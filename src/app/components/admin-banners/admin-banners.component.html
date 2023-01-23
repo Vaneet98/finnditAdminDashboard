@@ -1,0 +1,42 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Admin Banner</h1>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title">Admin Banner</h5>
+                   <table class="table datatable">
+                      <thead>
+                         <tr>
+                            <th scope="col">Display Title</th>
+                            <th scope="col">Placement</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Frequency</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <tr *ngFor="let data of dataMamber" (click)="onRowClick(data)" style="cursor: pointer;">
+                            <th scope="row">{{data.displayName}}</th>
+                            <td>{{data.placement}}</td>
+                            <td>{{data.position}}</td>
+                            <td>{{data.frequency}}</td>
+                            <td>{{data.startDate}}</td>
+                            <td>{{data.endDate}}</td>
+                            <td><span [ngClass]="{'badge bg-warning': data.status === 'Panding', 'badge bg-success': data.status === 'Approved'}">{{data.status}}</span></td>
+                            <td><i class="bi bi-pencil-fill" style="cursor: pointer;"></i><i class="bi bi-x-lg" style="margin-left: 10px;"></i></td>
+                         </tr>
+                      </tbody>
+                   </table>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+ </main>
