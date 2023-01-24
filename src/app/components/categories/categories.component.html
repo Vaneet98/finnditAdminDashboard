@@ -54,17 +54,17 @@
           </i>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterAddParent">
+               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddParent">
                   Add Parent Category
                </button>
             </li>
             <li>
-               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterAddL1">
+               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddL1">
                   Add sub-Category L1
                </button>
             </li>
             <li>
-               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterAddL2">
+               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddL2">
                   Add sub-Category L2
                </button>
             </li>
@@ -72,27 +72,58 @@
       
     </div>
     </section>
-          <!-- Model for Edit -->
-  <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered" role="document">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Reject</h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <div class="modal-body">
-         <label> Reason * </label>
-         <p>Note: The reason will be shared width merchant.</p>
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-         <button type="button" class="btn btn-primary">Reject</button>
-       </div>
-     </div>
-   </div>
- </div>
+   <!-- Model for Edit parent -->
+   <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <h6 for="recipient-name" class="col-form-label">Sub-Category Name:</h6>
+              <!-- <input type="text" class="form-control" id="recipient-name"> -->
+              <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <h6 for="message-text" class="col-form-label">Select Parent Category:</h6>
+              <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <h6>Sub-Category Name</h6>
+              <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
+          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
        <!-- Model for Deactivate -->
   <div class="modal fade" id="exampleModalCenterDeactivate" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered" role="document">
@@ -134,7 +165,8 @@
        </div>
      </div>
    </div>
- </div>  
+ </div>
+
        <!-- Model for Add parent -->
        <div class="modal fade" id="exampleModalCenterAddParent" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered" role="document">
@@ -176,46 +208,109 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <form>
                 <div class="modal-body">
                   <form>
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Recipient:</label>
-                      <input type="text" class="form-control" id="recipient-name">
+                      <label for="recipient-name" class="col-form-label">Sub-Category(L1) Name:</label>
+                      <!-- <input type="text" class="form-control" id="recipient-name"> -->
+                      <div class="form-group">
+                        <select class="form-control" id="exampleFormControlSelect1">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
                     </div>
                     <div class="form-group">
-                      <label for="message-text" class="col-form-label">Message:</label>
-                      <textarea class="form-control" id="message-text"></textarea>
+                      <label for="message-text" class="col-form-label">Select Parent Category:</label>
+                      <div class="form-group">
+                        <select class="form-control" id="exampleFormControlSelect1">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
                     </div>
+                    <div class="row">
+                      <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
+                  </div>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Send message</button>
+                  <button type="button" class="btn btn-primary">Save</button>
                 </div>
+              </form>
               </div>
             </div>
           </div>
+
            <!-- Model for Add L2 -->
            <div class="modal fade" id="exampleModalCenterAddL2" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Reject</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Add Sub-Category (L2)</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-                  <label> Reason * </label>
-                  <p>Note: The reason will be shared width merchant.</p>
-                  
-                  <div class="form-floating mb-3"><textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea><label for="floatingTextarea">Comments</label></div>
-                  <p></p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary">Reject</button>
-                </div>
+                <form>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Sub-Category(L2) Name:</label>
+                        <!-- <input type="text" class="form-control" id="recipient-name"> -->
+                        <div class="form-group">
+                          <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Sub-Category(L1) Name:</label>
+                        <!-- <input type="text" class="form-control" id="recipient-name"> -->
+                        <div class="form-group">
+                          <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="message-text" class="col-form-label">Select Parent Category:</label>
+                        <div class="form-group">
+                          <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
+                    </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>          

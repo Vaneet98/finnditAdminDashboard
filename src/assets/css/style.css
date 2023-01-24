@@ -13,6 +13,26 @@
   .bi-plus-lg::before{
 	margin-top: 25px;
   }
+  .c1:hover{
+	background: #b2b5c4;
+  }
+  .r1{
+	border-radius: 10px;
+	border: none; 
+	height: 40px;
+  }
+  .rc1{
+  /* margin-left: -4px; */
+  border-radius: 10px;
+  border: none;
+  height: 40px;
+  }
+  .r1:focus{
+	background-color:  #234887;
+  }
+.rc1:focus{
+	background-color: #234887;
+  }
   .add-more-container i {
 	width: 70px;
 	height: 70px;

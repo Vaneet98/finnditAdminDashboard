@@ -6,8 +6,10 @@ import { Component, OnInit,ElementRef } from '@angular/core';
   styleUrls: ['./rewards.component.css']
 })
 export class RewardsComponent implements OnInit {
-
-  constructor(private elementRef: ElementRef) { }
+  public selectedTab: "one" | "two"
+  constructor(private elementRef: ElementRef) { 
+    this.selectedTab = "one";
+  }
 
   ngOnInit(): void {
 
@@ -16,5 +18,13 @@ export class RewardsComponent implements OnInit {
     s.src = "../assets/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
   }
-
+dataMamber=[
+  {title:"Reward",category:"Reward Category",type:"Self",redeemPoint:"200",expirDate:"2022-10-10",status:"Panding"}
+]
+dataMamberCategory=[
+  {category:"Reward Category",title:"Test",status:"Approved"}
+]
+public show( tab: "one" | "two" ) : void {
+  this.selectedTab = tab;
+}
 }
