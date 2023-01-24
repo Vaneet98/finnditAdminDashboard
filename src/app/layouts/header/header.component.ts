@@ -7,10 +7,17 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+  fname: any;
+  lname:any;
   constructor(@Inject(DOCUMENT) private document: Document,private toastr: ToastrService) { }
-
+  
   ngOnInit(): void {
+    let d:any=localStorage.getItem("jwt")
+    const jwt = JSON.parse(d);
+    if (jwt) {
+      this.fname = jwt.data.adminDetails.firstName;
+      this.lname=jwt.data.adminDetails.lastName;
+    }
   }
   sidebarToggle()
   {
