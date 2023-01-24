@@ -16,4 +16,5 @@ export class CategoriesComponent implements OnInit {
     s.src = "../assets/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
   }
+  dataMamber=[{name:"Vaneet kumar",subcategory:"Test",productandservice:"Test11",status:"Panding"}]
 }

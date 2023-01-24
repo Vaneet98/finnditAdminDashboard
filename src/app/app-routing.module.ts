@@ -27,6 +27,7 @@ import { TiersComponent } from './components/tiers/tiers.component';
 import { SubscriptionPlansComponent } from './components/subscription-plans/subscription-plans.component';
 import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component';
 import { ManageNotificationComponent } from './components/manage-notification/manage-notification.component';
+import { DashBoardGuardGuard } from './components/dash-board-guard.guard';
 const routes: Routes = [
   { path: '', component: PagesLoginComponent,  },
   { path: 'register', component: PagesRegisterComponent },

@@ -7,7 +7,7 @@
           <div class="col-lg-12">
              <div class="card">
                 <div class="card-body">
-                   <h5 class="card-title">Admin Banner</h5>
+                     <h5 class="card-title">Admin Banner</h5>
                    <table class="table datatable">
                       <thead>
                          <tr>
@@ -22,7 +22,7 @@
                          </tr>
                       </thead>
                       <tbody>
-                         <tr *ngFor="let data of dataMamber" (click)="onRowClick(data)" style="cursor: pointer;">
+                         <tr *ngFor="let data of dataMamber" >
                             <th scope="row">{{data.displayName}}</th>
                             <td>{{data.placement}}</td>
                             <td>{{data.position}}</td>
@@ -30,7 +30,7 @@
                             <td>{{data.startDate}}</td>
                             <td>{{data.endDate}}</td>
                             <td><span [ngClass]="{'badge bg-warning': data.status === 'Panding', 'badge bg-success': data.status === 'Approved'}">{{data.status}}</span></td>
-                            <td><i class="bi bi-pencil-fill" style="cursor: pointer;"></i><i class="bi bi-x-lg" style="margin-left: 10px;"></i></td>
+                            <td><i class="bi bi-pencil-fill" (click)="onRowClick(data)" style="cursor: pointer;"></i><i class="bi bi-x-lg" style="margin-left: 10px;"></i></td>
                          </tr>
                       </tbody>
                    </table>
@@ -38,5 +38,11 @@
              </div>
           </div>
        </div>
+       <div class="add-more-container text-center btn btn-circle tooltip-custom" 
+       data-toggle="tooltip" data-placement="left" title="Add New Banners">
+      <!-- <a routerLink="/dashboard" class=""> -->
+        <i class="bi bi-plus-lg" ></i>
+      <!-- </a> -->
+    </div>
     </section>
  </main>

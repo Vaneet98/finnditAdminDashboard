@@ -295,13 +295,17 @@
   // datatables.forEach(datatable => {
   //   new simpleDatatables.DataTable(datatable);
   // })
+
+
   const datatables = select('.datatable', true)
-datatables.forEach(datatable => {
-    new simpleDatatables.DataTable(datatable, {
-      pageLength: 5,
-      searchable: true,
-    });
+   datatables.forEach(datatable => {
+  new simpleDatatables.DataTable(datatable, {
+    "pageLength": 5,
+    "lengthMenu": [ 10, 25, 50, 75, 100 ],
+    searchable: true,
+  });
 });
+
 
   /**
    * Autoresize echart charts

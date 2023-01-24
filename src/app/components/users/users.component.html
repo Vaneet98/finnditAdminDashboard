@@ -25,75 +25,23 @@
                          </tr>
                       </thead>
                       <tbody>
-                         <tr>
-                            <th scope="row">1</th>
-                            <td>Brandon Jacob</td>
-                            <td>Designer</td>
-                            <td>28</td>
-                            <td>2016-05-25</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">2</th>
-                            <td>Bridie Kessler</td>
-                            <td>Developer</td>
-                            <td>35</td>
-                            <td>2014-12-05</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">3</th>
-                            <td>Ashleigh Langosh</td>
-                            <td>Finance</td>
-                            <td>45</td>
-                            <td>2011-08-12</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">4</th>
-                            <td>Angus Grady</td>
-                            <td>HR</td>
-                            <td>34</td>
-                            <td>2012-06-11</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">5</th>
-                            <td>Raheem Lehner</td>
-                            <td>Dynamic Division Officer</td>
-                            <td>47</td>
-                            <td>2011-04-19</td>
-                         </tr>
-                         <tr>
-                           <th scope="row">6</th>
-                           <td>Brandon Jacob</td>
-                           <td>Designer</td>
-                           <td>28</td>
-                           <td>2016-05-25</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">7</th>
-                           <td>Bridie Kessler</td>
-                           <td>Developer</td>
-                           <td>35</td>
-                           <td>2014-12-05</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">8</th>
-                           <td>Ashleigh Langosh</td>
-                           <td>Finance</td>
-                           <td>45</td>
-                           <td>2011-08-12</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">9</th>
-                           <td>Angus Grady</td>
-                           <td>HR</td>
-                           <td>34</td>
-                           <td>2012-06-11</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">10</th>
-                           <td>Raheem Lehner</td>
-                           <td>Dynamic Division Officer</td>
-                           <td>47</td>
-                           <td>2011-04-19</td>
+                        <tr *ngFor="let data of dataMamber" >
+                           <th scope="row">{{data.name}}</th>
+                           <td>{{data.email}}</td>
+                           <td>{{data.phoneNumber}}</td>
+                           <td>{{data.location}}</td>
+                           <td>{{data.tier}}</td>
+                           <td>{{data.pointEarned}}</td>
+                           <td>{{data.pointRedeemed}}</td>
+                           <td>{{data.registerOn}}</td>
+                           <td><span [ngClass]="{'badge bg-warning': data.status === 'Panding', 'badge bg-success': data.status === 'Approved'}">{{data.status}}</span></td>
+                           <td>
+                              <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterApproved">
+                              <i class="bi bi-check-lg "  style="cursor: pointer;" ></i></button>
+                              <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterReject">
+                              <i class="bi bi-x-lg" style="margin-left: 10px;cursor: pointer;"></i>
+                           </button>
+                          </td>
                         </tr>
                       </tbody>
                    </table>
@@ -102,4 +50,48 @@
           </div>
        </div>
     </section>
+        <!-- Modal for approved -->
+        <div class="modal fade" id="exampleModalCenterApproved" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLongTitle" style="align-items: center; justify-content: center;">Approved</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               Are you sure you want to approved it
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+               <button type="button" class="btn btn-primary">Approved</button>
+             </div>
+           </div>
+         </div>
+       </div>
+     <!-- Model for reject -->
+     <div class="modal fade" id="exampleModalCenterReject" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Reject</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label> Reason * </label>
+            <p>Note: The reason will be shared width merchant.</p>
+            
+            <div class="form-floating mb-3"><textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea><label for="floatingTextarea">Comments</label></div>
+            <p></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
  </main>

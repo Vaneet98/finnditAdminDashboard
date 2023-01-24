@@ -7,7 +7,18 @@ import { Component, OnInit, ElementRef  } from '@angular/core';
 })
 export class AdminBannersComponent implements OnInit {
   constructor(private elementRef: ElementRef) { }
+  selectedDataMember: any;
 
+  onRowClick(data:any):void {
+    // this.selectedDataMember=dataMember
+    // let message = '';
+    // for (let prop in dataMember) {
+    //   message += prop.toUpperCase() + ': ' + dataMember[prop] + '\n';
+    // }
+    // alert(message);
+    console.log("this is admin banner")
+    alert(data);
+  }
   ngOnInit(): void {
 
 
@@ -33,14 +44,5 @@ export class AdminBannersComponent implements OnInit {
     {displayName:"Ashoka",placement:"HomePage3",position:"8",frequency:"4",startDate:"2022-01-01",endDate:"2022-03-03",status:"Panding"},
     {displayName:"Ashoka",placement:"HomePage3",position:"1",frequency:"8",startDate:"2022-01-01",endDate:"2022-03-03",status:"Approved"},
   ]
-  selectedDataMember: any;
-  onRowClick(dataMember: any):void {
-    // this.selectedDataMember=dataMember
-    // let message = '';
-    // for (let prop in dataMember) {
-    //   message += prop.toUpperCase() + ': ' + dataMember[prop] + '\n';
-    // }
-    // alert(message);
-    alert(dataMember);
-  }
+ 
 }  

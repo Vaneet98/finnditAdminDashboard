@@ -11,10 +11,11 @@ export class DashBoardGuardGuard implements CanActivate {
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (localStorage.getItem('token') === 'token') {
-        this.router.navigate(['/dashboard']);
+        console.log("This is auth guard========>",localStorage.getItem('token') === 'token')
+        this.router.navigate(['dashboard']);
         return true;
       } else {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['']);
         return false;
       }
     }

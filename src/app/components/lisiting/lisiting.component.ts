@@ -17,4 +17,8 @@ export class LisitingComponent implements OnInit {
     this.elementRef.nativeElement.appendChild(s);
   }
 
+  dataMamber=[
+    {businesses:"Ashoka",fullName:"Ashoka",ownerName:"Vaneet kumar",phoneNumber:"-",email:"vaneet.k@applify.co",category:"Automobile",subscriptionPlan:"Basic",status:"Panding"}
+  ]
+
 }

@@ -16,5 +16,7 @@ export class UsersComponent implements OnInit {
     s.src = "../assets/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
   }
-
+  dataMamber=[
+    {name:"vaneet kumar",email:"vaneet.k@applify.co",phoneNumber:"123456789",location:"Mohali",tier:"Horizontal",pointEarned:"25",pointRedeemed:"10",registerOn:"2022-04-07",status:"Approved"}
+  ]
 }

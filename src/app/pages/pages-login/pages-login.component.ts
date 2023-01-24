@@ -26,7 +26,7 @@ export class PagesLoginComponent implements OnInit {
     // storedResponse:any = JSON.parse(localStorage.getItem('token'));
     const token1=localStorage.getItem('token')
     console.log("this is token1------------>",token1)
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['dashboard']);
 
    },
    
