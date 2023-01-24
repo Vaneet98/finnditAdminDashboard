@@ -22,6 +22,7 @@ import { PagesBlankComponent } from './pages/pages-blank/pages-blank.component';
 import {FormsModule} from "@angular/forms"
 import { HttpClientModule } from '@angular/common/http';
 // import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { BusinessessComponent } from './components/businessess/businessess.component';
@@ -83,8 +84,9 @@ import { ManageNotificationComponent } from './components/manage-notification/ma
     FormsModule,
     HttpClientModule,
     CommonModule,
+    ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    // ToastrModule.forRoot(),
+   
 
   ],
   providers: [],

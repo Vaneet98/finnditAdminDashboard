@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common'
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,7 +8,7 @@ import { DOCUMENT } from '@angular/common'
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(@Inject(DOCUMENT) private document: Document) { }
+  constructor(@Inject(DOCUMENT) private document: Document,private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -16,5 +16,9 @@ export class HeaderComponent implements OnInit {
   {
     //toggle sidebar function
     this.document.body.classList.toggle('toggle-sidebar');
+  }
+  logout(){
+    localStorage.clear()
+    this.toastr.success('Logged Out Successfully.');
   }
 }
