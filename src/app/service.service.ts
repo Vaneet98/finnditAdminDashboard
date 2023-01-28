@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -11,8 +11,12 @@ export class ServiceService {
   isLoggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient,  private router: Router,private toastr: ToastrService) { }
+  HostURL=environment.hostULR
   LoginURL= environment.LoginURL;
+  logoutURL=environment.logoutURL;
   RegisterURL= environment.RegisterURL;
+  categoryURL= environment.CategoryURL;
+  SubcategoryL1URL=environment.SubcategoryL1URL;
 //Every 12 A.M logout automatically
    currentDate = new Date();
    startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 0, 0, 0);
@@ -24,9 +28,10 @@ export class ServiceService {
   }
  
   logIn(data: any) {
+    console.log("This is URL",this.HostURL+this.LoginURL)
     this.isLoggedIn.next(true);
     return this.http
-      .post<any>(this.LoginURL, data, { observe: 'response' })
+      .post<any>(this.HostURL+this.LoginURL, data, { observe: 'response' })
       .subscribe({
         next: (result) => {
           if (result.body.statusCode === 200) {
@@ -36,10 +41,10 @@ export class ServiceService {
             setTimeout(() => {
               this.router.navigate(['dashboard']);
               //This is for every 12 A.M automatically logout
-              setTimeout(() => {
-                localStorage.removeItem('jwt');
-                this.router.navigate(['']);
-              }, this.timeDiff)
+              // setTimeout(() => {
+              //   localStorage.removeItem('jwt');
+              //   this.router.navigate(['']);
+              // }, this.timeDiff)
             }, 100,
            );
             
@@ -52,6 +57,15 @@ export class ServiceService {
         },
       });
   }
+
+  logoutuser(){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.logoutURL, {headers: headers});
+  }
+
   reloadComponent() {
     console.log('reload component hit');
     if (localStorage.getItem('jwt')) {
@@ -74,5 +88,24 @@ export class ServiceService {
   deleteProduct(id: number) {
     return this.http.delete('http://localhost:3000/productList/' + id);
   }
+
+  //Category
+  getCategory(){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.categoryURL, {headers: headers});
+  }
+//SUB-Category-L1
+  getCategoryL1(id:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
+    console.log("this is id of subcategoryl1",id)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.SubcategoryL1URL+id, {headers: headers});
+  }
+
 }
  

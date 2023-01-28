@@ -27,6 +27,7 @@ import { TiersComponent } from './components/tiers/tiers.component';
 import { SubscriptionPlansComponent } from './components/subscription-plans/subscription-plans.component';
 import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component';
 import { ManageNotificationComponent } from './components/manage-notification/manage-notification.component';
+import { CategorySubL1Component } from './components/category-sub-l1/category-sub-l1.component'; 
 import { DashBoardGuardGuard } from './components/dash-board-guard.guard';
 const routes: Routes = [
   { path: '', component: PagesLoginComponent,  },
@@ -55,6 +56,7 @@ const routes: Routes = [
   { path: 'subsription', component:SubscriptionPlansComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'feedback', component:FeedbackFormComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'managenotification', component:  ManageNotificationComponent,canActivate:[DashBoardGuardGuard] },
+  { path: 'CategorySubL1Component', component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard] },
   { path: '**', component: PagesError404Component  },
 ];
 

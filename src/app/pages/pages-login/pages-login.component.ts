@@ -16,8 +16,11 @@ export class PagesLoginComponent implements OnInit {
   ngOnInit(): void {
     this.api.reloadComponent();
   }
-  getdata(data:NgForm){
+  adminType:any
+  getdata(data:any){
     console.log(data,"data value") 
+    data.adminType="935e28c4-8bfe-11ed-a2f3-b03cdcf7fe7b"
+    console.log("this is login id",data)
     this.api.logIn(data)
     }
 

@@ -63,6 +63,9 @@ import { DialogComponent } from './dialog/dialog.component';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CategorySubL1Component } from './components/category-sub-l1/category-sub-l1.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,6 +101,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ManageNotificationComponent,
     DialogComponent,
     DeleteDialogComponent,
+    CategorySubL1Component,
+
 
   ],
   imports: [

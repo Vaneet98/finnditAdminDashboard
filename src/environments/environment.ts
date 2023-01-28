@@ -4,11 +4,15 @@
 
 export const environment = {
   production: false,
-  LoginURL: 'http://localhost:3000/admin/v1/admin/login',
-  RegisterURL:'http://localhost:3000/admin/v1/admin',
+  hostULR:"https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/",
+  LoginURL: 'admin/v1/admin/login',
+  RegisterURL:'admin/v1/admin',
+  logoutURL:'admin/v1/admin/logout',
+  CategoryURL:'admin/v1/categories?limit=1000&skip=0',
+  SubcategoryL1URL:'/admin/v1/subCategories?limit=100&skip=0&categoryId='
 };
-
-/*
+// Admin/admin-v1-admin-login-post
+/* https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/api-docs/?urls.primaryName=API%20-%20Admin#/Admin
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

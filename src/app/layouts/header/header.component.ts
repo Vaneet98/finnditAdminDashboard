@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
+import { ServiceService } from '../../service.service'
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,14 +10,19 @@ import { ToastrService } from 'ngx-toastr';
 export class HeaderComponent implements OnInit {
   fname: any;
   lname:any;
-  constructor(@Inject(DOCUMENT) private document: Document,private toastr: ToastrService) { }
+  phoneNumber:any;
+  email:any
+  constructor(@Inject(DOCUMENT) private document: Document,private toastr: ToastrService,private api: ServiceService) { }
   
   ngOnInit(): void {
     let d:any=localStorage.getItem("jwt")
     const jwt = JSON.parse(d);
+    console.log("This is token",jwt)
     if (jwt) {
       this.fname = jwt.data.adminDetails.firstName;
       this.lname=jwt.data.adminDetails.lastName;
+      this.phoneNumber=jwt.data.adminDetails.phoneNumber;
+      this.email=jwt.data.adminDetails.email
     }
   }
   sidebarToggle()
@@ -26,6 +32,7 @@ export class HeaderComponent implements OnInit {
   }
   logout(){
     localStorage.clear()
+    this.api.logoutuser()
     this.toastr.success('Logged Out Successfully.');
   }
 }
