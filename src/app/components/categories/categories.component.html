@@ -9,10 +9,12 @@
              <div class="card">
                 <div class="card-body">
                    <h5 class="card-title">Categories Detalis</h5>
+                   <div style="margin-bottom: 20px;">
+                    <input [(ngModel)]="searchText" placeholder="Search">
+                  </div>
                    <table class="table datatable">
                       <thead>
                          <tr>
-
                             <th scope="col">Name</th>
                             <th scope="col">Sub Categories</th>
                             <th scope="col">Product&Service</th>
@@ -21,28 +23,37 @@
                          </tr>
                       </thead>
                       <tbody  >
-                        <tr *ngFor="let data of dataMamber">
-                          <th scope="row">{{data.name}}</th>
-                          <td>{{data.subcategory}}</td>
-                          <td>{{data.productandservice}}</td>
+                        <tr *ngFor="let data of dataMamber | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}" (click)="selectedRowDetail(data)" style="cursor: pointer;">
+                          <th scope="row"><span>{{data.name}}</span></th>
+                          <td><span>{{data.subcategory}}</span></td>
+                          <td><span>{{data.productandservice}}</span></td>
 
-                          <td><span class="badge bg-success">{{data.status}}</span></td>
+                          <td><span [ngClass]="{'badge bg-warning': data.status === 'Panding', 'badge bg-success': data.status === 'Approved'}">{{data.status}}</span></td>
                           
                           <td id="crossAndEdit">
-                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit">
+                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit" (click)="getId(data)">
                               <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
                            </button>
                            
-                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDeactivate">
+                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDeactivate" (click)="getId(data.id)">
                               <i class="bi bi-x-lg" style="margin-left: 10px;cursor: pointer;"></i>
                            </button>
-                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete">
+                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id)">
                               <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
                            </button>
                         </td>
                         </tr>
                       </tbody>
+                     
                    </table>
+                   <div class="pagination" >
+                    <mat-paginator [length]="dataMamber.length"
+                        [pageSize]="5"
+                        [pageSizeOptions]="[5,10, 25, 100]"
+                        (page)="loadDataPage($event)">
+                    </mat-paginator>
+                   </div>
+                  
                 </div>
              </div>
           </div>
@@ -73,7 +84,7 @@
     </div>
     </section>
    <!-- Model for Edit parent -->
-   <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" role="dialog" #modalRef  aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -82,14 +93,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form>
+        <form #basicForm="ngForm"  (ngSubmit)="getdataEdit(basicForm.value)"  >
         <div class="modal-body">
-          <form>
             <div class="form-group">
               <h6 for="recipient-name" class="col-form-label">Sub-Category Name:</h6>
               <!-- <input type="text" class="form-control" id="recipient-name"> -->
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="exampleFormControlSelect1" ngModel name="subCategory" required> 
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -101,7 +111,7 @@
             <div class="form-group">
               <h6 for="message-text" class="col-form-label">Select Parent Category:</h6>
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="exampleFormControlSelect1" ngModel name="parentCategory" required>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -112,16 +122,15 @@
             </div>
             <div class="row">
               <h6>Sub-Category Name</h6>
-              <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
+              <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile" ngModel name="subCatName" required> 
           </div>
-          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary"  [disabled]="!basicForm.valid" >Save</button>
         </div>
       </form>
-      </div>
+      </div >
     </div>
   </div>
        <!-- Model for Deactivate -->
@@ -140,13 +149,13 @@
              </div>
              <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-               <button type="button" class="btn btn-primary">Deactivate</button>
+               <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deactivate()">Deactivate</button>
              </div>
            </div>
          </div>
   </div>
          <!-- Model for Delete -->
-  <div class="modal fade" id="exampleModalCenterDelete" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenterDelete" tabindex="-1" role="dialog"    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
        <div class="modal-header">
@@ -161,14 +170,14 @@
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-         <button type="button" class="btn btn-primary">Delete</button>
+         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteData()">Delete</button>
        </div>
      </div>
    </div>
  </div>
 
        <!-- Model for Add parent -->
-       <div class="modal fade" id="exampleModalCenterAddParent" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+       <div class="modal fade" id="exampleModalCenterAddParent" tabindex="-1" role="dialog"      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered" role="document">
            <div class="modal-content">
              <div class="modal-header">
@@ -199,7 +208,7 @@
        </div>  
 
           <!-- Model for Add L1 -->
-          <div class="modal fade" id="exampleModalCenterAddL1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModalCenterAddL1" tabindex="-1" role="dialog"   aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -251,7 +260,7 @@
           </div>
 
            <!-- Model for Add L2 -->
-           <div class="modal fade" id="exampleModalCenterAddL2" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+           <div class="modal fade" id="exampleModalCenterAddL2" tabindex="-1" role="dialog"  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">

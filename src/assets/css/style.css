@@ -4,6 +4,32 @@
 :root {
 	scroll-behavior: smooth;
   }
+  .example-spacer {
+	flex: 1 1 auto;
+  }
+  table {
+	width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+	font-size: 14px;
+	width: 100%;
+  }
+  .pagination{
+	float: right; 
+	margin-right:150px
+  }
+  .filter{
+	margin-left: 40px;
+  }
+  .container {
+	max-width: 1300px;
+	margin: 0 auto;
+  }
+  .deleteBox{
+	width: 350px;
+	height: 200px;
+  }
   .add-more-container {
 	position: fixed;
 	right: 50px;
@@ -79,7 +105,6 @@
   h1, h2, h3, h4, h5, h6 {
 	font-family: "Nunito", sans-serif;
   }
-  
   /*--------------------------------------------------------------
   # Main
   --------------------------------------------------------------*/

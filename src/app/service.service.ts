@@ -13,7 +13,11 @@ export class ServiceService {
   constructor(private http: HttpClient,  private router: Router,private toastr: ToastrService) { }
   LoginURL= environment.LoginURL;
   RegisterURL= environment.RegisterURL;
-
+//Every 12 A.M logout automatically
+   currentDate = new Date();
+   startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 0, 0, 0);
+   endDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()+1, 0, 0, 0);
+   timeDiff = this.endDate.getTime() - this.currentDate.getTime();
 
   register(data:any){
     return this.http.post<any>(this.RegisterURL, data);
@@ -31,7 +35,13 @@ export class ServiceService {
             this.toastr.success('Logged In Successfully.', result.body.message);
             setTimeout(() => {
               this.router.navigate(['dashboard']);
-            }, 100);
+              //This is for every 12 A.M automatically logout
+              setTimeout(() => {
+                localStorage.removeItem('jwt');
+                this.router.navigate(['']);
+              }, this.timeDiff)
+            }, 100,
+           );
             
           }
         },
@@ -49,4 +59,20 @@ export class ServiceService {
       this.isLoggedIn.next(true);
     }
   }
+  postProduct(data: any) {
+    return this.http.post('http://localhost:3000/productList', data);
+  }
+
+  getProduct() {
+    return this.http.get('http://localhost:3000/productList');
+  }
+
+  updateProduct(data: any, id: number) {
+    return this.http.put('http://localhost:3000/productList/' + id, data);
+  }
+
+  deleteProduct(id: number) {
+    return this.http.delete('http://localhost:3000/productList/' + id);
+  }
 }
+ 

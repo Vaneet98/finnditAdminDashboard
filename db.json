@@ -1,0 +1,59 @@
+{
+  "productList": [
+    {
+      "productName": "apple",
+      "category": "Vegetables",
+      "date": "2023-01-18T18:30:00.000Z",
+      "productFreshness": "Refurbished",
+      "price": 986,
+      "comment": "nice product",
+      "id": 4
+    },
+    {
+      "productName": "Fig",
+      "category": "Fruits",
+      "date": "2023-01-18T18:30:00.000Z",
+      "productFreshness": "Brand New",
+      "price": 200,
+      "comment": "Excellent",
+      "id": 5
+    },
+    {
+      "productName": "Laptop",
+      "category": "Electronics",
+      "date": "2023-01-18T18:30:00.000Z",
+      "productFreshness": "Second Hand",
+      "price": 37000,
+      "comment": "Working Fine.",
+      "id": 7
+    },
+    {
+      "productName": "Watch",
+      "category": "Electronics",
+      "date": "2023-01-18T18:30:00.000Z",
+      "productFreshness": "Brand New",
+      "price": 50000,
+      "comment": "Rolex Watch",
+      "id": 8
+    },
+    {
+      "productName": "Test2",
+      "category": "Electronics",
+      "date": "2023-01-09T18:30:00.000Z",
+      "productFreshness": "Second Hand",
+      "price": 100,
+      "comment": "this is test update",
+      "id": 9
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

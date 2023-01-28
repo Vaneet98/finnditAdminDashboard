@@ -1,5 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,10 +40,7 @@ import { PagesError404Component } from './pages/pages-error404/pages-error404.co
 import { PagesBlankComponent } from './pages/pages-blank/pages-blank.component';
 
 import {FormsModule} from "@angular/forms"
-import { HttpClientModule } from '@angular/common/http';
-// import { ToastrModule } from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { BusinessessComponent } from './components/businessess/businessess.component';
 import { CategoriesComponent } from './components/categories/categories.component';
@@ -42,7 +59,10 @@ import { TiersComponent } from './components/tiers/tiers.component';
 import { SubscriptionPlansComponent } from './components/subscription-plans/subscription-plans.component';
 import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component';
 import { ManageNotificationComponent } from './components/manage-notification/manage-notification.component';
-
+import { DialogComponent } from './dialog/dialog.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +96,8 @@ import { ManageNotificationComponent } from './components/manage-notification/ma
     SubscriptionPlansComponent,
     FeedbackFormComponent,
     ManageNotificationComponent,
+    DialogComponent,
+    DeleteDialogComponent,
 
   ],
   imports: [
@@ -86,8 +108,23 @@ import { ManageNotificationComponent } from './components/manage-notification/ma
     CommonModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-   
-
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTooltipModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

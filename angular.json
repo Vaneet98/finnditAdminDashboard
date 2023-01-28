@@ -3,9 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "admindashboard": {
+    "adminPanal": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/admindashboard",
+            "outputPath": "dist/adminPanal",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,11 +27,10 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "src/assets/js/main.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -66,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "admindashboard:build:production"
+              "browserTarget": "adminPanal:build:production"
             },
             "development": {
-              "browserTarget": "admindashboard:build:development"
+              "browserTarget": "adminPanal:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "admindashboard:build"
+            "browserTarget": "adminPanal:build"
           }
         },
         "test": {
@@ -92,6 +95,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -100,7 +104,5 @@
       }
     }
   },
-  "cli": {
-    "analytics": "7c64ce7d-0abb-4421-935e-0fb388caa816"
-  }
+  "defaultProject": "adminPanal"
 }
