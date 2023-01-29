@@ -12,11 +12,6 @@ export class RewardsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = "../assets/js/main.js";
-    this.elementRef.nativeElement.appendChild(s);
   }
 dataMamber=[
   {title:"Reward",category:"Reward Category",type:"Self",redeemPoint:"200",expirDate:"2022-10-10",status:"Panding"}

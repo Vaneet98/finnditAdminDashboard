@@ -64,6 +64,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CategorySubL1Component } from './components/category-sub-l1/category-sub-l1.component';
+import { CategorySubL2Component } from './components/category-sub-l2/category-sub-l2.component';
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import { CategorySubL1Component } from './components/category-sub-l1/category-su
     DialogComponent,
     DeleteDialogComponent,
     CategorySubL1Component,
+    CategorySubL2Component,
 
 
   ],

@@ -6,18 +6,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
-import { CategorySubL1Component } from '../category-sub-l1/category-sub-l1.component';
+// import { CategorySubL1Component } from '../category-sub-l1/category-sub-l1.component';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrls: ['./categories.component.css'],
+  // entryComponents: [CategorySubL1Component]
 })
 export class CategoriesComponent implements OnInit {
   form: FormGroup | undefined;
   isFormValid:any = false;
   basicForm: any;
-  @ViewChild(CategorySubL1Component, { static: false }) child: CategorySubL1Component | any;
-  constructor(private elementRef: ElementRef,private router:Router,private toastr: ToastrService,private api: ServiceService) { 
+  // @ViewChild(CategorySubL1Component, { static: false }) child: CategorySubL1Component | any;
+  constructor(private elementRef: ElementRef,private router:Router,
+    private toastr: ToastrService,private api: ServiceService) { 
   }
   pagePerItem=0
   ngOnInit(): void {
@@ -29,13 +31,10 @@ dataMamber:any
   searchText = '';
  
  userId:any
-  getId(id:any){
-     alert(JSON.stringify(id))
-     this.userId=id
-     this.router.navigate(['/CategorySubL1Component']);
-     //this is called the child category-sub-l1 function
-     this.child.getData(id)
-     
+  getId(categoryid:any){
+     this.userId=categoryid
+    this.router.navigate(['/CategorySubL1Component', this.userId], { queryParams: { id: this.userId } });
+  
   }
 
   getData(){

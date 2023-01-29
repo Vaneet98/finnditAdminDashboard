@@ -17,6 +17,10 @@ export class ServiceService {
   RegisterURL= environment.RegisterURL;
   categoryURL= environment.CategoryURL;
   SubcategoryL1URL=environment.SubcategoryL1URL;
+  SubcategoryL2URL=environment.SubcategoryL2URL;
+  TageURL=environment.TageURL
+
+
 //Every 12 A.M logout automatically
    currentDate = new Date();
    startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 0, 0, 0);
@@ -107,5 +111,24 @@ export class ServiceService {
     return this.http.get(this.HostURL+this.SubcategoryL1URL+id, {headers: headers});
   }
 
+  //SUB-Category-L2
+  getCategoryL2(id:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
+    console.log("this is id of subcategoryl1",id)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.SubcategoryL2URL+id, {headers: headers});
+  }
+
+  //Tage
+
+ getTage(type:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.TageURL+type, {headers: headers});
+  }
 }
  

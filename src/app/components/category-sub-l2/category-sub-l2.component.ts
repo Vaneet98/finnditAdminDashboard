@@ -7,11 +7,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
 @Component({
-  selector: 'app-category-sub-l1',
-  templateUrl: './category-sub-l1.component.html',
-  styleUrls: ['./category-sub-l1.component.css']
+  selector: 'app-category-sub-l2',
+  templateUrl: './category-sub-l2.component.html',
+  styleUrls: ['./category-sub-l2.component.css']
 })
-export class CategorySubL1Component implements OnInit {
+export class CategorySubL2Component implements OnInit {
   @Input() categoryId:any;
   form: FormGroup | undefined;
   isFormValid:any = false;
@@ -41,15 +41,15 @@ dataMamber:any
   id:any
 
  public getDataOfSubCateL1(id:any){
-    this.api.getCategoryL1(id).subscribe(data => {
-      console.log("This is SubcategorireL1 data------->",data);
+    this.api.getCategoryL2(id).subscribe(data => {
+      console.log("This is SubcategorireL2 data------->",data);
       this.dataMamber=data
-      console.log("this is dataMamaber of subCategoryL1--------->",this.dataMamber.data.rows)
+      console.log("this is dataMamaber of subCategoryL2--------->",this.dataMamber.data.rows)
     })
   }
 
-  getbacktocategory(){
-    this.router.navigate(['/categories']);
+  getbacktosubcategoryl1(){
+    this.router.navigate(['/CategorySubL1Component',]);
   }
 
   selectedRowDetail(data:any){

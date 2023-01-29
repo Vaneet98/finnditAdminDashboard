@@ -1,15 +1,16 @@
 <main id="main" class="main">
     <div class="pagetitle">
        <h1>Categories</h1>
-
     </div>
     <section class="section">
        <div class="row">
           <div class="col-lg-12">
              <div class="card">
                 <div class="card-body">
-                  
-                   <h5 class="card-title">Categories Detalis</h5>
+                  <div style="display: flex; align-items: center;">
+                    <i class="bi bi-chevron-left" (click)="getbacktosubcategoryl1()" style="cursor: pointer;margin-right: 10px;"></i>
+                    <h5 class="card-title">Sub Categories (L2)</h5>
+                  </div>
                    <div style="margin-bottom: 20px;">
                     <input [(ngModel)]="searchText" placeholder="Search">
                   </div>
@@ -17,7 +18,6 @@
                       <thead>
                          <tr>
                             <th scope="col">Name</th>
-                            <th scope="col">Sub Categories</th>
                             <th scope="col">Product & Service</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
@@ -25,12 +25,11 @@
                       </thead>
                       <tbody  >
                         <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
-                          <th scope="row"><span>{{data.name}}</span></th>
-                          <td><a [routerLink]="['/CategorySubL1Component', data.id]">{{data.subCategoriesCount}}</a></td>
-                          <td><span>{{data.productAndServicesCount}}</span></td>
+                          <th scope="row"><span>{{data?.name}}</span></th>
+                          <td><span>{{data?.productAndServicesCount}}</span></td>
                           <td>
-                              <span *ngIf="data.isBlocked === 1">Blocked</span>
-                              <span *ngIf="data.isBlocked === 0">Active</span>
+                              <span *ngIf="data?.isBlocked === 1">Blocked</span>
+                              <span *ngIf="data?.isBlocked === 0">Active</span>
 
                           </td>
                           <td id="crossAndEdit">
@@ -62,28 +61,8 @@
           </div>
        </div>
        <div class="add-more-container text-center btn btn-circle tooltip-custom" 
-       data-toggle="tooltip" data-placement="left" title="Add New Category">
-        <i class="bi bi-plus-lg" type="button" id="dropdownMenuButton"
-         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          </i>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
-               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddParent">
-                  Add Parent Category
-               </button>
-            </li>
-            <li>
-               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddL1">
-                  Add sub-Category L1
-               </button>
-            </li>
-            <li>
-               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddL2">
-                  Add sub-Category L2
-               </button>
-            </li>
-          </ul>
-      
+       data-toggle="tooltip" data-placement="left" title="Add New Banners">
+       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterAddL2"><i class="bi bi-plus-lg" ></i></button> 
     </div>
     </section>
    <!-- Model for Edit parent -->
@@ -178,90 +157,6 @@
      </div>
    </div>
  </div>
-
-       <!-- Model for Add parent -->
-       <div class="modal fade" id="exampleModalCenterAddParent" tabindex="-1" role="dialog"      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Add Parent</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-               </button>
-             </div>
-             <form>
-               <div class="modal-body">
-                   <div class="form-element" >
-                       <label><h5> Parent Category Name</h5> </label>
-                       <input class="form-control" type="text">
-                   </div>
-                   <div class="form-element">
-                        <span><h5>Parent Category Icon</h5>  </span> 
-                       <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
-                   </div>
-
-               </div>
-               <div class="modal-footer buttons">
-                   <button  class="common-btn " data-dismiss="modal">Save </button>
-                   <button class="common-btn cancel" data-dismiss="modal">Cancel </button>
-               </div>
-           </form>
-           </div>
-         </div>
-       </div>  
-
-          <!-- Model for Add L1 -->
-          <div class="modal fade" id="exampleModalCenterAddL1" tabindex="-1" role="dialog"   aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Category L1</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Sub-Category(L1) Name:</label>
-                      <!-- <input type="text" class="form-control" id="recipient-name"> -->
-                      <div class="form-group">
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="message-text" class="col-form-label">Select Parent Category:</label>
-                      <div class="form-group">
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
-                  </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save</button>
-                </div>
-              </form>
-              </div>
-            </div>
-          </div>
-
            <!-- Model for Add L2 -->
            <div class="modal fade" id="exampleModalCenterAddL2" tabindex="-1" role="dialog"  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -327,4 +222,3 @@
             </div>
           </div>          
  </main>
- <!-- <app-category-sub-l1 #child></app-category-sub-l1> -->
