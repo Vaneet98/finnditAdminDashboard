@@ -57,8 +57,10 @@ const routes: Routes = [
   { path: 'subsription', component:SubscriptionPlansComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'feedback', component:FeedbackFormComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'managenotification', component:  ManageNotificationComponent,canActivate:[DashBoardGuardGuard] },
-  { path: 'CategorySubL1Component/:id', component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard] },
-  { path: 'CategorySubL2Component/:id', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
+  { path: 'CategorySubL1Component/:id', component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard] , children: [
+    { path: ':id', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
+  ]},
+  
   { path: '**', component: PagesError404Component  },
 ];
 

@@ -11,6 +11,9 @@ export const environment = {
   CategoryURL:'admin/v1/categories?limit=1000&skip=0',
   SubcategoryL1URL:'/admin/v1/subCategories?limit=100&skip=0&categoryId=',
   SubcategoryL2URL:'/admin/v1/subCategories/level2?limit=1000&skip=0&subCategoryLevel1Id=',
+  SubscriptionPlan:'/admin/v1/subscriptionPlan?limit=100&skip=0',
+  SubscriptionPlanEdit:'/admin/v1/subscriptionPlan',
+  SubscriptionPlanDelete:'/admin/v1/subscriptionPlan',
   TageURL:'/admin/v1/tags?limit=1000&skip=0&type='
 };
 // Admin/admin-v1-admin-login-post

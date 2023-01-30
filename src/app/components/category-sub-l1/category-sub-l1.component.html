@@ -27,7 +27,7 @@
                       <tbody  >
                         <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
                           <th scope="row"><span>{{data?.name}}</span></th>
-                          <td><a [routerLink]="['/CategorySubL2Component', data.id]">{{data?.subCategoriesCount}}</a></td>
+                          <td><a [routerLink]="data.id" [queryParamsHandling]="'preserve'">{{data?.subCategoriesCount}}</a></td>
                           <td><span>{{data?.productAndServicesCount}}</span></td>
                           <td>
                               <span *ngIf="data?.isBlocked === 1">Blocked</span>

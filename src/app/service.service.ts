@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,8 +19,10 @@ export class ServiceService {
   categoryURL= environment.CategoryURL;
   SubcategoryL1URL=environment.SubcategoryL1URL;
   SubcategoryL2URL=environment.SubcategoryL2URL;
-  TageURL=environment.TageURL
-
+  TageURL=environment.TageURL;
+  SubscriptionPlan=environment.SubscriptionPlan;
+  SubscriptionPlanEdit=environment.SubscriptionPlanEdit;
+  SubscriptionPlanDelete=environment.SubscriptionPlanDelete;
 
 //Every 12 A.M logout automatically
    currentDate = new Date();
@@ -129,6 +132,38 @@ export class ServiceService {
     console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.get(this.HostURL+this.TageURL+type, {headers: headers});
+  }
+
+  //subscription plan
+  getSubscriptionPlan(){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.SubscriptionPlan, {headers: headers});
+  }
+
+  AddSubscriptionPlan(data:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.post(this.HostURL+this.SubscriptionPlanEdit,data, {headers: headers});
+  }
+  EditSubscriptionPlan(data:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.put(this.HostURL+this.SubscriptionPlanEdit,data, {headers: headers});
+  }
+
+  DeleteSubscriptionPlan(id:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.put(this.HostURL+this.SubscriptionPlanDelete,id, {headers: headers});
   }
 }
  

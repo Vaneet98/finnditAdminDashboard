@@ -39,6 +39,28 @@
   .bi-plus-lg::before{
 	margin-top: 25px;
   }
+  .listview dl.list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .listview dl.list dt {
+    font-weight: bold;
+    width: 150px;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .listview dl.list dd {
+    width: 200px;
+  }
+  .highlight{
+	cursor: pointer;
+	text-decoration: underline;
+	color: #318337;
+  }
   .c1:hover{
 	background: #b2b5c4;
   }
