@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
+import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +21,8 @@ export class ServiceService {
   SubcategoryL1URL=environment.SubcategoryL1URL;
   SubcategoryL2URL=environment.SubcategoryL2URL;
   TageURL=environment.TageURL;
+  TagAdminDetailURL=environment.TagAdminDetailURL;
+  UnassignedURL=environment.UnassignedURL;
   SubscriptionPlan=environment.SubscriptionPlan;
   SubscriptionPlanEdit=environment.SubscriptionPlanEdit;
   SubscriptionPlanDelete=environment.SubscriptionPlanDelete;
@@ -132,6 +135,41 @@ export class ServiceService {
     console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.get(this.HostURL+this.TageURL+type, {headers: headers});
+  }
+
+  deleteTag(id:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.delete(this.HostURL+this.TageURL+id, {headers: headers});
+  }
+
+  editTag(data:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getCategory",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.put(this.HostURL+this.TageURL,data, {headers: headers});
+  }
+
+  getTagAdminDetail(type:any,tagId:any){
+    let params = new HttpParams();
+    params = params.set('type', type.toString());
+    params = params.set('tagId', tagId);
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(this.HostURL+this.TagAdminDetailURL, {headers: headers, params: params});
+  }
+
+  Unassigned(data:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.post(this.HostURL+this.UnassignedURL,data, {headers: headers});
   }
 
   //subscription plan

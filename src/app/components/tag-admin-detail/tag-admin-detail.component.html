@@ -1,0 +1,98 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1></h1>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="card">
+                <div class="card-body">
+                  <div style="display: flex; align-items: center;">
+                    <i class="bi bi-chevron-left" (click)="getbacktoTag()" style="cursor: pointer;margin-right: 10px;"></i>
+                    <h2 class="card-title">Tag:Content Write</h2>
+                  </div>
+                   <div style="margin-bottom: 20px;">
+                    <input [(ngModel)]="searchText" placeholder="Search">
+                  </div>
+                   <table class="table datatable">
+                      <thead>
+                         <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Action</th>
+                         </tr>
+                      </thead>
+                      <tbody  >
+                        <tr *ngFor="let data of dataMamber | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
+                           <td>
+                           <ng-container scope="row" *ngIf="data.admin; else defaultUser">
+                              <span>{{ data.admin.firstName }} {{ data.admin.lastName }}</span>
+                            </ng-container>
+                            
+                            <ng-template #defaultUser>
+                              <span>{{ data.user.firstName }} {{ data.user.lastName }}</span>
+                            </ng-template>
+                           </td>
+                          <td> 
+                           <ng-container scope="row" *ngIf="data.admin; else defaultUser">
+                           <span>{{ data.admin.email }} </span>
+                         </ng-container>
+                         
+                         <ng-template #defaultUser>
+                           <span>{{ data.user.email}}</span>
+                         </ng-template>
+                        </td>
+                          <td>
+                           <ng-container scope="row" *ngIf="data.admin; else defaultUser">
+                              <span>{{ data.admin.phoneNumber }} </span>
+                            </ng-container>
+                            
+                            <ng-template #defaultUser>
+                              <span>{{ data.user.phoneNumber}}</span>
+                            </ng-template>
+                        </td>
+                          <td id="crossAndEdit">
+                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterUnassigned" (click)="getdata(data)">
+                              <i class="bi bi-box-arrow-up" style="margin-left: 10px;cursor: pointer;"></i>
+                           </button>
+                        </td>
+                        </tr>
+                      </tbody>
+                     
+                   </table>
+                   <div class="pagination" >
+                    <mat-paginator [length]="dataMamber.length"
+                        [pageSize]="5"
+                        [pageSizeOptions]="[5,10, 25, 100]"
+                        (page)="loadDataPage($event)">
+                    </mat-paginator>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+
+        <!-- Model for Deactivate -->
+  <div class="modal fade" id="exampleModalCenterUnassigned" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h2 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Unassigned Tag</h2>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <label>  </label>
+         <p>Are you sure you want to Unassigned this?</p>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="Unassigned()">Unassigned</button>
+       </div>
+     </div>
+   </div>
+</div>
+ </main>

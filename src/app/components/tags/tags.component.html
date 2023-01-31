@@ -32,7 +32,7 @@
                           <tbody  >
                             <tr *ngFor="let data of dataMamber.data.rows">
                               <th scope="row">{{data.name}}</th>
-                              <td>{{data.assignedToCount}}</td>
+                              <td><a [routerLink]="['/TagAdminDetailComponent',1 ,data.id]">{{data.assignedToCount}}</a> </td>
                               
                               <td id="crossAndEdit">
                                <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin">
@@ -63,14 +63,14 @@
                           <tbody  >
                             <tr *ngFor="let data of dataMamaberMarchant.data.rows">
                               <th scope="row">{{data.name}}</th>
-                              <td><span >{{data.assignedToCount}}</span></td>
+                              <td><a [routerLink]="['/TagAdminDetailComponent',2 ,data.id]">{{data.assignedToCount}}</a></td>
                               
                               <td id="crossAndEdit">
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditMarchant">
+                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditMarchant" (click)="getId(data.id)">
                                   <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
                                </button>
                                
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete">
+                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id)">
                                   <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
                                </button>
                             </td>
@@ -101,19 +101,20 @@
          </div>
          <form>
          <div class="modal-body">
-           <form #basicForm="ngForm" >
-             <div class="form-group">
+           <form #basicForm="ngForm" (ngSubmint)="editTag(basicForm.value)">
+             <div class="form-group" >
                <h2 for="recipient-name" class="col-form-label">Name:</h2>
              </div>
              <div class="row">
-               <input name="name" type="text"  id="text" class="form-control" name="name" style="margin-left: 20px; width: 350px;">
+               <input name="name" type="text" ngModel required id="text" class="form-control"  style="margin-left: 20px; width: 350px;">
            </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" [disabled]="!basicForm.valid">Save</button>
+          </div>
            </form>
          </div>
-         <div class="modal-footer">
-           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-           <button type="button" class="btn btn-primary" [disabled]="!basicForm.valid">Save</button>
-         </div>
+        
        </form>
        </div>
      </div>
@@ -166,7 +167,7 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-  <button type="button" class="btn btn-primary">Delete</button>
+  <button type="button" class="btn btn-primary" (click)="deleteTag()">Delete</button>
 </div>
 </div>
 </div>

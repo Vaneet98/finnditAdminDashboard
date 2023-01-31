@@ -28,12 +28,16 @@
                            <span *ngIf="data.paymentType === 1">Recurring</span>
                            <span *ngIf="data.paymentType === 0">On Time</span>
                        </td>
-                          <td>{{data.validityDays}}</td>
+                          <td>
+                           <span *ngIf="data.validityDays === 0 || data.validityDays==='Days' || data.validityDays === '0'  ">Days</span>
+                           <span *ngIf="data.validityDays === 1 ||data.validityDays==='Month'  || data.validityDays === '1' ">Months</span>
+                           <span *ngIf="data.validityDays === 2 || data.validityDays==='Year'  || data.validityDays === '2' ">Year</span>
+                          </td>
                           <td>
                            <span *ngIf="data.status === 1">Published</span>
                            <span *ngIf="data.status === 0">Draft</span>
                        </td>
-                          <td><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit" title="Edit detail" (click)="getId(data.id);patchValue(data)" >
+                          <td><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit" title="Edit detail" (click)="getId(data.id);patchValue(data,2)" >
                              <i class="bi bi-pencil"  style="cursor: pointer;" ></i></button>
                              <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" title="Delete data" (click)="getId(data.id)">
                              <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
@@ -59,7 +63,7 @@
        
      <div class="add-more-container text-center btn btn-circle tooltip-custom" 
      data-toggle="tooltip" data-placement="left" title="Add New Banners">
-     <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit"><i class="bi bi-plus-lg" ></i></button> 
+     <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit" (click)="patchValue(data,1)"><i class="bi bi-plus-lg" ></i></button> 
   </div>
    </section>
    <!-- Modal for Edit -->
@@ -110,9 +114,9 @@
                            <div *ngIf="subscriptionForm.controls.validityDays.errors && (subscriptionForm.controls.validityDays.dirty || subscriptionForm.controls.validityDays.touched)">
                               <span class="invalid-feedback" *ngIf="subscriptionForm.controls.validityDays.errors.required">validityDays is required</span>
                             </div>
-                           <option selected>Days(s)</option>
-                           <option value="1">Months(s)</option>
-                           <option value="2">Years(s)</option>
+                           <option value=0>Days(s)</option>
+                           <option value=1>Months(s)</option>
+                           <option value=2>Years(s)</option>
                         </select>
                      </div>
                   </div>
@@ -122,8 +126,8 @@
                         <div *ngIf="subscriptionForm.controls.paymentType.errors && (subscriptionForm.controls.paymentType.dirty || subscriptionForm.controls.paymentType.touched)">
                            <span class="invalid-feedback" *ngIf="subscriptionForm.controls.paymentType.errors.required">paymentType is required</span>
                          </div>
-                        <option selected>On Time</option>
-                        <option value="1">Recurring</option>
+                        <option selected value=0>On Time</option>
+                        <option value=1>Recurring</option>
                      </select>       
                 </div>
                 <div class="col-md-6">
@@ -140,24 +144,24 @@
                   <div class="form-floating mb-3">
                      <span>Days,Month,Year</span>
                      <select class="form-select" id="floatingSelect" aria-label="State">
-                        <option selected>Days(s)</option>
-                        <option value="1">Months(s)</option>
-                        <option value="2">Years(s)</option>
+                        <option value=0>Days(s)</option>
+                        <option value=1>Months(s)</option>
+                        <option value=2>Years(s)</option>
                      </select>
                   </div>
                </div>
                <div class="col-md-12">
                   <span>Status</span>
-                  <select class="form-select" id="floatingSelect" aria-label="State" formControlName="status">
+                  <select class="form-select" id="floatingSelect"  aria-label="State" formControlName="status">
                      <div *ngIf="subscriptionForm.controls.status.errors && (subscriptionForm.controls.status.dirty || subscriptionForm.controls.status.touched)">
                         <span class="invalid-feedback" *ngIf="subscriptionForm.controls.status.errors.required">status is required</span>
                       </div>
-                     <option selected value="0">Active</option>
-                     <option value="1">Deactivate</option>
+                     <option selected value=0>Active</option>
+                     <option value=1>Deactivate</option>
                   </select>       
              </div>
                   <div class="text-center">
-                      <button type="submit" [disabled]="!subscriptionForm.valid" class="btn btn-primary" >Submit</button>
+                      <button type="submit" [disabled]="!subscriptionForm.valid" class="btn btn-primary"  >Submit</button>
                       <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset</button>
                   </div>
                </form>
@@ -235,7 +239,9 @@
             </dl>
             <dl class="list">
                 <dt> Validity </dt>
-                <dd> {{validityDays}}  </dd>
+                <dd *ngIf="validityDays === 0 || validityDays==='Days' || validityDays === '0'  ">Days</dd>
+                <dd *ngIf="validityDays === 1 || validityDays==='Month'  || validityDays === '1' ">Months</dd>
+                <dd *ngIf="validityDays === 2 || validityDays==='Year'  || validityDays === '2' ">Year</dd>
             </dl>
             
             <dl class="list">

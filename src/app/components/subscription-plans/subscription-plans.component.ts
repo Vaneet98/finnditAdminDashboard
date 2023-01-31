@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SubscriptionPlansComponent implements OnInit {
   subscriptionForm: FormGroup | any;
+ condition: boolean | any
   constructor(private elementRef: ElementRef,private api: ServiceService ,
      private router:Router,private fb: FormBuilder,private toastr: ToastrService) { }
    form:FormGroup|any
@@ -50,7 +51,6 @@ export class SubscriptionPlansComponent implements OnInit {
 subscriptionPlanId:any
 getId(id:any){
 this.subscriptionPlanId=id
-// alert(this.subscriptionPlanId)
 }
 showrecord:any
 name:any
@@ -67,15 +67,17 @@ this.validityDays=this.showrecord.validityDays
 this.status=this.showrecord.status
   console.log("This is getrecord data",this.name)
 }
-//Add subscription Plan
 
 
-//Get data for edit
+//Get data for edit and Add subscription Plan
 statusVal:any
 getdataForEditSubscriptionPlan(data:any){
     data.id=this.subscriptionPlanId
     console.log("This is edit subscritpion value details------>",data)
     if(data.id !== undefined){
+      data.paymentType=parseInt(data.paymentType)
+      data.status=parseInt(data.status)
+      console.log("This is payment type details------>",data)
       this.api.EditSubscriptionPlan(data).subscribe((val) => {
         console.log("This is respone from server side for edit the subsrcription plan",val)
         if (val) {
@@ -83,6 +85,7 @@ getdataForEditSubscriptionPlan(data:any){
           if(this.statusVal.statusCode===200){
             this.toastr.success('Edit data Successfully.');
             this.getData();
+            
           }
         }
       });
@@ -100,19 +103,24 @@ getdataForEditSubscriptionPlan(data:any){
         }
       });
     }
-   
 }
+
 //This is for set value in edit filds
-patchValue(data:any) {
-  this.subscriptionForm.patchValue({
-    name: data.name,
-    description:data.description,
-    validityLevel:data.validityLevel,
-    validityDays:data.validityDays,
-    paymentType:data.paymentType,
-    price:data.price,
-    status:data.status
-  });
+patchValue(data:any,num:number) {
+  if(num===1){
+    this.subscriptionForm.reset()
+    this.subscriptionPlanId=undefined
+  }else{
+    this.subscriptionForm.patchValue({
+      name: data.name !==undefined ? data.name : "",
+      description:data.description !==undefined?data.description : "",
+      validityLevel:data.validityLevel !== undefined ? data.validityLevel :"",
+      validityDays:data.validityDays !==undefined ? data.validityDays : "",
+      paymentType:data.paymentType !==undefined ? data.paymentType : "",
+      price:data.price !==undefined ? data.price : "",
+      status:data.status !==undefined ?data.status:"",
+    });
+  }
 }
 
 

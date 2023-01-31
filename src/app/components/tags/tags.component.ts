@@ -1,6 +1,6 @@
 import { Component, OnInit,ElementRef } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
@@ -9,7 +9,8 @@ import { ServiceService } from 'src/app/service.service';
 export class TagsComponent implements OnInit {
 
   public selectedTab: "one" | "two"
-  constructor(private elementRef: ElementRef,private api: ServiceService) { 
+  statusVal: any;
+  constructor(private elementRef: ElementRef,private api: ServiceService,private toastr: ToastrService) { 
     this.selectedTab = "one";
   }
 
@@ -20,13 +21,6 @@ export class TagsComponent implements OnInit {
   }
   dataMamber:any;
   dataMamaberMarchant:any
-  // dataMamber=[
-  //   {name:"Reward",assignedTo:"Reward Category"}
-  // ]
-  // dataMamberCategory=[
-  //   {name:"Reward222",assignedTo:"Reward Category"}
-  // ]
-
 
   getDataAdminTage(){
     this.api.getTage("1").subscribe(data => {
@@ -46,6 +40,31 @@ export class TagsComponent implements OnInit {
  
   public show( tab: "one" | "two" ) : void {
     this.selectedTab = tab;
+  }
+tagId:any
+  getId(id:any){
+this.tagId=id
+  }
+
+  editTag(data:any){
+  data.id=this.tagId
+  alert(data)
+  this.api.editTag(data).subscribe((val) => {
+    console.log("This is respone from server side for edit the subsrcription plan",val)
+    if (val) {
+      this.statusVal=val
+      if(this.statusVal.statusCode===200){
+        this.toastr.success('Edit data Successfully.');
+        this.getDataAdminTage()
+       this.getDataMarchantTage()
+        
+      }
+    }
+  });
+  }
+
+  deleteTag(){
+    this.api.deleteTag(this.tagId)
   }
 
 }

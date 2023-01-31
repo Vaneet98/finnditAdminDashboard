@@ -14,7 +14,9 @@ export const environment = {
   SubscriptionPlan:'/admin/v1/subscriptionPlan?limit=100&skip=0',
   SubscriptionPlanEdit:'/admin/v1/subscriptionPlan',
   SubscriptionPlanDelete:'/admin/v1/subscriptionPlan',
-  TageURL:'/admin/v1/tags?limit=1000&skip=0&type='
+  TageURL:'/admin/v1/tags?limit=1000&skip=0&type=',
+  TagAdminDetailURL:'/admin/v1/tags/assignedToListing?limit=1000&skip=0',
+  UnassignedURL:'/admin/v1/tags/unAssign'
 };
 // Admin/admin-v1-admin-login-post
 /* https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/api-docs/?urls.primaryName=API%20-%20Admin#/Admin

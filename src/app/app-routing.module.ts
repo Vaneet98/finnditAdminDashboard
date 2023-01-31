@@ -29,8 +29,9 @@ import { FeedbackFormComponent } from './components/feedback-form/feedback-form.
 import { ManageNotificationComponent } from './components/manage-notification/manage-notification.component';
 import { CategorySubL1Component } from './components/category-sub-l1/category-sub-l1.component'; 
 import { CategorySubL2Component } from './components/category-sub-l2/category-sub-l2.component';
+import { TagAdminDetailComponent } from './components/tag-admin-detail/tag-admin-detail.component';
 import { DashBoardGuardGuard } from './components/dash-board-guard.guard';
-const routes: Routes = [
+const routes: Routes = [ 
   { path: '', component: PagesLoginComponent,  },
   { path: 'register', component: PagesRegisterComponent },
   { path: 'dashboard', component: DashboardComponent,canActivate: [DashBoardGuardGuard] },
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'myteam', component:  MyTeamComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'roleandpermission', component: RoleAndPermissionsComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'tags', component:TagsComponent,canActivate:[DashBoardGuardGuard] },
+  { path: 'TagAdminDetailComponent/:typeId/:tagId', component:TagAdminDetailComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'queries', component: QueriesComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'auditandlogs', component:AuditAndLogsComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'tier', component: TiersComponent,canActivate:[DashBoardGuardGuard] },
@@ -60,7 +62,7 @@ const routes: Routes = [
   { path: 'CategorySubL1Component/:id', component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard] , children: [
     { path: ':id', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
   ]},
-  
+
   { path: '**', component: PagesError404Component  },
 ];
 

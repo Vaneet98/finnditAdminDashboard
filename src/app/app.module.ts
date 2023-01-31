@@ -65,6 +65,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CategorySubL1Component } from './components/category-sub-l1/category-sub-l1.component';
 import { CategorySubL2Component } from './components/category-sub-l2/category-sub-l2.component';
+import { TagAdminDetailComponent } from './components/tag-admin-detail/tag-admin-detail.component';
 
 
 @NgModule({
@@ -104,6 +105,7 @@ import { CategorySubL2Component } from './components/category-sub-l2/category-su
     DeleteDialogComponent,
     CategorySubL1Component,
     CategorySubL2Component,
+    TagAdminDetailComponent,
 
 
   ],
