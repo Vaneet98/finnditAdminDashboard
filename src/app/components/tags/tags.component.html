@@ -17,10 +17,12 @@
                   (click)="show('two')"
                   class="tabs__nav-item rc1"
                   [class.tabs__nav-item--on]="selectedTab === 'two'">Marchant Tage</button>
-                 </div>
-                 
+                 </div> 
                   <div #tabsContentRef class="tabs__content" [ngSwitch]="selectedTab">
                     <div *ngSwitchCase="'one'" class="tabs__tab">
+                      <div style="margin-top: 20px; margin-bottom: 10px;">
+                        <input [(ngModel)]="searchText" placeholder="Search">
+                      </div>
                        <table class="table datatable">
                           <thead>
                              <tr>
@@ -30,28 +32,38 @@
                              </tr>
                           </thead>
                           <tbody  >
-                            <tr *ngFor="let data of dataMamber.data.rows">
+                            <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
                               <th scope="row">{{data.name}}</th>
                               <td><a [routerLink]="['/TagAdminDetailComponent',1 ,data.id]">{{data.assignedToCount}}</a> </td>
                               
                               <td id="crossAndEdit">
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin">
+                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="getId(data.id);patchValue(data,2)">
                                   <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
                                </button>
                         
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete">
+                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id);sendType(1)">
                                   <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
                                </button>
                             </td>
                             </tr>
                           </tbody>
                        </table>  
+                       <div class="pagination" >
+                        <mat-paginator [length]="dataMamber.data.rows.length"
+                            [pageSize]="5"
+                            [pageSizeOptions]="[5,10, 25, 100]"
+                            (page)="loadDataPage($event)">
+                        </mat-paginator>
+                       </div>
                        <div class="add-more-container text-center btn btn-circle tooltip-custom" 
                        data-toggle="tooltip" data-placement="left" title="Add New Admin Tage">
-                       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterAddMarchantTage"><i class="bi bi-plus-lg" ></i></button> 
+                       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);sendType(1)"><i class="bi bi-plus-lg" ></i></button> 
                     </div> 
                     </div>
                     <div *ngSwitchCase="'two'" class="tabs__tab">
+                      <div style="margin-top: 20px; margin-bottom: 10px;">
+                        <input [(ngModel)]="searchText" placeholder="Search">
+                      </div>
                        <table class="table datatable">
                           <thead>
                              <tr>
@@ -61,25 +73,32 @@
                              </tr>
                           </thead>
                           <tbody  >
-                            <tr *ngFor="let data of dataMamaberMarchant.data.rows">
+                            <tr *ngFor="let data of dataMamaberMarchant.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
                               <th scope="row">{{data.name}}</th>
                               <td><a [routerLink]="['/TagAdminDetailComponent',2 ,data.id]">{{data.assignedToCount}}</a></td>
                               
                               <td id="crossAndEdit">
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditMarchant" (click)="getId(data.id)">
+                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="getId(data.id);patchValue(data,2)">
                                   <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
                                </button>
                                
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id)">
+                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id);sendType(1)">
                                   <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
                                </button>
                             </td>
                             </tr>
                           </tbody>
                        </table>  
+                       <div class="pagination" >
+                        <mat-paginator [length]="dataMamaberMarchant.data.rows.length"
+                            [pageSize]="5"
+                            [pageSizeOptions]="[5,10, 25, 100]"
+                            (page)="loadDataPage($event)">
+                        </mat-paginator>
+                       </div>
                        <div class="add-more-container text-center btn btn-circle tooltip-custom" 
                        data-toggle="tooltip" data-placement="left" title="Add New Banners">
-                       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterAddMarchantTage"><i class="bi bi-plus-lg" ></i></button> 
+                       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);sendType(2)"><i class="bi bi-plus-lg" ></i></button> 
                     </div>
                        </div>
                        </div>
@@ -87,76 +106,43 @@
             </div>
          </div>
       </div>
-
    </section>
-     <!-- Model for Edit Admin tage-->
+     <!-- Model for Add & Edit Admin tage-->
   <div class="modal fade" id="exampleModalCenterEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog" role="document">
        <div class="modal-content">
          <div class="modal-header">
-           <h2 class="modal-title" id="exampleModalLabel">Edit Admin Tage</h2>
+           <h2 class="modal-title" id="exampleModalLabel">{{this.tagId != null?'Edit':'Add'}} {{this.typeId==1?'Admin':'Merchant'}} Tage</h2>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
          </div>
-         <form>
-         <div class="modal-body">
-           <form #basicForm="ngForm" (ngSubmint)="editTag(basicForm.value)">
+         <form  [formGroup]="tagForm" (ngSubmit)="editTags(tagForm.value)">
              <div class="form-group" >
-               <h2 for="recipient-name" class="col-form-label">Name:</h2>
-             </div>
-             <div class="row">
-               <input name="name" type="text" ngModel required id="text" class="form-control"  style="margin-left: 20px; width: 350px;">
-           </div>
+              <div class="col-md-12">
+                <span>Tags Name</span>
+                <div class="form-floating" [ngClass]="{ 'is-invalid': tagForm.controls.name.errors && (tagForm.controls.name.dirty || tagForm.controls.name.touched) }">
+                   <input type="text" formControlName="name" class="form-control" id="floatingName" placeholder="Your Subscription plan name">
+                   <div *ngIf="tagForm.controls.name.errors && (tagForm.controls.name.dirty || tagForm.controls.name.touched)">
+                     <span class="invalid-feedback" *ngIf="tagForm.controls.name.errors.required">Name is required</span>
+                   </div>
+                 </div>
+                 </div>
            <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" [disabled]="!basicForm.valid">Save</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!tagForm.valid">Save</button>
           </div>
-           </form>
-         </div>
-        
+             </div>
        </form>
        </div>
      </div>
    </div>
-
-  <!-- Model for Edit Marchant tage-->
-  <div class="modal fade" id="exampleModalCenterEditMarchant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h2 class="modal-title" id="exampleModalLabel">Edit Marchant Tage</h2>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <form>
-       <div class="modal-body">
-         <form>
-           <div class="form-group">
-             <h2 for="recipient-name" class="col-form-label">Name:</h2>
-           </div>
-         
-           <div class="row">
-            <input name="name" type="text"  id="text" class="form-control" name="name" style="margin-left: 20px; width: 350px;">
-         </div>
-         </form>
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-         <button type="button" class="btn btn-primary">Save</button>
-       </div>
-     </form>
-     </div>
-   </div>
- </div>
-
   <!-- Model for Delete -->
 <div class="modal fade" id="exampleModalCenterDelete" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
 <div class="modal-content">
 <div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Delete</h5>
+  <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">{{this.typeId==1?'Admin':'Merchant'}} Delete</h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -172,61 +158,4 @@
 </div>
 </div>
 </div>
-
-     <!-- Model for Add Admin tage -->
-     <div class="modal fade" id="exampleModalCenterAddAdminTage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Admin Tage</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form>
-            <div class="modal-body">
-              <form>
-                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label"><h6>Name</h6></label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter name" name="name">
-                  </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save</button>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
-
-     <!-- Model for Add Marchant Tage -->
-     <div class="modal fade" id="exampleModalCenterAddMarchantTage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-           <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel">Add Marchant Tage</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-             </button>
-           </div>
-           <form>
-           <div class="modal-body">
-             <form>
-                <div class="mb-3">
-                   <label for="exampleFormControlInput1" class="form-label"><h6>Name</h6></label>
-                   <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter name" name="name">
-                 </div>
-             </form>
-           </div>
-           <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             <button type="button" class="btn btn-primary">Save</button>
-           </div>
-         </form>
-         </div>
-       </div>
-      </div>       
-
 </main>

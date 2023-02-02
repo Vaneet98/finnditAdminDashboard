@@ -5,13 +5,16 @@ import {NgForm} from "@angular/forms"
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
-import { ServiceService } from '../../service.service'
+import { ServiceService } from '../../service.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-category-sub-l1',
   templateUrl: './category-sub-l1.component.html',
   styleUrls: ['./category-sub-l1.component.css']
 })
 export class CategorySubL1Component implements OnInit {
+  HostURL=environment.hostULR
+  SubcategoryL1URL=environment.SubcategoryL1URL
   @Input() categoryId:any;
   form: FormGroup | undefined;
   isFormValid:any = false;
@@ -41,7 +44,7 @@ dataMamber:any
   id:any
 
  public getDataOfSubCateL1(id:any){
-    this.api.getCategoryL1(id).subscribe(data => {
+    this.api.getById(this.HostURL+this.SubcategoryL1URL+id).subscribe(data => {
       console.log("This is SubcategorireL1 data------->",data);
       this.dataMamber=data
       console.log("this is dataMamaber of subCategoryL1--------->",this.dataMamber.data.rows)

@@ -6,12 +6,15 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-tag-admin-detail',
   templateUrl: './tag-admin-detail.component.html',
   styleUrls: ['./tag-admin-detail.component.css']
 })
 export class TagAdminDetailComponent implements OnInit {
+  HostURL=environment.hostULR
+  UnassignedURL=environment.UnassignedURL;
   @Input() categoryId:any;
   form: FormGroup | undefined;
   isFormValid:any = false;
@@ -42,18 +45,18 @@ dataMamber:any
   getdata(data:any){
      this.admintagId=data
   }
-  id:any
 
- public getDataOfTageAdminDetail(type:any,tagId:any){
+  getDataOfTageAdminDetail(type:any,tagId:any){
     this.api.getTagAdminDetail(type,tagId).subscribe(data => {
       console.log("This is getDataOfTageAdminDetail data------->",data);
       this.dataMamber=data
-      if(this.type===1){
+      if(this.type==1){
         this.dataMamber=this.dataMamber.data.rows
       }
-      else{
+      else if(this.type==2){
         this.dataMamber=this.dataMamber.data.rows
       }
+      console.log("This is type id",this.type)
       console.log("this is dataMamaber of getDataOfTageAdminDetail--------->",this.dataMamber)
     })
   }
@@ -78,7 +81,7 @@ UnassignedValue:any={}
       userId:this.admintagId.adminId
     }
     console.log( this.UnassignedValue)
-    this.api.Unassigned(this.UnassignedValue)
+    this.api.edit(this.HostURL+this.UnassignedURL,this.UnassignedValue)
     this.toastr.success('Unassigned data Successfully.');
   }
 }

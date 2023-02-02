@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
@@ -14,18 +13,8 @@ export class ServiceService {
 
   constructor(private http: HttpClient,  private router: Router,private toastr: ToastrService) { }
   HostURL=environment.hostULR
-  LoginURL= environment.LoginURL;
-  logoutURL=environment.logoutURL;
   RegisterURL= environment.RegisterURL;
-  categoryURL= environment.CategoryURL;
-  SubcategoryL1URL=environment.SubcategoryL1URL;
-  SubcategoryL2URL=environment.SubcategoryL2URL;
-  TageURL=environment.TageURL;
   TagAdminDetailURL=environment.TagAdminDetailURL;
-  UnassignedURL=environment.UnassignedURL;
-  SubscriptionPlan=environment.SubscriptionPlan;
-  SubscriptionPlanEdit=environment.SubscriptionPlanEdit;
-  SubscriptionPlanDelete=environment.SubscriptionPlanDelete;
 
 //Every 12 A.M logout automatically
    currentDate = new Date();
@@ -37,11 +26,10 @@ export class ServiceService {
     return this.http.post<any>(this.RegisterURL, data);
   }
  
-  logIn(data: any) {
-    console.log("This is URL",this.HostURL+this.LoginURL)
+  logIn(url:any,data: any) {
     this.isLoggedIn.next(true);
     return this.http
-      .post<any>(this.HostURL+this.LoginURL, data, { observe: 'response' })
+      .post<any>(url, data, { observe: 'response' })
       .subscribe({
         next: (result) => {
           if (result.body.statusCode === 200) {
@@ -68,12 +56,11 @@ export class ServiceService {
       });
   }
 
-  logoutuser(){
+  logoutuser(url:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.logoutURL, {headers: headers});
+    return this.http.get(url, {headers: headers});
   }
 
   reloadComponent() {
@@ -86,11 +73,9 @@ export class ServiceService {
   postProduct(data: any) {
     return this.http.post('http://localhost:3000/productList', data);
   }
-
   getProduct() {
     return this.http.get('http://localhost:3000/productList');
   }
-
   updateProduct(data: any, id: number) {
     return this.http.put('http://localhost:3000/productList/' + id, data);
   }
@@ -98,59 +83,44 @@ export class ServiceService {
   deleteProduct(id: number) {
     return this.http.delete('http://localhost:3000/productList/' + id);
   }
-
-  //Category
-  getCategory(){
+// Get detail by id
+  getById(url:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(url, {headers: headers});
+  }
+  //Get all record
+  getAll(url:any){
+    const token: any = localStorage.getItem('jwt');
+    const accessToken: any = JSON.parse(token);
+    console.log("tHIS IS token",accessToken.data.accessToken)
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
+    return this.http.get(url, {headers: headers});
+  }
+// Add API
+  add(url:any,data:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
     console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.categoryURL, {headers: headers});
+    return this.http.post(url,data, {headers: headers});
   }
-//SUB-Category-L1
-  getCategoryL1(id:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
-    console.log("this is id of subcategoryl1",id)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.SubcategoryL1URL+id, {headers: headers});
-  }
-
-  //SUB-Category-L2
-  getCategoryL2(id:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
-    console.log("this is id of subcategoryl1",id)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.SubcategoryL2URL+id, {headers: headers});
-  }
-
-  //Tage
-
- getTage(type:any){
+  // Delete API
+  delete(url:any,id:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
     console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.TageURL+type, {headers: headers});
+    return this.http.put(url,id, {headers: headers});
   }
-
-  deleteTag(id:any){
+//Edit API
+  edit(url:any,data:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
     console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.delete(this.HostURL+this.TageURL+id, {headers: headers});
-  }
-
-  editTag(data:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.put(this.HostURL+this.TageURL,data, {headers: headers});
+    return this.http.put(url,data, {headers: headers});
   }
 
   getTagAdminDetail(type:any,tagId:any){
@@ -162,46 +132,6 @@ export class ServiceService {
     console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.get(this.HostURL+this.TagAdminDetailURL, {headers: headers, params: params});
-  }
-
-  Unassigned(data:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.post(this.HostURL+this.UnassignedURL,data, {headers: headers});
-  }
-
-  //subscription plan
-  getSubscriptionPlan(){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.SubscriptionPlan, {headers: headers});
-  }
-
-  AddSubscriptionPlan(data:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.post(this.HostURL+this.SubscriptionPlanEdit,data, {headers: headers});
-  }
-  EditSubscriptionPlan(data:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.put(this.HostURL+this.SubscriptionPlanEdit,data, {headers: headers});
-  }
-
-  DeleteSubscriptionPlan(id:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.put(this.HostURL+this.SubscriptionPlanDelete,id, {headers: headers});
   }
 }
  

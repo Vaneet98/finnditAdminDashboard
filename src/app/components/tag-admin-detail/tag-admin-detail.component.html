@@ -1,7 +1,15 @@
 <main id="main" class="main">
-    <div class="pagetitle">
-       <h1></h1>
+  <div class="pagetitle">
+    <div>
+      <ng-container *ngIf="type==1; else defaultUser">
+        <h1>Admin</h1>
+      </ng-container>
+      
+      <ng-template #defaultUser>
+        <h1>Marchant</h1>
+      </ng-template>
     </div>
+  </div>
     <section class="section">
        <div class="row">
           <div class="col-lg-12">

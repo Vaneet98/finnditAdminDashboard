@@ -5,19 +5,19 @@ import {NgForm} from "@angular/forms"
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
-import { ServiceService } from '../../service.service'
-// import { CategorySubL1Component } from '../category-sub-l1/category-sub-l1.component';
+import { ServiceService } from '../../service.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css'],
-  // entryComponents: [CategorySubL1Component]
 })
 export class CategoriesComponent implements OnInit {
+  HostURL=environment.hostULR
+  categoryURL= environment.CategoryURL;
   form: FormGroup | undefined;
   isFormValid:any = false;
   basicForm: any;
-  // @ViewChild(CategorySubL1Component, { static: false }) child: CategorySubL1Component | any;
   constructor(private elementRef: ElementRef,private router:Router,
     private toastr: ToastrService,private api: ServiceService) { 
   }
@@ -38,7 +38,7 @@ dataMamber:any
   }
 
   getData(){
-    this.api.getCategory().subscribe(data => {
+    this.api.getAll(this.HostURL+this.categoryURL).subscribe(data => {
       console.log("This is categorire data------->",data);
       this.dataMamber=data
       console.log("this is dataMamaber--------->",this.dataMamber.data.rows)

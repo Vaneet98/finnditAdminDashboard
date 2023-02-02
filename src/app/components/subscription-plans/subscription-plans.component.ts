@@ -5,14 +5,19 @@ import { PageEvent } from '@angular/material/paginator'
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-subscription-plans',
   templateUrl: './subscription-plans.component.html',
   styleUrls: ['./subscription-plans.component.css']
 })
 export class SubscriptionPlansComponent implements OnInit {
+  HostURL=environment.hostULR
+  SubscriptionPlan=environment.SubscriptionPlan;
+  SubscriptionPlanEdit=environment.SubscriptionPlanEdit;
+  SubscriptionPlanDelete=environment.SubscriptionPlanDelete;
   subscriptionForm: FormGroup | any;
- condition: boolean | any
+  condition: boolean | any
   constructor(private elementRef: ElementRef,private api: ServiceService ,
      private router:Router,private fb: FormBuilder,private toastr: ToastrService) { }
    form:FormGroup|any
@@ -34,7 +39,7 @@ export class SubscriptionPlansComponent implements OnInit {
   // Get data from server
   dataMamber:any
   getData(){
-    this.api.getSubscriptionPlan().subscribe(data => {
+    this.api.getAll(this.HostURL+this.SubscriptionPlan).subscribe(data => {
       console.log("This is subscription plan data------->",data);
       this.dataMamber=data
       console.log("this is subscription plan dataMamaber--------->",this.dataMamber.data)
@@ -59,12 +64,12 @@ validityDays:any
 status:any
 getRecord(data:any){
   this.showrecord=data
- this.showrecord= JSON.parse(JSON.stringify(this.showrecord))
- console.log("This is getrecord showrecord data",this.showrecord)
- this.name=this.showrecord.name
- this.paymentType=this.showrecord.paymentType
-this.validityDays=this.showrecord.validityDays
-this.status=this.showrecord.status
+  this.showrecord= JSON.parse(JSON.stringify(this.showrecord))
+  console.log("This is getrecord showrecord data",this.showrecord)
+  this.name=this.showrecord.name
+  this.paymentType=this.showrecord.paymentType
+  this.validityDays=this.showrecord.validityDays
+  this.status=this.showrecord.status
   console.log("This is getrecord data",this.name)
 }
 
@@ -78,7 +83,7 @@ getdataForEditSubscriptionPlan(data:any){
       data.paymentType=parseInt(data.paymentType)
       data.status=parseInt(data.status)
       console.log("This is payment type details------>",data)
-      this.api.EditSubscriptionPlan(data).subscribe((val) => {
+      this.api.edit(this.HostURL+this.SubscriptionPlanEdit,data).subscribe((val) => {
         console.log("This is respone from server side for edit the subsrcription plan",val)
         if (val) {
           this.statusVal=val
@@ -92,7 +97,7 @@ getdataForEditSubscriptionPlan(data:any){
     }
     else{
       delete data.id
-      this.api.AddSubscriptionPlan(data).subscribe((val) => {
+      this.api.add(this.HostURL+this.SubscriptionPlan,data).subscribe((val) => {
         console.log("This is respone from server side for add the subsrcription plan",val)
         if (val) {
           this.statusVal=val
@@ -126,7 +131,7 @@ patchValue(data:any,num:number) {
 
 deleteData(){
   console.log("This is deleted",this.subscriptionPlanId)
-  this.api.DeleteSubscriptionPlan(this.subscriptionPlanId).subscribe((val) => {
+  this.api.delete(this.HostURL+this.SubscriptionPlanDelete,this.subscriptionPlanId).subscribe((val) => {
     console.log("This is respone from server side for edit the subsrcription plan",val)
     if (val) {
       this.statusVal=val
@@ -152,7 +157,7 @@ pusblishData(){
     status: this.publish === 1 ? 0 : 1
   };
   console.log("This is publish subscritpion value details------>",this.data)
-  this.api.EditSubscriptionPlan(this.data).subscribe((val) => {
+  this.api.edit(this.HostURL+this.SubscriptionPlanEdit,this.data).subscribe((val) => {
     console.log("This is respone from server side for edit the subsrcription plan",val)
     if (val) {
       this.statusVal=val
