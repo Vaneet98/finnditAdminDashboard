@@ -31,6 +31,7 @@ import { CategorySubL1Component } from './components/category-sub-l1/category-su
 import { CategorySubL2Component } from './components/category-sub-l2/category-sub-l2.component';
 import { TagAdminDetailComponent } from './components/tag-admin-detail/tag-admin-detail.component';
 import { DashBoardGuardGuard } from './components/dash-board-guard.guard';
+import { CommonComponent } from './common';
 const routes: Routes = [ 
   { path: '', component: PagesLoginComponent,  },
   { path: 'register', component: PagesRegisterComponent },
@@ -59,9 +60,12 @@ const routes: Routes = [
   { path: 'subsription', component:SubscriptionPlansComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'feedback', component:FeedbackFormComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'managenotification', component:  ManageNotificationComponent,canActivate:[DashBoardGuardGuard] },
-  { path: 'CategorySubL1Component/:id', component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard] , children: [
+  { path: 'CategorySubL1Component',  component: CommonComponent, canActivate:[DashBoardGuardGuard] ,
+   children: [
+    {path :'',component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard]},
     { path: ':id', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
-  ]},
+  ]
+},
 
   { path: '**', component: PagesError404Component  },
 ];

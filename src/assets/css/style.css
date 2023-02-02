@@ -10,7 +10,61 @@
   table {
 	width: 100%;
   }
-  
+  .tab-section ul li.active a{
+	background-color: #18225a;
+    /* color: #b4bcc8; */
+	color: white;
+  }
+ .sidebar ul li.active a{
+	background-color: #18225a;
+	color: white;
+  }
+  .sidebar ul li.active .sidebarIcon{
+	color: white;
+  }
+  .sidebar ul li.active a:hover{
+	background-color: #18225a;
+	color: white;
+  }
+  .tab-section ul li.active a:hover{
+	color: white;
+  }
+  .tab-section ul li a{
+	padding: 10px 30px;
+    display: block;
+    font-size: 14px;
+    position: relative;
+    border-radius: 50px;
+    text-align: center;
+	cursor: pointer;
+  }
+  .tab-section ul li{
+	list-style: none;
+  }
+  .tab-section ul {
+    margin: 0px;
+    padding: 0px;
+	display:flex;
+}
+  ul{
+	display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+  .tab-section{
+	padding: 0px 0px;
+    background: rgba(43, 48, 55, 0.1);
+    display: inline-block;
+    z-index: 9;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
   .mat-mdc-form-field {
 	font-size: 14px;
 	width: 100%;

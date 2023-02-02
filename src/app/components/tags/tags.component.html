@@ -2,106 +2,53 @@
    <div class="pagetitle">
       <h1>Tage</h1>
    </div>
+   <div class="tab-section">
+      <ul>
+          <li class="{{type==1?'active':''}}"><a (click)="type=1;this.getData();"
+           >Admin </a></li>
+          <li class="{{type==2?'active':''}}"><a (click)="type=2;this.getData();" 
+            > Merchant </a></li>
+      </ul>
+  </div>
    <section class="section">
       <div class="row">
          <div class="col-lg-12">
             <div class="card">
                <div class="card-body">
-                 <div class="rewardButton">
-                  <button 
-                  (click)="show('one')"
-                  class="tabs__nav-item r1"
-                  [class.tabs__nav-item--on]="selectedTab === 'one'"
-                  >Admin Tage</button>
-                  <button 
-                  (click)="show('two')"
-                  class="tabs__nav-item rc1"
-                  [class.tabs__nav-item--on]="selectedTab === 'two'">Marchant Tage</button>
-                 </div> 
-                  <div #tabsContentRef class="tabs__content" [ngSwitch]="selectedTab">
-                    <div *ngSwitchCase="'one'" class="tabs__tab">
-                      <div style="margin-top: 20px; margin-bottom: 10px;">
-                        <input [(ngModel)]="searchText" placeholder="Search">
-                      </div>
-                       <table class="table datatable">
-                          <thead>
-                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Assigned To</th>
-                                <th scope="col">Action</th>
-                             </tr>
-                          </thead>
-                          <tbody  >
-                            <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
-                              <th scope="row">{{data.name}}</th>
-                              <td><a [routerLink]="['/TagAdminDetailComponent',1 ,data.id]">{{data.assignedToCount}}</a> </td>
-                              
-                              <td id="crossAndEdit">
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="getId(data.id);patchValue(data,2)">
-                                  <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
-                               </button>
-                        
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id);sendType(1)">
-                                  <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
-                               </button>
-                            </td>
-                            </tr>
-                          </tbody>
-                       </table>  
-                       <div class="pagination" >
-                        <mat-paginator [length]="dataMamber.data.rows.length"
-                            [pageSize]="5"
-                            [pageSizeOptions]="[5,10, 25, 100]"
-                            (page)="loadDataPage($event)">
-                        </mat-paginator>
-                       </div>
-                       <div class="add-more-container text-center btn btn-circle tooltip-custom" 
-                       data-toggle="tooltip" data-placement="left" title="Add New Admin Tage">
-                       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);sendType(1)"><i class="bi bi-plus-lg" ></i></button> 
-                    </div> 
-                    </div>
-                    <div *ngSwitchCase="'two'" class="tabs__tab">
-                      <div style="margin-top: 20px; margin-bottom: 10px;">
-                        <input [(ngModel)]="searchText" placeholder="Search">
-                      </div>
-                       <table class="table datatable">
-                          <thead>
-                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Assigned To</th>
-                                <th scope="col">Action</th>
-                             </tr>
-                          </thead>
-                          <tbody  >
-                            <tr *ngFor="let data of dataMamaberMarchant.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
-                              <th scope="row">{{data.name}}</th>
-                              <td><a [routerLink]="['/TagAdminDetailComponent',2 ,data.id]">{{data.assignedToCount}}</a></td>
-                              
-                              <td id="crossAndEdit">
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="getId(data.id);patchValue(data,2)">
-                                  <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
-                               </button>
-                               
-                               <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id);sendType(1)">
-                                  <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
-                               </button>
-                            </td>
-                            </tr>
-                          </tbody>
-                       </table>  
-                       <div class="pagination" >
-                        <mat-paginator [length]="dataMamaberMarchant.data.rows.length"
-                            [pageSize]="5"
-                            [pageSizeOptions]="[5,10, 25, 100]"
-                            (page)="loadDataPage($event)">
-                        </mat-paginator>
-                       </div>
-                       <div class="add-more-container text-center btn btn-circle tooltip-custom" 
-                       data-toggle="tooltip" data-placement="left" title="Add New Banners">
-                       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);sendType(2)"><i class="bi bi-plus-lg" ></i></button> 
-                    </div>
-                       </div>
-                       </div>
+                  <table class="table datatable">
+                     <thead>
+                        <tr>
+                           <th scope="col">Name</th>
+                           <th scope="col">{{type==1?"Assigned to":"Assign to"}}</th>
+                           <th scope="col">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody  >
+                       <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
+                         <th scope="row" (click)="onRowSelect(data)" style="cursor: pointer;">{{data.name}}</th>
+                         <td><a (click)="onRowSelect(data)" style="cursor: pointer; color: blue;">{{data.assignedToCount}}</a> </td>
+                         <td id="crossAndEdit">
+                          <button type="button" *ngIf="editTag"  class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="getId(data.id);patchValue(data,2)">
+                             <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
+                          </button>                
+                          <button type="button" *ngIf="deleteTags" class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" (click)="getId(data.id);">
+                             <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
+                          </button>
+                       </td>
+                       </tr>
+                     </tbody>
+                  </table>  
+                  <div class="pagination" >
+                   <mat-paginator [length]="dataMamber.data.rows.length"
+                       [pageSize]="5"
+                       [pageSizeOptions]="[5,10, 25, 100]"
+                       (page)="loadDataPage($event)">
+                   </mat-paginator>
+                  </div>
+                  <div *ngIf="addTag" class="add-more-container text-center btn btn-circle tooltip-custom" 
+                  data-toggle="tooltip" data-placement="left" title="Add New Admin Tage">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);"><i class="bi bi-plus-lg" ></i></button> 
+               </div> 
                  </div>
             </div>
          </div>
@@ -112,7 +59,7 @@
      <div class="modal-dialog" role="document">
        <div class="modal-content">
          <div class="modal-header">
-           <h2 class="modal-title" id="exampleModalLabel">{{this.tagId != null?'Edit':'Add'}} {{this.typeId==1?'Admin':'Merchant'}} Tage</h2>
+           <h2 class="modal-title" id="exampleModalLabel">{{this.tagId != null?'Edit':'Add'}} {{this.type==1?'Admin':'Merchant'}} Tage</h2>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
@@ -120,7 +67,7 @@
          <form  [formGroup]="tagForm" (ngSubmit)="editTags(tagForm.value)">
              <div class="form-group" >
               <div class="col-md-12">
-                <span>Tags Name</span>
+                <h3>Tags Name</h3>
                 <div class="form-floating" [ngClass]="{ 'is-invalid': tagForm.controls.name.errors && (tagForm.controls.name.dirty || tagForm.controls.name.touched) }">
                    <input type="text" formControlName="name" class="form-control" id="floatingName" placeholder="Your Subscription plan name">
                    <div *ngIf="tagForm.controls.name.errors && (tagForm.controls.name.dirty || tagForm.controls.name.touched)">
@@ -142,7 +89,7 @@
 <div class="modal-dialog modal-dialog-centered" role="document">
 <div class="modal-content">
 <div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">{{this.typeId==1?'Admin':'Merchant'}} Delete</h5>
+  <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">{{this.type==1?'Admin':'Merchant'}} Delete</h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>

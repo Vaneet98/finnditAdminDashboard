@@ -66,7 +66,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CategorySubL1Component } from './components/category-sub-l1/category-sub-l1.component';
 import { CategorySubL2Component } from './components/category-sub-l2/category-sub-l2.component';
 import { TagAdminDetailComponent } from './components/tag-admin-detail/tag-admin-detail.component';
-
+import { CommonComponent } from './common';
+import { SortPipe } from './sort.pipe';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { TagAdminDetailComponent } from './components/tag-admin-detail/tag-admin
     CategorySubL1Component,
     CategorySubL2Component,
     TagAdminDetailComponent,
-
+    CommonComponent,
+    SortPipe
 
   ],
   imports: [

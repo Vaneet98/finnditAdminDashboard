@@ -12,6 +12,8 @@ export class UsersComponent implements OnInit {
   HostURL=environment.hostULR
   UserULR=environment.UserUrl;
   statusVal: any;
+  sortBy: string|any;
+  sortOrder: string|any;
   constructor(private elementRef: ElementRef,private api: ServiceService,private toastr: ToastrService ) { }
   pagePerItem=0
   searchText = '';
@@ -19,6 +21,10 @@ export class UsersComponent implements OnInit {
  
   loadDataPage(event: PageEvent) {
     this.pagePerItem=event.pageSize
+}
+
+toggleSortOrder() {
+  this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
 }
   ngOnInit(): void {
     this.pagePerItem=5

@@ -1,6 +1,6 @@
 import { getLocaleDateFormat } from '@angular/common';
 import { Component, OnInit,ElementRef ,ViewChild, Input} from '@angular/core';
-import { Router,ActivatedRoute  } from '@angular/router';
+import { Router,ActivatedRoute ,NavigationEnd } from '@angular/router';
 import {NgForm} from "@angular/forms"
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -19,16 +19,24 @@ export class CategorySubL2Component implements OnInit {
   form: FormGroup | undefined;
   isFormValid:any = false;
   basicForm: any;
+  L1id:any
   constructor(private elementRef: ElementRef,private router:Router,
     private toastr: ToastrService,private api: ServiceService,private route: ActivatedRoute) { 
   }
   pagePerItem=0
   ngOnInit(): void {
-    this.pagePerItem=5
+    // this.pagePerItem=5
+    // this.L1id= this.route.snapshot.paramMap.get("L1id")
+    // this.id=this.route.snapshot.paramMap.get("id")
+
     this.route.params.subscribe(params => {
+      console.log("This is params-------->",params)
+      this.L1id= params['L1id']
       this.id = params['id'];
+      
     });
-    console.log("THis is parameter id",this.id)
+    console.log("THis is parameter L1id----------->",this.L1id)
+    console.log("THis is parameter id----------->",this.id)
     this.getDataOfSubCateL1(this.id)
   }
 
@@ -52,7 +60,7 @@ dataMamber:any
   }
 
   getbacktosubcategoryl1(){
-    this.router.navigate(['/CategorySubL1Component',]);
+    this.router.navigate(['/CategorySubL1Component/'+this.L1id]);
   }
 
   selectedRowDetail(data:any){

@@ -54,7 +54,8 @@ dataMamber:any
         this.dataMamber=this.dataMamber.data.rows
       }
       else if(this.type==2){
-        this.dataMamber=this.dataMamber.data.rows
+        this.dataMamber=this.dataMamber.data.rows.rows
+        console.log("This is getDataOfTageAdminDetail data-----====",this.dataMamber.rows)
       }
       console.log("This is type id",this.type)
       console.log("this is dataMamaber of getDataOfTageAdminDetail--------->",this.dataMamber)

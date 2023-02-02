@@ -31,9 +31,10 @@ dataMamber:any
   searchText = '';
  
  userId:any
-  getId(categoryid:any){
-     this.userId=categoryid
-    this.router.navigate(['/CategorySubL1Component', this.userId], { queryParams: { id: this.userId } });
+  getId(categoryid:any){ 
+     this.userId=categoryid   //
+     this.router.navigate(['/CategorySubL1Component'], { queryParams: { L1id: this.userId } });
+    // this.router.navigate(['/CategorySubL1Component', this.userId],);
   
   }
 

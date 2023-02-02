@@ -18,7 +18,9 @@ export const environment = {
   TagaddURL:'admin/v1/tags',
   TagAdminDetailURL:'/admin/v1/tags/assignedToListing?limit=1000&skip=0',
   UnassignedURL:'/admin/v1/tags/unAssign',
-  UserUrl:'/admin/v1/customers?limit=1000&skip=0'
+  UserUrl:'/admin/v1/customers?limit=1000&skip=0',
+  adminBannerURL:'http://localhost:3000/admin/v1/adminBanner?limit=100&skip=0',
+  myTeamURL:'/admin/v1/admin?limit=100&skip=0'
 };
 // Admin/admin-v1-admin-login-post
 /* https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/api-docs/?urls.primaryName=API%20-%20Admin#/Admin

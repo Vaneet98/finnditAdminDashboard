@@ -10,12 +10,12 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ServiceService {
   isLoggedIn = new BehaviorSubject<boolean>(false);
-
-  constructor(private http: HttpClient,  private router: Router,private toastr: ToastrService) { }
+  constructor(private http: HttpClient,  private router: Router,private toastr: ToastrService) {
+   }
   HostURL=environment.hostULR
   RegisterURL= environment.RegisterURL;
   TagAdminDetailURL=environment.TagAdminDetailURL;
-
+  type:any=1
 //Every 12 A.M logout automatically
    currentDate = new Date();
    startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 0, 0, 0);
@@ -35,6 +35,8 @@ export class ServiceService {
           if (result.body.statusCode === 200) {
             this.isLoggedIn.next(true);
             localStorage.setItem('jwt', JSON.stringify(result.body));
+            localStorage.setItem('userPermissions',JSON.stringify(result.body.data.adminDetails?.role.role_permissions));
+            localStorage.setItem('type',this.type)
             this.toastr.success('Logged In Successfully.', result.body.message);
             setTimeout(() => {
               this.router.navigate(['dashboard']);
@@ -94,7 +96,6 @@ export class ServiceService {
   getAll(url:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
-    console.log("tHIS IS token",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.get(url, {headers: headers});
   }
@@ -102,7 +103,6 @@ export class ServiceService {
   add(url:any,data:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.post(url,data, {headers: headers});
   }
@@ -110,7 +110,6 @@ export class ServiceService {
   delete(url:any,id:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.put(url,id, {headers: headers});
   }
@@ -118,7 +117,6 @@ export class ServiceService {
   edit(url:any,data:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
-    console.log("This is token in getCategory",accessToken.data.accessToken)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.put(url,data, {headers: headers});
   }

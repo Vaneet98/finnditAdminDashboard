@@ -7,7 +7,10 @@
           <div class="col-lg-12">
              <div class="card">
                 <div class="card-body">
-                     <h5 class="card-title">Admin Banner</h5>
+                     <h2 class="card-title">Admin Banner</h2>
+                     <div style="margin-bottom: 20px;">
+                        <input [(ngModel)]="searchText" placeholder="Search">
+                      </div>
                    <table class="table datatable">
                       <thead>
                          <tr>
@@ -22,27 +25,44 @@
                          </tr>
                       </thead>
                       <tbody>
-                         <tr *ngFor="let data of dataMamber" >
-                            <th scope="row">{{data.displayName}}</th>
+                         <tr *ngFor="let data of dataMamber | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}" >
+                            <th scope="row">{{data.displayTitle}}</th>
                             <td>{{data.placement}}</td>
                             <td>{{data.position}}</td>
                             <td>{{data.frequency}}</td>
-                            <td>{{data.startDate}}</td>
-                            <td>{{data.endDate}}</td>
-                            <td><span [ngClass]="{'badge bg-warning': data.status === 'Panding', 'badge bg-success': data.status === 'Approved'}">{{data.status}}</span></td>
-                            <td><i class="bi bi-pencil-fill" (click)="onRowClick(data)" style="cursor: pointer;"></i><i class="bi bi-x-lg" style="margin-left: 10px;"></i></td>
+                            <td>{{data.startDate | date}}</td>
+                            <td>{{data.endDate | date}}</td>
+                            <td>
+                              <span *ngIf="data.status==0" [ngClass]="{'badge bg-warning': data.status == 1, 'badge bg-success': data.status == 0}">Active</span>
+                              <span *ngIf="data.status==1" [ngClass]="{'badge bg-warning': data.status == 1, 'badge bg-success': data.status == 0}">Paused</span>
+                            </td>
+                            <td id="crossAndEdit">
+                              <button type="button"   class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" title="Edit Admin Banner Detail" (click)="getId(data.id)">
+                                 <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
+                              </button>                
+                              <button type="button"  class="btn" data-toggle="modal" data-target="#exampleModalCenterDelete" title="Delete Admin Banner Detail" (click)="getId(data.id);">
+                                 <i class="bi bi-x-lg" style="margin-left: 10px;cursor: pointer;"></i>
+                              </button>
+                           </td>
                          </tr>
                       </tbody>
                    </table>
+                   <div class="pagination" >
+                     <mat-paginator [length]="dataMamber.length"
+                         [pageSize]="5"
+                         [pageSizeOptions]="[5,10, 25, 100]"
+                         (page)="loadDataPage($event)">
+                     </mat-paginator>
+                    </div>
                 </div>
              </div>
           </div>
        </div>
        <div class="add-more-container text-center btn btn-circle tooltip-custom" 
-       data-toggle="tooltip" data-placement="left" title="Add New Banners">
-      <!-- <a routerLink="/dashboard" class=""> -->
-        <i class="bi bi-plus-lg" ></i>
-      <!-- </a> -->
-    </div>
+       data-toggle="tooltip" data-placement="left" title="Add New Admin Tage">
+       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin">
+         <i class="bi bi-plus-lg" ></i>
+      </button> 
+    </div> 
     </section>
  </main>

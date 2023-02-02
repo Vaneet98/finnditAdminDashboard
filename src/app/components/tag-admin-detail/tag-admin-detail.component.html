@@ -3,8 +3,7 @@
     <div>
       <ng-container *ngIf="type==1; else defaultUser">
         <h1>Admin</h1>
-      </ng-container>
-      
+      </ng-container>  
       <ng-template #defaultUser>
         <h1>Marchant</h1>
       </ng-template>
@@ -61,7 +60,7 @@
                             </ng-template>
                         </td>
                           <td id="crossAndEdit">
-                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterUnassigned" (click)="getdata(data)">
+                           <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterUnassigned" title="Unassigned" (click)="getdata(data)">
                               <i class="bi bi-box-arrow-up" style="margin-left: 10px;cursor: pointer;"></i>
                            </button>
                         </td>

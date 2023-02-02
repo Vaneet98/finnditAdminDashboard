@@ -26,9 +26,9 @@ export class CategorySubL1Component implements OnInit {
   ngOnInit(): void {
     this.pagePerItem=5
     this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params['L1id'];
     });
-    console.log("THis is parameter id",this.id)
+    console.log("THis is parameter L1id",this.id)
     this.getDataOfSubCateL1(this.id)
   }
 

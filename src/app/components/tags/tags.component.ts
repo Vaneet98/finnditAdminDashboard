@@ -3,7 +3,9 @@ import { ServiceService } from 'src/app/service.service';
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { HttpParams, HttpClient } from "@angular/common/http"
 import { environment } from 'src/environments/environment';
+import { Router, ActivatedRoute } from "@angular/router"
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
@@ -14,7 +16,6 @@ export class TagsComponent implements OnInit {
   TageURL=environment.TageURL;
   TagaddURL=environment.TagaddURL;
   TagAdminDetailURL=environment.TagAdminDetailURL;
-  public selectedTab: "one" | "two"
   statusVal: any;
   tagForm: FormGroup | any;
   pagePerItem=0
@@ -23,49 +24,54 @@ export class TagsComponent implements OnInit {
   dataMamber:any;
   dataMamaberMarchant:any
   tagId:any
-  typeId:any
-  constructor(private elementRef: ElementRef,private api: ServiceService,private toastr: ToastrService,private fb: FormBuilder) { 
-    this.selectedTab = "one";
+  type:any=1
+  editTag=false
+  deleteTags=false
+  addTag=false
+
+  constructor(private elementRef: ElementRef,private api: ServiceService,
+    private toastr: ToastrService,private fb: FormBuilder,private router: Router) { 
+
   }
   loadDataPage(event: PageEvent) {
     this.pagePerItem=event.pageSize
 }
   ngOnInit(): void {
    this.pagePerItem=5
-    this.getDataAdminTage()
-    this.getDataMarchantTage()
+   this.getData()
     this.tagForm = this.fb.group({
       name: ['', Validators.required],
     });
   }
  
-  getDataAdminTage(){
-    this.api.getById(this.HostURL+this.TageURL+1).subscribe(data => {
-      console.log("This is tageAdmin data------->",data);
-      this.dataMamber=data
-      console.log("this is tageAdmin dataMamaber--------->",this.dataMamber.data.rows)
-    })
-  }
+getData(){
+  this.api.getById(this.HostURL+this.TageURL+this.type).subscribe(res => {
+    console.log("This is tageAdmin data------->",res);
+    this.dataMamber=res
+    console.log("this is tageAdmin dataMamaber--------->",this.dataMamber.data.rows)
+    // permission
+				
+    for(let data of this.dataMamber.data.permissions.role_permissions){
+      if (data.permission.name=="Add Tag") {
+        this.addTag=true
+      }
+      if (data.permission.name=="Edit Tag") {
+        this.editTag=true
+      }
+      if(data.permission.name=="Delete Tag"){
+        this.deleteTags=true
+      }
+  }  
+  })
+}
 
-  getDataMarchantTage(){
-    this.api.getById(this.HostURL+this.TageURL+2).subscribe(data => {
-      console.log("This is tageAdmin data------->",data);
-      this.dataMamaberMarchant=data
-      console.log("this is tageAdmin dataMamaber--------->",this.dataMamaberMarchant.data.rows)
-    })
-  }
- 
-  public show( tab: "one" | "two" ) : void {
-    this.selectedTab = tab;
-  }
-
-  getId(id:any){
+getId(id:any){
    this.tagId=id
   }
 
-  sendType(v:any){
-  this.typeId=v
-  }
+  onRowSelect(event:any) {
+		this.router.navigate(['/TagAdminDetailComponent/'+this.type+'/'+ event.id])
+	}
 
   patchValue(data:any,num:number) {
     if(num===1){
@@ -81,30 +87,25 @@ export class TagsComponent implements OnInit {
     data.id=this.tagId
     if(data.id!==undefined){
       this.api.edit(this.HostURL+this.TageURL,data).subscribe((val) => {
-        console.log("This is respone from server side for edit the subsrcription plan",val)
         if (val) {
           this.statusVal=val
           if(this.statusVal.statusCode===200){
             this.toastr.success('Edit data Successfully.');
-            this.getDataAdminTage()
-           this.getDataMarchantTage()
+            this.getData()
           }
         }
       });
     }
     else{
       delete data.id
-      data.type=this.typeId
+      data.type=this.type
       console.log("This is data for add",data)
       this.api.add(this.HostURL+this.TagaddURL,data).subscribe((val) => {
-        console.log("This is respone from server side for add the subsrcription plan",val)
         if (val) {
           this.statusVal=val
           if(this.statusVal.statusCode===200){
             this.toastr.success('Add data Successfully.');
-            this.typeId=null
-            this.getDataAdminTage()
-           this.getDataMarchantTage()
+            this.getData()
           }
         }
       });
@@ -118,8 +119,7 @@ export class TagsComponent implements OnInit {
         this.statusVal=val
         if(this.statusVal.statusCode===200){
           this.toastr.success('Deleted data Successfully.');
-          this.getDataAdminTage()
-         this.getDataMarchantTage()
+          this.getData()
         }
       }
     })

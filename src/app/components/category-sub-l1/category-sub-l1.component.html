@@ -9,7 +9,7 @@
                 <div class="card-body">
                   <div style="display: flex; align-items: center;">
                     <i class="bi bi-chevron-left" (click)="getbacktocategory()" style="cursor: pointer;margin-right: 10px;"></i>
-                    <h5 class="card-title">Sub Categories (L1)</h5>
+                    <h2 class="card-title">Sub Categories (L1)</h2>
                   </div>
                    <div style="margin-bottom: 20px;">
                     <input [(ngModel)]="searchText" placeholder="Search">
@@ -25,14 +25,14 @@
                          </tr>
                       </thead>
                       <tbody  >
+                        <!--  [queryParamsHandling]="'preserve'" -->
                         <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
                           <th scope="row"><span>{{data?.name}}</span></th>
-                          <td><a [routerLink]="data.id" [queryParamsHandling]="'preserve'">{{data?.subCategoriesCount}}</a></td>
+                          <td><a [routerLink]="data.id">{{data?.subCategoriesCount}}</a></td>
                           <td><span>{{data?.productAndServicesCount}}</span></td>
                           <td>
                               <span *ngIf="data?.isBlocked === 1">Blocked</span>
                               <span *ngIf="data?.isBlocked === 0">Active</span>
-
                           </td>
                           <td id="crossAndEdit">
                            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEdit" (click)="getId(data)">

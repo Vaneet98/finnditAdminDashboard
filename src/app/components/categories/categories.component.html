@@ -9,7 +9,7 @@
              <div class="card">
                 <div class="card-body">
                   
-                   <h5 class="card-title">Categories Detalis</h5>
+                   <h2 class="card-title">Categories Detalis</h2>
                    <div style="margin-bottom: 20px;">
                     <input [(ngModel)]="searchText" placeholder="Search">
                   </div>
@@ -23,10 +23,11 @@
                             <th scope="col">Action</th>
                          </tr>
                       </thead>
+                      <!-- [routerLink]="['/CategorySubL1Component', data.id]" -->
                       <tbody  >
                         <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
                           <th scope="row"><span>{{data.name}}</span></th>
-                          <td><a [routerLink]="['/CategorySubL1Component', data.id]">{{data.subCategoriesCount}}</a></td>
+                          <td><a (click)="getId(data.id)">{{data.subCategoriesCount}}</a></td>
                           <td><span>{{data.productAndServicesCount}}</span></td>
                           <td>
                               <span *ngIf="data.isBlocked === 1">Blocked</span>
