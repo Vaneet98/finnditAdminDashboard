@@ -69,6 +69,9 @@ import { TagAdminDetailComponent } from './components/tag-admin-detail/tag-admin
 import { CommonComponent } from './common';
 import { SortPipe } from './sort.pipe';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './interceptor.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,7 +140,7 @@ import { SortPipe } from './sort.pipe';
     Ng2SearchPipeModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

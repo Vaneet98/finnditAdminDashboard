@@ -7,11 +7,13 @@
           <div class="col-lg-12">
              <div class="card">
                 <div class="card-body">
-                   <h5 class="card-title">Role and Permission</h5>
+                  <div style="margin-bottom: 20px;">
+                     <input [(ngModel)]="searchText" placeholder="Search">
+                   </div>
                    <table class="table datatable">
                       <thead>
-                         <tr>
-                            <th scope="col">ID</th>
+                         <tr >
+                            <th scope="col">Id</th>
                             <th scope="col">Role</th>
                             <th scope="col">Description</th>
                             <th scope="col">Permission</th>
@@ -19,81 +21,146 @@
                          </tr>
                       </thead>
                       <tbody>
-                         <tr>
-                            <th scope="row">1</th>
-                            <td>Brandon Jacob</td>
-                            <td>Designer</td>
-                            <td>28</td>
-                            <td>2016-05-25</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">2</th>
-                            <td>Bridie Kessler</td>
-                            <td>Developer</td>
-                            <td>35</td>
-                            <td>2014-12-05</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">3</th>
-                            <td>Ashleigh Langosh</td>
-                            <td>Finance</td>
-                            <td>45</td>
-                            <td>2011-08-12</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">4</th>
-                            <td>Angus Grady</td>
-                            <td>HR</td>
-                            <td>34</td>
-                            <td>2012-06-11</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">5</th>
-                            <td>Raheem Lehner</td>
-                            <td>Dynamic Division Officer</td>
-                            <td>47</td>
-                            <td>2011-04-19</td>
-                         </tr>
-                         <tr>
-                           <th scope="row">6</th>
-                           <td>Brandon Jacob</td>
-                           <td>Designer</td>
-                           <td>28</td>
-                           <td>2016-05-25</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">7</th>
-                           <td>Bridie Kessler</td>
-                           <td>Developer</td>
-                           <td>35</td>
-                           <td>2014-12-05</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">8</th>
-                           <td>Ashleigh Langosh</td>
-                           <td>Finance</td>
-                           <td>45</td>
-                           <td>2011-08-12</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">9</th>
-                           <td>Angus Grady</td>
-                           <td>HR</td>
-                           <td>34</td>
-                           <td>2012-06-11</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">10</th>
-                           <td>Raheem Lehner</td>
-                           <td>Dynamic Division Officer</td>
-                           <td>47</td>
-                           <td>2011-04-19</td>
+                        <tr *ngFor="let data of dataMamber.data.data | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
+                           <th scope="row">{{data.id}}</th>
+                           <td>{{data.name}}</td>
+                           <td>{{data.description}}</td>
+                           <td>
+                                 <span  data-toggle="modal" data-target="#exampleModalCenterShow" (click)="getRecordSingle(data.id)" class="highlight">
+                                    {{dataMamber.data.permissions.name}}
+                                 </span>
+                             </td>
+                           <td id="crossAndEdit">
+                              <button type="button"   class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" title="Edit" (click)="getId(data.id); sendValue(1);patchValue(data,1)">
+                                 <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
+                              </button>                
+                              <button type="button"  class="btn" title="Delete" (click)="deleteRole(data.id);">
+                                 <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
+                              </button>
+                           </td>
                         </tr>
                       </tbody>
                    </table>
+                   <div class="pagination" >
+                     <mat-paginator [length]="dataMamber.data.data.length"
+                         [pageSize]="5"
+                         [pageSizeOptions]="[5,10, 25, 100]"
+                         (page)="loadDataPage($event)">
+                     </mat-paginator>
+                    </div>
                 </div>
              </div>
           </div>
        </div>
+       <div  class="add-more-container text-center btn btn-circle tooltip-custom" 
+       data-toggle="tooltip" data-placement="left" title="Add New Role and Permission">
+       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);"><i class="bi bi-plus-lg" ></i></button> 
+    </div> 
     </section>
+
+<!-- Add & Edit Roles and Permissions -->
+
+<div class="modal fade" id="exampleModalCenterEditAdmin" tabindex="-1" role="dialog"      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h2 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Add Role's & Permission</h2>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <form>
+         <div class="modal-body">
+             <div class="form-element" >
+                 <label><h2>Name Of Role</h2> </label>
+                 <input class="form-control" type="text">
+             </div>
+             <div class="form-floating mb-3">
+               <h2>Role's Description</h2>
+               <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;">
+               </textarea>
+            </div>
+            <div class="row">
+               <div class="col-6">
+                   <div class="form-element">
+                       <h2> Categories </h2>
+                       <select  class="selectpicker" data-selected-text-format="count" data-actions-box="true"  data-live-search="true">
+                           <option>Create Categories </option>
+                           <option>Edit Categories </option>
+                           <option>Delete Categories </option>
+                       </select>
+                   </div>
+               </div>
+               <div class="col-6">
+                   <div class="form-element">
+                       <h2> Team </h2>
+                       <select class="selectpicker" data-selected-text-format="count" data-actions-box="true"   data-live-search="true">
+                           <option>Add New Member</option>
+                           <option>Edit Member </option>
+                           <option>Delete Member </option>
+                       </select>
+                   </div>
+               </div>
+               <div class="col-6">
+                   <div class="form-element">
+                       <h2> Rewords </h2>
+                       <select class="selectpicker" data-selected-text-format="count" data-actions-box="true"  data-live-search="true">
+                           <option>Add Reword </option>
+                           <option>Edit Reword </option>
+                           <option>Delete Reword </option>
+                       </select>
+                   </div>
+               </div>
+               <div class="col-6">
+                   <div class="form-element">
+                       <h2> Business </h2>
+                       <select class="selectpicker" data-selected-text-format="count" data-actions-box="true"  data-live-search="true">
+                           <option>Add Business</option>
+                           <option>Edit Business </option>
+                           <option>Delete Business </option>
+                       </select>
+                   </div>
+               </div>
+           </div>
+
+         </div>
+         <div class="text-center" style="margin-bottom: 20px;">
+            <button type="submit"  class="btn btn-primary"  >Submit</button>
+            <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset</button>
+        </div>
+     </form>
+     </div>
+   </div>
+ </div>  
+
+    <!-- Discribe Permission records detail -->
+<div class="modal fade" id="exampleModalCenterShow" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h1 class="modal-title" id="exampleModalLongTitle" style="margin-left: 100px; font-size: 30px;">Permission Details</h1>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <div class="listview" >
+            <dl class="list1" >
+                <div class="permission-row">
+                  <dd *ngFor="let d of datarecord?.data?.role_permissions; let i = index">
+                     <button class="permission-button" *ngIf="d?.permission?.name">{{d?.permission?.name}}</button>
+                     <ng-container *ngIf="(i + 1) % 3 === 0">
+                     </ng-container>
+                     <br *ngIf="(i + 1) % 3 === 0"/>
+                  </dd>
+                </div>
+            </dl>
+        </div>
+</div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       </div>
+     </div>
+   </div>
+ </div>
  </main>

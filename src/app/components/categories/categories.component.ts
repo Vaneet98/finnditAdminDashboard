@@ -33,9 +33,13 @@ dataMamber:any
  userId:any
   getId(categoryid:any){ 
      this.userId=categoryid   //
-     this.router.navigate(['/CategorySubL1Component'], { queryParams: { L1id: this.userId } });
+    //  this.router.navigate(['/CategorySubL1Component'], { queryParams: { L1id: this.userId } });
     // this.router.navigate(['/CategorySubL1Component', this.userId],);
   
+  }
+  moveTol1(categoryid:any){
+    this.userId=categoryid   //
+    this.router.navigate(['/CategorySubL1Component'], { queryParams: { L1id: this.userId } });
   }
 
   getData(){

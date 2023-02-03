@@ -106,12 +106,19 @@ export class ServiceService {
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.post(url,data, {headers: headers});
   }
-  // Delete API
+
+
   delete(url:any,id:any){
     const token: any = localStorage.getItem('jwt');
     const accessToken: any = JSON.parse(token);
+    console.log("THIS IS URL---------",url)
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.put(url,id, {headers: headers});
+    const options = {
+      headers: headers,
+      body: id,
+    };
+    return this.http.delete(url, options);
+
   }
 //Edit API
   edit(url:any,data:any){

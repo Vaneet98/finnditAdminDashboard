@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-subscription-plans',
   templateUrl: './subscription-plans.component.html',
@@ -18,7 +20,7 @@ export class SubscriptionPlansComponent implements OnInit {
   SubscriptionPlanDelete=environment.SubscriptionPlanDelete;
   subscriptionForm: FormGroup | any;
   condition: boolean | any
-  constructor(private elementRef: ElementRef,private api: ServiceService ,
+  constructor(private elementRef: ElementRef,private api: ServiceService ,private dialog: MatDialog,
      private router:Router,private fb: FormBuilder,private toastr: ToastrService) { }
    form:FormGroup|any
   pagePerItem=0
@@ -129,20 +131,29 @@ patchValue(data:any,num:number) {
 }
 
 
-deleteData(){
-  console.log("This is deleted",this.subscriptionPlanId)
-  this.api.delete(this.HostURL+this.SubscriptionPlanDelete,this.subscriptionPlanId).subscribe((val) => {
-    console.log("This is respone from server side for edit the subsrcription plan",val)
-    if (val) {
-      this.statusVal=val
-      if(this.statusVal.statusCode===200){
-        this.toastr.success('Deleted data Successfully.');
-        this.getData();
+deleteSubscription(id: any) {
+  const dialogRef = this.dialog.open(DeleteDialogComponent);
+  const data = {
+    "id": id
+  }
+  dialogRef.afterClosed().subscribe((result) => {
+    console.log("This is result", result);
+      if (result) {
+        this.api.delete(this.HostURL+this.SubscriptionPlanDelete,data).subscribe({
+          next: (res) => {
+            console.log("This is result--------->",res)
+            this.getData();
+            this.toastr.success("Delete data Successfull.")
+            console.log(res);
+          },
+          error: () => {
+            this.toastr.error("Something went wrong in deletion")
+          },
+        });
       }
-    }
   });
- 
 }
+
 publish:any
 
 getdataForPublish(data:any){

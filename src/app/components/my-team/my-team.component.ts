@@ -3,8 +3,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/service.service';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
-import { DefaultMatCalendarRangeStrategy } from '@angular/material/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-my-team',
   templateUrl: './my-team.component.html',
@@ -12,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MyTeamComponent implements OnInit {
 
-  constructor(private elementRef: ElementRef,private toastr: ToastrService,private api: ServiceService,private fb: FormBuilder) { }
+  constructor(private elementRef: ElementRef,private toastr: ToastrService,private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog) { }
   HostURL=environment.hostULR
   myTeam=environment.myTeamURL
   teamForm: FormGroup | any;
@@ -73,15 +74,24 @@ teamId:any
 
   }
   statusVal:any
-  deleteTeam(){
-    this.api.delete(this.HostURL+this.myTeam,this.teamIds).subscribe((val)=>{
-      if(val){
-        this.statusVal=val
-        if(this.statusVal.statusCode===200){
-          this.toastr.success('Deleted data Successfully.');
-          this.getData()
-        }
+  deleteMyteam(id: any) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
+    const data = {
+      "id": id
+    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.api.delete(this.HostURL+this.myTeam,data).subscribe({
+          next: (res) => {
+            this.toastr.success("Deleted Successfully.")
+            this.getData();
+            console.log(res);
+          },
+          error: () => {
+            this.toastr.error("Something went wrong in deletion")
+          },
+        });
       }
-    })
+    });
   }
 }

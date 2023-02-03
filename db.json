@@ -35,15 +35,6 @@
       "price": 50000,
       "comment": "Rolex Watch",
       "id": 8
-    },
-    {
-      "productName": "Test2",
-      "category": "Electronics",
-      "date": "2023-01-09T18:30:00.000Z",
-      "productFreshness": "Second Hand",
-      "price": 100,
-      "comment": "this is test update",
-      "id": 9
     }
   ],
   "comments": [
@@ -57,4 +48,3 @@
     "name": "typicode"
   }
 }
-

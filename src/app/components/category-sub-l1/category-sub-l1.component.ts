@@ -25,7 +25,7 @@ export class CategorySubL1Component implements OnInit {
   pagePerItem=0
   ngOnInit(): void {
     this.pagePerItem=5
-    this.route.params.subscribe(params => {
+    this.route.queryParams.subscribe(params => {
       this.id = params['L1id'];
     });
     console.log("THis is parameter L1id",this.id)
@@ -40,6 +40,10 @@ dataMamber:any
      console.log("this is data",JSON.stringify(id))
      alert(JSON.stringify(id))
      this.userId=id
+  }
+
+  moveTol2(id:any){
+    this.router.navigate([''], { queryParams: { id: this.id } });
   }
   id:any
 

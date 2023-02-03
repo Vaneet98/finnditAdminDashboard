@@ -13,14 +13,17 @@ export const environment = {
   SubcategoryL2URL:'/admin/v1/subCategories/level2?limit=1000&skip=0&subCategoryLevel1Id=',
   SubscriptionPlan:'/admin/v1/subscriptionPlan?limit=100&skip=0',
   SubscriptionPlanEdit:'/admin/v1/subscriptionPlan',
-  SubscriptionPlanDelete:'/admin/v1/subscriptionPlan',
+  SubscriptionPlanDelete:'admin/v1/subscriptionPlan',
   TageURL:'/admin/v1/tags?limit=1000&skip=0&type=',
   TagaddURL:'admin/v1/tags',
   TagAdminDetailURL:'/admin/v1/tags/assignedToListing?limit=1000&skip=0',
   UnassignedURL:'/admin/v1/tags/unAssign',
   UserUrl:'/admin/v1/customers?limit=1000&skip=0',
   adminBannerURL:'http://localhost:3000/admin/v1/adminBanner?limit=100&skip=0',
-  myTeamURL:'/admin/v1/admin?limit=100&skip=0'
+  adminBannerdeleteURL:'http://localhost:3000/admin/v1/adminBanner',
+  myTeamURL:'/admin/v1/admin?limit=100&skip=0',
+  roleAndPermission:'admin/v1/roles?limit=100&skip=0',
+  roleAndPermissionById:'/admin/v1/roles/'
 };
 // Admin/admin-v1-admin-login-post
 /* https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/api-docs/?urls.primaryName=API%20-%20Admin#/Admin

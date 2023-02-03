@@ -81,6 +81,7 @@ export class BusinessessComponent implements OnInit {
       if (result) {
         this.api.deleteProduct(id).subscribe({
           next: (res) => {
+            this.toastr.success("Delete successfully")
             this.getProduct();
             console.log(res);
           },

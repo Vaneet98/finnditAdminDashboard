@@ -5,7 +5,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { HttpParams, HttpClient } from "@angular/common/http"
 import { environment } from 'src/environments/environment';
-import { Router, ActivatedRoute } from "@angular/router"
+import { Router, ActivatedRoute } from "@angular/router";
+import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
@@ -29,7 +31,7 @@ export class TagsComponent implements OnInit {
   deleteTags=false
   addTag=false
 
-  constructor(private elementRef: ElementRef,private api: ServiceService,
+  constructor(private elementRef: ElementRef,private api: ServiceService,private dialog: MatDialog,
     private toastr: ToastrService,private fb: FormBuilder,private router: Router) { 
 
   }
@@ -113,15 +115,24 @@ getId(id:any){
  
   }
 
-  deleteTag(){
-    this.api.delete(this.HostURL+this.TagaddURL,this.tagId).subscribe((val)=>{
-      if(val){
-        this.statusVal=val
-        if(this.statusVal.statusCode===200){
-          this.toastr.success('Deleted data Successfully.');
-          this.getData()
-        }
+  deleteTag(id: any) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
+    const data = {
+      "id": id
+    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.api.delete(this.HostURL+this.TagaddURL,data).subscribe({
+          next: (res) => {
+            this.toastr.success("Deleted successfully")
+            this.getData();
+            console.log(res);
+          },
+          error: () => {
+            this.toastr.error("Something went wrong in deletion")
+          },
+        });
       }
-    })
+    });
   }
 }
