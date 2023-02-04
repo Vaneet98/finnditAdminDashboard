@@ -38,8 +38,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem("jwt")
     localStorage.removeItem("userPermissions")
     localStorage.removeItem("type")
-    // const email=localStorage.getItem("email")
-    // const password=localStorage.getItem("password")
     if(localStorage.getItem("email")=='')
     {
       localStorage.clear()

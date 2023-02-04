@@ -10,11 +10,13 @@ export class InterceptorService implements HttpInterceptor {
   HostURL=environment.hostULR
   LoginURL= environment.LoginURL;
   commanRoleURL=environment.commanRoleURL
+  registerURL=environment.RegisterURL
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('Request URL------------------->:', req.url);
-    if (req.url !== this.HostURL+this.LoginURL && req.url!== "https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/admin/v1/common/roles") {
+    if (req.url !== this.HostURL+this.LoginURL && req.url!== this.HostURL+this.commanRoleURL 
+      && req.url !== this.HostURL+this.registerURL ) {
       console.log("Hellllllllllllllllllllllll")
       const token: any = localStorage.getItem('jwt');
       const accessToken: any = JSON.parse(token);

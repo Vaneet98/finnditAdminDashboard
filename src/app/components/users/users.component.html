@@ -29,14 +29,14 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | sort: sortBy: sortOrder | paginate: { itemsPerPage: pagePerItem, currentPage: p}" >
-                           <th scope="row">{{data.fullName}}</th>
-                           <td>{{data.email ? data.email:'welcomeToApplify.@applify.co'}}</td>
-                           <td>{{data.countryCode}}</td>
-                           <td>{{data.phoneNumber}}</td>
-                           <td>{{data.gender}}</td>
-                           <td>{{data.pointsEarned}}</td>
-                           <td>{{data.pointsRedeemed}}</td>
-                           <td>{{data.createdAt | date}}</td>
+                           <th scope="row">{{data?.fullName}}</th>
+                           <td>{{data?.email ? data.email:'welcomeToApplify.@applify.co'}}</td>
+                           <td>{{data?.countryCode}}</td>
+                           <td>{{data?.phoneNumber}}</td>
+                           <td>{{data?.gender}}</td>
+                           <td>{{data?.pointsEarned}}</td>
+                           <td>{{data?.pointsRedeemed}}</td>
+                           <td>{{data?.createdAt | date}}</td>
                            <td>
                             <span *ngIf="data.isBlocked===0" [ngClass]="{'badge bg-warning': data.isBlocked === 1, 'badge bg-success': data.isBlocked === 0}">Active</span>
                             <span *ngIf="data.isBlocked===1" [ngClass]="{'badge bg-warning': data.isBlocked === 1, 'badge bg-success': data.isBlocked === 0}">Deactive</span>

@@ -42,6 +42,16 @@ toggleSortOrder() {
  }
 
   dataMamber:any
+  // async getData() {
+  //   try {
+  //     const data = await this.api.getAll(this.HostURL + this.UserULR).toPromise();
+  //     console.log("This is subscription plan data------->", data);
+  //     this.dataMamber = data;
+  //     console.log("this is subscription plan dataMamaber--------->", this.dataMamber.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   getData(){
     this.api.getAll(this.HostURL+this.UserULR).subscribe(data => {
       console.log("This is subscription plan data------->",data);

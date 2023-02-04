@@ -67,6 +67,8 @@
   </div>
    </section>
    <!-- Modal for Edit -->
+
+   <!-- <ng-template #AddEdit let-data let-ref="dialogRef"> -->
    <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
      <div class="modal-dialog modal-dialog-centered" role="document">
        <div class="modal-content">
@@ -161,8 +163,8 @@
                   </select>       
              </div>
                   <div class="text-center">
-                      <button type="submit" [disabled]="!subscriptionForm.valid" class="btn btn-primary"  >Submit</button>
-                      <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset</button>
+                      <button type="submit" [disabled]="!subscriptionForm.valid" class="btn btn-primary">Submit</button>
+                      <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset </button>
                   </div>
                </form>
             </div>
@@ -170,6 +172,7 @@
        </div>
      </div>
    </div>
+<!-- </ng-template> -->
  <!-- Model for Publish -->
  <div class="modal fade" id="exampleModalCenterPublish" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

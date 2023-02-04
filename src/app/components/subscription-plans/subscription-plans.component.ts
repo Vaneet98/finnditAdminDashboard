@@ -2,7 +2,7 @@ import { Component, OnInit,ElementRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
 import { PageEvent } from '@angular/material/paginator'
-import { NgForm } from '@angular/forms';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';

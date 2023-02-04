@@ -88,6 +88,7 @@ export class ServiceService {
   }
 //Get all record
   getAll(url:any){
+    console.log("this is url-----> for get",url)
     return this.http.get(url);
   }
 // Add API

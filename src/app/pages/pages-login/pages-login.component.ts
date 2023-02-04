@@ -57,13 +57,6 @@ export class PagesLoginComponent implements OnInit {
     }
 
   }
-  adminType:any
-  // getdata(data:any){
-  //   console.log(data,"data value") 
-  //   data.adminType="935e28c4-8bfe-11ed-a2f3-b03cdcf7fe7b"
-  //   console.log("this is login id",data)
-  //   this.api.logIn(this.HostURL+this.LoginURL,data)
-  //   }
   role:any
   getcommonRoles() {
     let params = new HttpParams()
@@ -82,9 +75,6 @@ export class PagesLoginComponent implements OnInit {
   setValue:any
   getdata(){
     if(this.form.valid){
-      // this.form.value.adminType = "935e28c4-8bfe-11ed-a2f3-b03cdcf7fe7b";
-      console.log("This is data",this.form.value)
-
       this.api.add(this.HostURL+this.LoginURL,this.form.value)
       .subscribe(async (res) => {
         this.setValue=res
@@ -101,7 +91,6 @@ export class PagesLoginComponent implements OnInit {
           localStorage.setItem("rememberMe", "1")
           localStorage.setItem("email", this.form.value.email)
           localStorage.setItem('password', encryptedPassword.toString());
-          // localStorage.setItem('password', this.form.value.password);
         } else {
           localStorage.setItem("rememberMe", "0")
           localStorage.setItem("email", "")
