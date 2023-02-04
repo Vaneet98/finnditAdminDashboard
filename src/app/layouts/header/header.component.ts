@@ -34,7 +34,16 @@ export class HeaderComponent implements OnInit {
     this.document.body.classList.toggle('toggle-sidebar');
   }
   logout(){
-    localStorage.clear()
+    // localStorage.clear()
+    localStorage.removeItem("jwt")
+    localStorage.removeItem("userPermissions")
+    localStorage.removeItem("type")
+    // const email=localStorage.getItem("email")
+    // const password=localStorage.getItem("password")
+    if(localStorage.getItem("email")=='')
+    {
+      localStorage.clear()
+    }
     this.api.logoutuser(this.HostURL+this.logoutURL)
     this.toastr.success('Logged Out Successfully.');
   }

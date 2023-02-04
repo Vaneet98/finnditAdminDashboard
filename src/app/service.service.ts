@@ -14,7 +14,6 @@ export class ServiceService {
    }
   HostURL=environment.hostULR
   RegisterURL= environment.RegisterURL;
-  TagAdminDetailURL=environment.TagAdminDetailURL;
   type:any=1
 //Every 12 A.M logout automatically
    currentDate = new Date();
@@ -51,9 +50,9 @@ export class ServiceService {
           }
         },
         error: (error) => {
-          if (error.error.statusCode === 400) {
-            this.toastr.error(error.error.message);
-          }
+          // if (error.error.statusCode === 400) {
+            this.toastr.error(error);
+          // }
         },
       });
   }
@@ -64,7 +63,6 @@ export class ServiceService {
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     return this.http.get(url, {headers: headers});
   }
-
   reloadComponent() {
     console.log('reload component hit');
     if (localStorage.getItem('jwt')) {
@@ -81,62 +79,35 @@ export class ServiceService {
   updateProduct(data: any, id: number) {
     return this.http.put('http://localhost:3000/productList/' + id, data);
   }
-
   deleteProduct(id: number) {
     return this.http.delete('http://localhost:3000/productList/' + id);
   }
 // Get detail by id
   getById(url:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(url, {headers: headers});
+    return this.http.get(url);
   }
-  //Get all record
+//Get all record
   getAll(url:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(url, {headers: headers});
+    return this.http.get(url);
   }
 // Add API
   add(url:any,data:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.post(url,data, {headers: headers});
+    return this.http.post(url,data);
   }
-
-
+// Delete API
   delete(url:any,id:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("THIS IS URL---------",url)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
     const options = {
-      headers: headers,
       body: id,
     };
     return this.http.delete(url, options);
-
   }
 //Edit API
   edit(url:any,data:any){
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.put(url,data, {headers: headers});
+    return this.http.put(url,data);
   }
-
-  getTagAdminDetail(type:any,tagId:any){
-    let params = new HttpParams();
-    params = params.set('type', type.toString());
-    params = params.set('tagId', tagId);
-    const token: any = localStorage.getItem('jwt');
-    const accessToken: any = JSON.parse(token);
-    console.log("This is token in getSubCategoryL1",accessToken.data.accessToken)
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);
-    return this.http.get(this.HostURL+this.TagAdminDetailURL, {headers: headers, params: params});
+//Get by Params
+  getByParams(URL:any,params:any){
+    return this.http.get(URL, {params: params});
   }
 }
  

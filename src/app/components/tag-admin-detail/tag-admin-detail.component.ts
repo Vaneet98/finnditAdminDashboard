@@ -1,12 +1,11 @@
-import { getLocaleDateFormat } from '@angular/common';
 import { Component, OnInit,ElementRef ,ViewChild, Input} from '@angular/core';
 import { Router,ActivatedRoute  } from '@angular/router';
-import {NgForm} from "@angular/forms"
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
 import { environment } from 'src/environments/environment';
+import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-tag-admin-detail',
   templateUrl: './tag-admin-detail.component.html',
@@ -15,6 +14,7 @@ import { environment } from 'src/environments/environment';
 export class TagAdminDetailComponent implements OnInit {
   HostURL=environment.hostULR
   UnassignedURL=environment.UnassignedURL;
+  TagAdminDetailURL=environment.TagAdminDetailURL;
   @Input() categoryId:any;
   form: FormGroup | undefined;
   isFormValid:any = false;
@@ -32,13 +32,10 @@ export class TagAdminDetailComponent implements OnInit {
       this.tagId = params['tagId'];
       this.type=params['typeId']
     });
-
-    console.log("THis is parameter id",this.tagId)
-    console.log("THis is parameter type",this.type)
     this.getDataOfTageAdminDetail(this.type,this.tagId)
   }
 
-dataMamber:any 
+  dataMamber:any 
   searchText = '';
   
  admintagId:any
@@ -47,18 +44,17 @@ dataMamber:any
   }
 
   getDataOfTageAdminDetail(type:any,tagId:any){
-    this.api.getTagAdminDetail(type,tagId).subscribe(data => {
-      console.log("This is getDataOfTageAdminDetail data------->",data);
+    let params = new HttpParams();
+    params = params.set('type', type.toString());
+    params = params.set('tagId', tagId);
+    this.api.getByParams(this.HostURL+this.TagAdminDetailURL,params).subscribe(data => {
       this.dataMamber=data
       if(this.type==1){
         this.dataMamber=this.dataMamber.data.rows
       }
       else if(this.type==2){
         this.dataMamber=this.dataMamber.data.rows.rows
-        console.log("This is getDataOfTageAdminDetail data-----====",this.dataMamber.rows)
       }
-      console.log("This is type id",this.type)
-      console.log("this is dataMamaber of getDataOfTageAdminDetail--------->",this.dataMamber)
     })
   }
 
@@ -70,7 +66,6 @@ dataMamber:any
     alert(JSON.stringify(data))
   }
   p = 1;
- 
   loadDataPage(event: PageEvent) {
     this.pagePerItem=event.pageSize
 }
@@ -81,7 +76,6 @@ UnassignedValue:any={}
       tagId:this.admintagId.tagId,
       userId:this.admintagId.adminId
     }
-    console.log( this.UnassignedValue)
     this.api.edit(this.HostURL+this.UnassignedURL,this.UnassignedValue)
     this.toastr.success('Unassigned data Successfully.');
   }
