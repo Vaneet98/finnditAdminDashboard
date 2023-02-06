@@ -27,6 +27,11 @@ export class PagesLoginComponent implements OnInit {
   secretKey='Vaneet.k@applify.co'
   isLogin = "login";
   constructor(private api: ServiceService,private toastr: ToastrService,private router: Router,private formBuilder: FormBuilder,) { 
+    this.form = this.formBuilder.group({
+      email: ["", Validators.compose([Validators.required,Validators.pattern('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')])],
+      password: ["", Validators.compose([Validators.required])],
+      adminType:["",Validators.compose([Validators.required])]
+    });
   }
 
   ngOnInit(): void {
@@ -55,7 +60,6 @@ export class PagesLoginComponent implements OnInit {
       this.isRemember = false;
       this.rememberMe = false;
     }
-
   }
   role:any
   getcommonRoles() {

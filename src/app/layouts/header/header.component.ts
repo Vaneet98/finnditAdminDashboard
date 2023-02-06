@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   lname:any;
   phoneNumber:any;
   email:any
+  profileImage: string|any;
+  defaultImage = 'assets/img/vaneet.jpeg';
   constructor(@Inject(DOCUMENT) private document: Document,private toastr: ToastrService,private api: ServiceService) { }
   
   ngOnInit(): void {

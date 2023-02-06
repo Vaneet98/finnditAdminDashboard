@@ -7,9 +7,9 @@
           <div class="col-xl-4">
              <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                   <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                   <h2>{{firstName}} {{lastName}}</h2>
-                   <h3>{{email}}</h3>
+                   <img [src]="profileImage || defaultImage"  alt="Profile" class="rounded-circle">
+                   <h2>{{response?.data?.firstName}} {{response?.data?.lastName}}</h2>
+                   <h3>{{response?.data?.email}}</h3>
                    <div class="social-links mt-2"> <a href="#" class="twitter"><i class="bi bi-twitter"></i></a> <a href="#" class="facebook"><i class="bi bi-facebook"></i></a> <a href="#" class="instagram"><i class="bi bi-instagram"></i></a> <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a></div>
                 </div>
              </div>
@@ -23,119 +23,140 @@
                       <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button></li>
                    </ul>
                    <div class="tab-content pt-2">
+                       <!-- Overview of admin loged In -->
                       <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                         <h2 class="card-title">About</h2>
+                         <h2 class="card-title">About Loged In user</h2>
                          <div class="row">
                             <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                            <div class="col-lg-9 col-md-8">{{firstName}} {{lastName}}</div>
+                            <div class="col-lg-9 col-md-8">{{response?.data?.firstName}} {{response?.data?.lastName}}</div>
                          </div>
                          <div class="row">
                            <div class="col-lg-3 col-md-4 label">Email</div>
-                           <div class="col-lg-9 col-md-8">{{email}}</div>
+                           <div class="col-lg-9 col-md-8">{{response?.data?.email}}</div>
                         </div>
                          <div class="row">
                             <div class="col-lg-3 col-md-4 label">Job Role</div>
-                            <div class="col-lg-9 col-md-8">{{job}}</div>
+                            <div class="col-lg-9 col-md-8">{{response?.data?.role?.name}}</div>
                          </div>
                          <div class="row">
                             <div class="col-lg-3 col-md-4 label">Registration Date</div>
-                            <div class="col-lg-9 col-md-8" *ngIf="registrationDate!==null">{{registrationDate}}</div>
-                            <div class="col-lg-9 col-md-8" *ngIf="registrationDate===null">{{createdAt|date: 'yyyy-MM-dd HH:mm:ss'}}</div>
+                            <div class="col-lg-9 col-md-8" *ngIf="response?.data?.registrationDate!==null" >{{response?.data?.registrationDate}}</div>
+                            <div class="col-lg-9 col-md-8" *ngIf="response?.data?.registrationDate==null" >{{response?.data?.createdAt|date: 'yyyy-MM-dd HH:mm:ss'}}</div>
                          </div>
+                         <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Phone</div>
+                           <div class="col-lg-9 col-md-8">{{response?.data?.countryCode}} {{response?.data?.phoneNumber}}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-3 col-md-4 label">Created At</div>
+                          <div class="col-lg-9 col-md-8">{{response?.data?.createdAt | date}}</div>
+                       </div>
                          <div class="row">
                            <div class="col-lg-3 col-md-4 label">Roles & permission</div>
                            <div class="permission-row">
                              <div *ngFor="let d of role; let i = index">
-                               <span *ngIf="d?.permission?.name" style="padding-right: 10px; background-color: whitesmoke;">
+                               <span *ngIf=  "d?.permission && d?.permission?.name" style="padding-right: 10px; background-color: whitesmoke;">
                                  [{{i+1}}] {{d?.permission?.name}}</span>
                              </div>
                            </div>
                          </div>
-                         
-                         <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Phone</div>
-                            <div class="col-lg-9 col-md-8">{{countryCode}} {{phoneNumber}}</div>
-                         </div>
-                         <div class="row">
-                           <div class="col-lg-3 col-md-4 label">Created At</div>
-                           <div class="col-lg-9 col-md-8">{{createdAt | date}}</div>
-                        </div>
                       </div>
-
-
+                      <!-- Edit profile -->
                       <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                         <form [formGroup]="form"  (ngSubmit)="editdata()">
-                            <div class="row mb-3">
-                               <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                               <div class="col-md-8 col-lg-9">
-                                  <img [src]="profileImage || defaultImage" alt="Profile">
-                                  <div class="pt-2"> 
-                                    <input type="file" (change)="onFileSelected($event)" >
-                                       </div>
-                               </div>
-                            </div>
-                            <div class="row mb-3">
-                               <label for="firstName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
-                               <div class="col-md-8 col-lg-9"> 
-                                 <input formControlName="firstName" type="text" class="form-control" id="firstName" >
+                        <form [formGroup]="form"  (ngSubmit)="editdata()">
+                           <div class="row mb-3">
+                              <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <img [src]="profileImage || defaultImage"  alt="Profile">
+                                 <div class="pt-2"> 
+                                   <input type="file" formControlName="image" (change)="onFileSelected($event)" >
+                                   <div class="text-danger" *ngIf="form.controls['image'].hasError('required') && showError"> *Please enter image.</div>
+                                      </div>
                               </div>
-                            </div>
-                            <div class="row mb-3">
-                              <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                           </div>
+                           <div class="row mb-3">
+                              <label for="firstName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                               <div class="col-md-8 col-lg-9"> 
-                                <input formControlName="lastName" type="text" class="form-control" id="lastName" >
+                                <input formControlName="firstName" type="text" class="form-control" id="firstName">
+                                 <div class="text-danger" *ngIf="form.controls['firstName'].hasError('required') && showError"> *Please enter first name.</div>
+                                 <div class="text-danger" *ngIf="!form.controls['firstName'].hasError('required') && showError && form.controls['firstName'].hasError('whitespace')" >*invalid characters </div>
+                                 <div class="text-danger" *ngIf="!form.controls['firstName'].hasError('required') && form.controls['firstName'].hasError('maxlength') && showError">
+                                     *Name must be less than 20 characters.
+                                 </div>
                              </div>
                            </div>
-                          
-                            <div class="row mb-3">
-                               <label for="addressLine1" class="col-md-4 col-lg-3 col-form-label">AddressLine1</label>
-                               <div class="col-md-8 col-lg-9"> 
-                                 <input formControlName="addressLine1" type="text" class="form-control" id="addressLine1" ></div>
+                           <div class="row mb-3">
+                             <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                             <div class="col-md-8 col-lg-9"> 
+                               <input formControlName="lastName" type="text" class="form-control" id="lastName" >
+                               <div class="text-danger" *ngIf="form.controls['lastName'].hasError('required') && showError"> *Please enter last name.</div>
+                                 <div class="text-danger" *ngIf="!form.controls['lastName'].hasError('required') && showError && form.controls['lastName'].hasError('whitespace')" >*invalid characters </div>
+                                 <div class="text-danger" *ngIf="!form.controls['lastName'].hasError('required') && form.controls['lastName'].hasError('maxlength') && showError">
+                                     *Name must be less than 20 characters.
+                                 </div>
                             </div>
-                            <div class="row mb-3">
-                              <label for="addressLine2" class="col-md-4 col-lg-3 col-form-label">AddressLine2</label>
+                          </div>
+                           <div class="row mb-3">
+                              <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country Code</label>
                               <div class="col-md-8 col-lg-9"> 
-                                 <input formControlName="addressLine2" type="text" class="form-control" id="addressLine2" ></div>
+                                <input formControlName="countryCode" type="tel" class="form-control" id="Country"></div>
+                                <div class="text-danger" *ngIf="form.controls['countryCode'].hasError('required') && showError"> *Please enter country Code.</div>
+                                 <div class="text-danger" *ngIf="!form.controls['countryCode'].hasError('required') && showError && form.controls['countryCode'].hasError('whitespace')" >*invalid characters </div>
                            </div>
+                         
+                           <div class="row mb-3">
+                              <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input formControlName="phoneNumber" type="tel" class="form-control" id="Phone" ></div>
+                                 <div class="text-danger" *ngIf="form.controls['phoneNumber'].hasError('required') && showError"> *Please enter last name.</div>
+                                 <div class="text-danger" *ngIf="!form.controls['phoneNumber'].hasError('required') && showError && form.controls['phoneNumber'].hasError('whitespace')" >*invalid characters </div>
+                                 <div class="text-danger" *ngIf="!form.controls['phoneNumber'].hasError('required') && form.controls['phoneNumber'].hasError('maxlength') && showError">
+                                     *Name must be less than 10 characters.
+                                 </div>
+                           </div>
+
+                           <div class="text-center"> <button type="submit" class="btn btn-primary" >Save Changes</button>
+                          </div>
+                        </form>
+                     </div>
+                     <!-- Change password -->
+                      <div class="tab-pane fade pt-3" id="profile-change-password">
+                        <form [formGroup]="changePassword"  (ngSubmit)="changepassword()">
+                            
                             <div class="row mb-3">
-                               <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country Code</label>
-                               <div class="col-md-8 col-lg-9"> 
-                                 <input formControlName="countryCode" type="text" class="form-control" id="Country"></div>
+                              <label for="password" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                              <div class="col-md-8 col-lg-9"> 
+                                <input formControlName="oldPassword" type="password" class="form-control" id="newPassword" [ngClass]="{'is-invalid': changePassword.get('oldPassword').touched && changePassword.get('oldPassword').errors}">
+                                <div *ngIf="changePassword.get('oldPassword').touched && changePassword.get('oldPassword').errors" class="invalid-feedback">
+                                  <div *ngIf="changePassword.get('oldPassword').errors.required">Current Password is required</div>
+                                </div>
+                              </div>
                             </div>
-                          
+                            
                             <div class="row mb-3">
-                               <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                               <div class="col-md-8 col-lg-9">
-                                  <input formControlName="phoneNumber" type="text" class="form-control" id="Phone" ></div>
-                            </div>
-                            <div class="row mb-3">
-                               <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                               <div class="col-md-8 col-lg-9"> 
-                                 <input formControlName="email" type="email" class="form-control" id="Email" ></div>
+                              <label for="password" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                              <div class="col-md-8 col-lg-9"> 
+                                <input formControlName="password" type="password" class="form-control" id="currentPassword" [ngClass]="{'is-invalid': changePassword.get('password').touched && changePassword.get('password').errors}">
+                                <div *ngIf="changePassword.get('password').touched && changePassword.get('password').errors" class="invalid-feedback">
+                                  <div *ngIf="changePassword.get('password').errors.required">New Password is required</div>
+                                </div>
+                              </div>
                             </div>
 
-                            <div class="text-center"> <button type="submit" class="btn btn-primary">Save Changes</button>
-                           </div>
-                         </form>
-                      </div>
-                     
-                      <div class="tab-pane fade pt-3" id="profile-change-password">
-                         <form>
                             <div class="row mb-3">
-                               <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                               <div class="col-md-8 col-lg-9"> <input name="password" type="password" class="form-control" id="currentPassword"></div>
+                              <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                              <div class="col-md-8 col-lg-9">
+                                <input formControlName="renewPassword" type="password" class="form-control" id="renewPassword" [ngClass]="{'is-invalid': changePassword.get('renewPassword').touched && changePassword.get('renewPassword').errors}">
+                                <div *ngIf="changePassword.get('renewPassword').touched && changePassword.get('renewPassword').errors" class="invalid-feedback">
+                                  <div *ngIf="changePassword.get('renewPassword').errors.required">Re-enter Password is required</div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="row mb-3">
-                               <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                               <div class="col-md-8 col-lg-9"> <input name="newpassword" type="password" class="form-control" id="newPassword"></div>
-                            </div>
-                            <div class="row mb-3">
-                               <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                               <div class="col-md-8 col-lg-9"> <input name="renewpassword" type="password" class="form-control" id="renewPassword"></div>
-                            </div>
-                            <div class="text-center"> <button type="submit" class="btn btn-primary">Change Password</button></div>
-                         </form>
-                      </div>
+                            
+                           <div class="text-center"> 
+                             <button type="submit" class="btn btn-primary" [disabled]="!changePassword.valid">Change Password</button></div>
+                        </form>
+                     </div>
                    </div>
                 </div>
              </div>

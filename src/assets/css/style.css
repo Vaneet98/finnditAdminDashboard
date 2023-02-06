@@ -15,6 +15,9 @@
     /* color: #b4bcc8; */
 	color: white;
   }
+  .sidebar ul li .sidebarIcon{
+	color:black
+  }
  .sidebar ul li.active a{
 	background-color: #18225a;
 	color: white;
@@ -764,7 +767,9 @@
 	align-items: center;
 	font-size: 15px;
 	font-weight: 600;
-	color: #4154f1;
+	/* color: #4154f1; */
+	color:black;
+	/* color: white; */
 	transition: 0.3;
 	background: #f6f9ff;
 	padding: 10px 15px;

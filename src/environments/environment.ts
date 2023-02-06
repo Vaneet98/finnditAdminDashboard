@@ -10,6 +10,7 @@ export const environment = {
   commanRoleURL:'admin/v1/common/roles',
   RegisterURL:'admin/v1/admin',
   getAdmin:'admin/v1/admin',
+  changePassword:'admin/v1/admin/profile/change-password',
   logoutURL:'admin/v1/admin/logout',
   CategoryURL:'admin/v1/categories?limit=1000&skip=0',
   SubcategoryL1URL:'admin/v1/subCategories?limit=100&skip=0&categoryId=',

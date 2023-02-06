@@ -25,37 +25,37 @@ export class ServiceService {
     return this.http.post<any>(this.RegisterURL, data);
   }
  
-  logIn(url:any,data: any) {
-    this.isLoggedIn.next(true);
-    return this.http
-      .post<any>(url, data, { observe: 'response' })
-      .subscribe({
-        next: (result) => {
-          if (result.body.statusCode === 200) {
-            this.isLoggedIn.next(true);
-            localStorage.setItem('jwt', JSON.stringify(result.body));
-            localStorage.setItem('userPermissions',JSON.stringify(result.body.data.adminDetails?.role.role_permissions));
-            localStorage.setItem('type',this.type)
-            this.toastr.success('Logged In Successfully.', result.body.message);
-            setTimeout(() => {
-              this.router.navigate(['dashboard']);
-              //This is for every 12 A.M automatically logout
-              // setTimeout(() => {
-              //   localStorage.removeItem('jwt');
-              //   this.router.navigate(['']);
-              // }, this.timeDiff)
-            }, 100,
-           );
+  // logIn(url:any,data: any) {
+  //   this.isLoggedIn.next(true);
+  //   return this.http
+  //     .post<any>(url, data, { observe: 'response' })
+  //     .subscribe({
+  //       next: (result) => {
+  //         if (result.body.statusCode === 200) {
+  //           this.isLoggedIn.next(true);
+  //           localStorage.setItem('jwt', JSON.stringify(result.body));
+  //           localStorage.setItem('userPermissions',JSON.stringify(result.body.data.adminDetails?.role.role_permissions));
+  //           localStorage.setItem('type',this.type)
+  //           this.toastr.success('Logged In Successfully.', result.body.message);
+  //           setTimeout(() => {
+  //             this.router.navigate(['dashboard']);
+  //             //This is for every 12 A.M automatically logout
+  //             // setTimeout(() => {
+  //             //   localStorage.removeItem('jwt');
+  //             //   this.router.navigate(['']);
+  //             // }, this.timeDiff)
+  //           }, 100,
+  //          );
             
-          }
-        },
-        error: (error) => {
-          // if (error.error.statusCode === 400) {
-            this.toastr.error(error);
-          // }
-        },
-      });
-  }
+  //         }
+  //       },
+  //       error: (error) => {
+  //         // if (error.error.statusCode === 400) {
+  //           this.toastr.error(error);
+  //         // }
+  //       },
+  //     });
+  // }
 
   logoutuser(url:any){
     const token: any = localStorage.getItem('jwt');
