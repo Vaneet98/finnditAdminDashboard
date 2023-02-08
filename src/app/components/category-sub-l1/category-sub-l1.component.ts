@@ -15,7 +15,9 @@ import { environment } from 'src/environments/environment';
 export class CategorySubL1Component implements OnInit {
   HostURL=environment.hostULR
   SubcategoryL1URL=environment.SubcategoryL1URL
-  @Input() categoryId:any;
+  // @Input() categoryId:any;
+  L1id:any
+  id:any
   form: FormGroup | undefined;
   isFormValid:any = false;
   basicForm: any;
@@ -25,11 +27,11 @@ export class CategorySubL1Component implements OnInit {
   pagePerItem=0
   ngOnInit(): void {
     this.pagePerItem=5
-    this.route.queryParams.subscribe(params => {
-      this.id = params['L1id'];
+    this.route.params.subscribe(params => {
+      this.L1id = params['id'];
     });
-    console.log("THis is parameter L1id",this.id)
-    this.getDataOfSubCateL1(this.id)
+    console.log("THis is parameter id",this.L1id)
+    this.getDataOfSubCateL1(this.L1id)
   }
 
 dataMamber:any 
@@ -43,9 +45,10 @@ dataMamber:any
   }
 
   moveTol2(id:any){
-    this.router.navigate([''], { queryParams: { id: this.id } });
+    // this.router.navigate(['CategorySubL1Component/c1'+'?'+this.L1id+'c2'], { queryParams: {id: id } });
+    this.router.navigate(['CategorySubL1Component/c1/'+this.L1id+'/c2/'+id]);
   }
-  id:any
+
 
  public getDataOfSubCateL1(id:any){
     this.api.getById(this.HostURL+this.SubcategoryL1URL+id).subscribe(data => {

@@ -60,12 +60,12 @@
 
 <!-- Add & Edit Roles and Permissions -->
 
-<div class="modal fade" id="exampleModalCenterEditAdmin" tabindex="-1" role="dialog"      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenterEditAdmin" tabindex="-1" role="dialog"   data-backdrop="static" data-keyboard="false"   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
        <div class="modal-header">
          <h2 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Add Role's & Permission</h2>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <button type="button" class="close" #closebutton data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true">&times;</span>
          </button>
        </div>
@@ -125,7 +125,7 @@
 
          </div>
          <div class="text-center" style="margin-bottom: 20px;">
-            <button type="submit"  class="btn btn-primary"  >Submit</button>
+            <button type="submit" (click)="onSave()" class="btn btn-primary"  >Submit</button>
             <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset</button>
         </div>
      </form>
@@ -134,7 +134,7 @@
  </div>  
 
     <!-- Discribe Permission records detail -->
-<div class="modal fade" id="exampleModalCenterShow" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenterShow" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
        <div class="modal-header">

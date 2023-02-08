@@ -42,7 +42,7 @@
                              <button type="button" class="btn" title="Delete data"(click)="deleteSubscription(data.id)">
                              <i class="bi bi-trash-fill" style="margin-left: 10px;cursor: pointer;"></i>
                           </button>
-                          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterPublish" title="Publish data" (click)="getdataForPublish(data)">
+                          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterPublish"  title="Publish data" (click)="getdataForPublish(data)">
                           <i class="bi bi-upload" style="margin-left: 10px;cursor: pointer;"></i>
                        </button></td>
                        </tr>
@@ -67,22 +67,21 @@
   </div>
    </section>
    <!-- Modal for Edit -->
-
-   <!-- <ng-template #AddEdit let-data let-ref="dialogRef"> -->
-   <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal fade" id="exampleModalCenterEdit" tabindex="-1" data-backdrop="static" data-keyboard="false"
+   role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
      <div class="modal-dialog modal-dialog-centered" role="document">
        <div class="modal-content">
          <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <button type="button" class="close" #closebutton data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
          </div>
          <div class="card">
             <div class="card-body">
-               <h2 class="card-title">Subscription Plan Form</h2>
-               <form [formGroup]="subscriptionForm" (ngSubmit)="getdataForEditSubscriptionPlan(subscriptionForm.value)" class="row g-3">
+               <h2 class="card-title" >Subscription Plan Form</h2>
+               <form [formGroup]="subscriptionForm" (ngSubmit)="getdataForEditSubscriptionPlan(subscriptionForm.value);" class="row g-3">
                   <div class="col-md-12">
-                     <span>Subscription Plan Name</span>
+                     <span style="margin-left: 20px;">Subscription Plan Name</span>
                      <div class="form-floating" [ngClass]="{ 'is-invalid': subscriptionForm.controls.name.errors && (subscriptionForm.controls.name.dirty || subscriptionForm.controls.name.touched) }">
                         <input type="text" formControlName="name" class="form-control" id="floatingName" placeholder="Your Subscription plan name">
                         <div *ngIf="subscriptionForm.controls.name.errors && (subscriptionForm.controls.name.dirty || subscriptionForm.controls.name.touched)">
@@ -91,7 +90,7 @@
                       </div>
                       </div>
                   <div class="col-12">
-                     <span>Subscription Plan Description</span>
+                     <span style="margin-left: 20px;">Subscription Plan Description</span>
                      <div class="form-floating">
                         <textarea class="form-control" formControlName="description" placeholder="" id="floatingTextarea" style="height: 100px;"></textarea>
                         <div *ngIf="subscriptionForm.controls.description.errors && (subscriptionForm.controls.description.dirty || subscriptionForm.controls.description.touched)">
@@ -101,7 +100,7 @@
                   </div>
                   <div class="col-md-6">
                      <div class="col-md-12">
-                        <span>Validity</span>
+                        <span style="margin-left: 20px;">Validity</span>
                         <div class="form-floating"> <input type="text" formControlName="validityLevel" class="form-control" id="floatingCity" placeholder="0">
                            <div *ngIf="subscriptionForm.controls.validityLevel.errors && (subscriptionForm.controls.validityLevel.dirty || subscriptionForm.controls.validityLevel.touched)">
                               <span class="invalid-feedback" *ngIf="subscriptionForm.controls.validityLevel.errors.required">validityLevel is required</span>
@@ -111,7 +110,7 @@
                   </div>
                   <div class="col-md-4">
                      <div class="form-floating mb-3">
-                        <span>Days,Month,Year</span>
+                        <span >Days,Month,Year</span>
                         <select class="form-select" id="floatingSelect" aria-label="State" formControlName="validityDays" >
                            <div *ngIf="subscriptionForm.controls.validityDays.errors && (subscriptionForm.controls.validityDays.dirty || subscriptionForm.controls.validityDays.touched)">
                               <span class="invalid-feedback" *ngIf="subscriptionForm.controls.validityDays.errors.required">validityDays is required</span>
@@ -134,7 +133,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="col-md-12">
-                     <span>Price</span>
+                     <span style="margin-left: 20px;">Price</span>
                      <div class="form-floating"> <input type="text" formControlName="price" class="form-control" id="floatingCity" placeholder="0">
                         <div *ngIf="subscriptionForm.controls.price.errors && (subscriptionForm.controls.price.dirty || subscriptionForm.controls.price.touched)">
                            <span class="invalid-feedback" *ngIf="subscriptionForm.controls.price.errors.required">price is required</span>
@@ -163,7 +162,7 @@
                   </select>       
              </div>
                   <div class="text-center">
-                      <button type="submit" [disabled]="!subscriptionForm.valid" class="btn btn-primary">Submit</button>
+                      <button type="submit" (click)="onSave()" [disabled]="!subscriptionForm.valid" class="btn btn-primary">Submit</button>
                       <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset </button>
                   </div>
                </form>
@@ -172,7 +171,6 @@
        </div>
      </div>
    </div>
-<!-- </ng-template> -->
  <!-- Model for Publish -->
  <div class="modal fade" id="exampleModalCenterPublish" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

@@ -1,101 +1,183 @@
 <main id="main" class="main">
-    <div class="pagetitle">
-       <h1>Tier</h1>
-    </div>
-    <section class="section">
-       <div class="row">
-          <div class="col-lg-12">
-             <div class="card">
-                <div class="card-body">
-                   <h5 class="card-title">Tier</h5>
-                   <table class="table datatable">
-                      <thead>
-                         <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Points Rewarded</th>
-                            <th scope="col">Point Multiplier</th>
-                            <th scope="col">Profile completion %</th>
-                            <th scope="col">Latest Update</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                         </tr>
-                      </thead>
-                      <tbody>
-                         <tr>
-                            <th scope="row">1</th>
-                            <td>Brandon Jacob</td>
-                            <td>Designer</td>
-                            <td>28</td>
-                            <td>2016-05-25</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">2</th>
-                            <td>Bridie Kessler</td>
-                            <td>Developer</td>
-                            <td>35</td>
-                            <td>2014-12-05</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">3</th>
-                            <td>Ashleigh Langosh</td>
-                            <td>Finance</td>
-                            <td>45</td>
-                            <td>2011-08-12</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">4</th>
-                            <td>Angus Grady</td>
-                            <td>HR</td>
-                            <td>34</td>
-                            <td>2012-06-11</td>
-                         </tr>
-                         <tr>
-                            <th scope="row">5</th>
-                            <td>Raheem Lehner</td>
-                            <td>Dynamic Division Officer</td>
-                            <td>47</td>
-                            <td>2011-04-19</td>
-                         </tr>
-                         <tr>
-                           <th scope="row">6</th>
-                           <td>Brandon Jacob</td>
-                           <td>Designer</td>
-                           <td>28</td>
-                           <td>2016-05-25</td>
+   <div class="pagetitle">
+      <h1>Tires</h1>
+   </div>
+   <div class="tab-section">
+      <ul>
+          <li class="{{type==0?'active':''}}"><a (click)="type=0;this.getData();"
+           > Horizontal Tires</a></li>
+          <li class="{{type==1?'active':''}}"><a (click)="type=1;this.getData();" 
+            > Vertical Tires </a></li>
+      </ul>
+  </div>
+   <section class="section">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="card">
+               <div class="card-body">
+                  <table class="table datatable">
+                     <thead>
+                        <tr> 
+                           <th scope="col">Title</th>
+                           <th scope="col">Point rewarded</th>
+                           <th scope="col"*ngIf="type==1">Point earned Validity</th>
+                           <th scope="col"*ngIf="type==1">Max. Point earned per Month</th>
+                           <th scope="col"*ngIf="type==1">Max. Point redeemed per Month</th>
+                           <th scope="col"*ngIf="type==1">Max. Point redeemed per trans....</th>
+                           <th scope="col"*ngIf="type==1">Additional rewards</th>
+                           <th scope="col" *ngIf="type==0">Point Multiplier</th>
+                           <th scope="col"*ngIf="type==0">Profile Completion %</th>
+                           <th scope="col">Last Updateed</th>
+                           <th scope="col">Status</th>
+                           <th scope="col">Action</th>
                         </tr>
-                        <tr>
-                           <th scope="row">7</th>
-                           <td>Bridie Kessler</td>
-                           <td>Developer</td>
-                           <td>35</td>
-                           <td>2014-12-05</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">8</th>
-                           <td>Ashleigh Langosh</td>
-                           <td>Finance</td>
-                           <td>45</td>
-                           <td>2011-08-12</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">9</th>
-                           <td>Angus Grady</td>
-                           <td>HR</td>
-                           <td>34</td>
-                           <td>2012-06-11</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">10</th>
-                           <td>Raheem Lehner</td>
-                           <td>Dynamic Division Officer</td>
-                           <td>47</td>
-                           <td>2011-04-19</td>
-                        </tr>
-                      </tbody>
-                   </table>
-                </div>
-             </div>
+                     </thead>
+                     <tbody  >
+                       <tr *ngFor="let data of dataMamber.data | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
+                         <th scope="row" (click)="onRowSelect(data)" style="cursor: pointer;">{{data.tierTitle}}</th>
+                         <td >{{data.pointsRewarded}} </td>
+                         <td *ngIf="type==1">{{data.pointEarnedValidity}} </td>
+                         <td *ngIf="type==1">{{data.maxPointEarningPerMonth}} </td>
+                         <td *ngIf="type==1">{{data.maxPointRedeemedPerMonth}} </td>
+                         <td *ngIf="type==1">{{data.redeemedPerTransaction}} </td>
+                         <td *ngIf="type==1">{{data.additionalRewards}} </td>
+                         <td *ngIf="type==0">{{data.pointMultiplier}} </td>
+                         <td *ngIf="type==0">{{data.profileCompletion}} </td>
+                         <td>{{data.createdAt|date}} </td>
+                         <td>
+                           <span *ngIf="data.status === 0" [ngClass]="{'badge bg-warning': data.status === 1, 'badge bg-success': data.status === 0}">Active</span>
+                           <span *ngIf="data.status === 1" [ngClass]="{'badge bg-warning': data.status === 1, 'badge bg-success': data.status === 0}">Deactivate</span>
+                       </td>
+                         <td id="crossAndEdit">
+                          <button type="button"  class="btn" data-toggle="modal"
+                           data-target="#exampleModalCenterEditAdmin" (click)="getId(data.id);patchValue(data,2)" title="Edit">
+                             <i class="bi bi-pencil-fill" style="cursor: pointer;"></i>
+                          </button>                
+                          <button type="button"  class="btn"  data-toggle="modal" data-target="#exampleModalCenterApproved" (click)="getStatus(data.status);getId(data.id)">
+                             <i *ngIf="data.status==0" title="Do Deactivate" class="bi bi-check-lg" style="margin-left: 10px;cursor: pointer;"></i>
+                             <i  *ngIf="data.status==1" title="Do Activate" class="bi bi-x-lg" style="margin-left: 10px;cursor: pointer;"></i>
+                          </button>
+                       </td>
+                       </tr>
+                     </tbody>
+                  </table>  
+                  <div class="pagination" >
+                   <mat-paginator [length]="dataMamber.data.length"
+                       [pageSize]="5"
+                       [pageSizeOptions]="[5,10, 25, 100]"
+                       (page)="loadDataPage($event)">
+                   </mat-paginator>
+                  </div>
+                  <div  class="add-more-container text-center btn btn-circle tooltip-custom" *ngIf="type==0"
+                  data-toggle="tooltip" data-placement="left" title="Add New Tier">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenterEditAdmin" (click)="patchValue(0,1);"><i class="bi bi-plus-lg" ></i></button> 
+               </div> 
+                 </div>
+            </div>
+         </div>
+      </div>
+   </section>
+     <!-- Model for Add & Edit Admin tage-->
+  <div class="modal fade" id="exampleModalCenterEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h2 class="modal-title" id="exampleModalLabel">{{this.tierId != null?'Edit':'Add'}} Tier</h2>
+           <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <form  [formGroup]="tierForm" (ngSubmit)="editTags(tierForm.value)">
+             <div class="form-group" >
+              <div class="col-md-12">
+                <h2 style="margin-left: 15px;"> Tier Type </h2>
+                <div class="d-flex tier-tabs">
+                  <input type="radio" id="tab1" name="tab" (click)="TypePass(0)" checked>
+                  <h3 for="tab1" id="tab11"> Horizontal Tier </h3>
+
+                  <input type="radio" id="tab2" name="tab" (click)="TypePass(1)" >
+                  <h3 for="tab2" id="tab22"> Vertical Tier </h3>
+              </div>
+                <div class="form-floating" >
+                  <h3 class="h33">Tiers Title</h3>
+                   <input type="text" formControlName="tierTitle" class="form-control" id="floatingName">
+                 </div>
+                 <!-- <div class="form-floating" *ngIf="typeOfTier==0" >
+                  <h3 class="">Reward Image</h3>
+                   <input type="file" formControlName="image" class="form-control" id="floatingName">
+                 </div> -->
+                 <div class="form-floating" *ngIf="typeOfTier==0">
+                  <h3 class="h33">Points awarded</h3>
+                   <input type="text" formControlName="pointsRewarded" class="form-control" id="floatingName">
+                 </div>
+                 <div class="form-floating" *ngIf="typeOfTier==0">
+                  <h3 class="h33">Points Multiplier</h3>
+                   <input type="text" formControlName="pointMultiplier" class="form-control" id="floatingName">
+                 </div>
+                 <div class="form-floating" *ngIf="typeOfTier==0" >
+                  <h3 class="h33">Profile Completion %</h3>
+                   <input type="text" formControlName="profileCompletion" class="form-control" id="floatingName">
+                 </div>
+                 <div class="form-floating" *ngIf="typeOfTier==0" >
+                  <h3 class="h33">Description</h3>
+                  <textarea class="form-control" formControlName="description" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;">
+                  </textarea></div>
+                  <div class="form-floating" *ngIf="typeOfTier==1" >
+                    <h3 class="h33">Point earned Validity</h3>
+                     <input type="text" formControlName="pointEarnedValidity" class="form-control" id="floatingName">
+                   </div>
+                   <div class="form-floating" *ngIf="typeOfTier==1" >
+                    <h3 class="h33">Max. Points earning per Month</h3>
+                     <input type="text" formControlName="maxPointEarningPerMonth" class="form-control" id="floatingName">
+                   </div>
+                   <div class="form-floating" *ngIf="typeOfTier==1">
+                    <h3 class="h33">Max. Points redeemed per month</h3>
+                     <input type="text" formControlName="maxPointRedeemedPerMonth" class="form-control" id="floatingName">
+                   </div>
+                   <div class="form-floating" *ngIf="typeOfTier==1">
+                    <h3 class="h33">Max. Points redeemed per transaction</h3>
+                     <input type="text" formControlName="redeemedPerTransaction" class="form-control" id="floatingName">
+                   </div>
+                   <div class="form-floating" *ngIf="typeOfTier==1">
+                    <h3 class="h33">Min. block of points redeemed per transation</h3>
+                     <input type="text" formControlName="minBlockRedeemedPerTransaction" class="form-control" id="floatingName">
+                   </div>
+                   <div class="form-floating" *ngIf="typeOfTier==1">
+                    <h3 class="h33">Additional rewards</h3>
+                     <input type="text" formControlName="additionalRewards" class="form-control" id="floatingName">
+                   </div>
+                 </div>
+           <div class="modal-footer" style="margin-right: 150px;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit"  (click)="onSave()" class="btn btn-primary" [disabled]="!tierForm.valid" >Save</button>
           </div>
+             </div>
+       </form>
        </div>
-    </section>
- </main>
+     </div>
+   </div>
+
+     <!-- Modal for active -->
+     <div class="modal fade" id="exampleModalCenterApproved" tabindex="-1" role="dialog"     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title" id="exampleModalLongTitle" style="align-items: center; justify-content: center; margin-left:180px">
+              {{this.status==1?'Active':'Deactivate'}}</h1>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="margin-left: 80px;">
+           <h3> Are you sure you want to {{this.status==1?'Active':'Deactivate'}} it ?</h3>
+           
+          </div>
+          <div class="modal-footer" style="margin-right: 150px;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="ActiveData()">{{this.status==1?'Active':'Deactivate'}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</main>

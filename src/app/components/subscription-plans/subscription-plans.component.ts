@@ -1,8 +1,8 @@
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
 import { PageEvent } from '@angular/material/paginator'
-
+import * as $ from 'jquery';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -20,6 +20,7 @@ export class SubscriptionPlansComponent implements OnInit {
   SubscriptionPlanDelete=environment.SubscriptionPlanDelete;
   subscriptionForm: FormGroup | any;
   condition: boolean | any
+
   constructor(private elementRef: ElementRef,private api: ServiceService ,private dialog: MatDialog,
      private router:Router,private fb: FormBuilder,private toastr: ToastrService) { }
    form:FormGroup|any
@@ -36,6 +37,13 @@ export class SubscriptionPlansComponent implements OnInit {
       price: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       status: ['', Validators.required]
     });
+  }
+
+
+  @ViewChild('closebutton') closebutton: any;
+
+  public onSave() {
+    this.closebutton.nativeElement.click();
   }
 
   // Get data from server
@@ -111,6 +119,8 @@ getdataForEditSubscriptionPlan(data:any){
       });
     }
 }
+
+
 
 //This is for set value in edit filds
 patchValue(data:any,num:number) {

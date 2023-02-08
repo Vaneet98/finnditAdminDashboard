@@ -1,6 +1,22 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+#tab11,#tab22{
+	margin-top: 11px;
+	margin-left: 10px;
+}
+#tab2{
+	margin-left: 20px;
+}
+.tier-tabs,.form-floating{
+	margin-left: 20px;
+}
+.h33{
+	margin-left: 25px;
+}
+#tab22{
+	margin-left: 25px;
+}
 :root {
 	scroll-behavior: smooth;
   }

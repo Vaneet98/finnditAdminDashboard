@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef  } from '@angular/core';
+import { Component, OnInit, ElementRef,ViewChild  } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
 import { ServiceService } from 'src/app/service.service';
@@ -31,6 +31,15 @@ export class AdminBannersComponent implements OnInit {
   this.pagePerItem=5
   this.getData()
   }
+
+
+//This is for close the popup window
+@ViewChild('closebutton') closebutton: any;
+
+public onSave() {
+  this.closebutton.nativeElement.click();
+}
+
 
   dataMamber:any
 

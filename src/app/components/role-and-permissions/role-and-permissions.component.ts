@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit,ElementRef ,ViewChild} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/service.service';
 import { environment } from 'src/environments/environment';
@@ -36,6 +36,13 @@ export class RoleAndPermissionsComponent implements OnInit {
   loadDataPage(event: PageEvent) {
     this.pagePerItem=event.pageSize
 }
+
+@ViewChild('closebutton') closebutton: any;
+
+public onSave() {
+  this.closebutton.nativeElement.click();
+}
+
 teamIds:any
   getId(id:any){
 this.teamIds=id

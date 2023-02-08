@@ -34,6 +34,8 @@ import { DashBoardGuardGuard } from './components/dash-board-guard.guard';
 import { CommonComponent } from './common';
 const routes: Routes = [ 
   { path: '', component: PagesLoginComponent,  },
+  { path: 'login', component: PagesLoginComponent,  },
+  
   { path: 'register', component: PagesRegisterComponent },
   { path: 'dashboard', component: DashboardComponent,canActivate: [DashBoardGuardGuard] },
   { path: 'tables-data', component: TablesDataComponent,canActivate:[DashBoardGuardGuard] },
@@ -62,8 +64,11 @@ const routes: Routes = [
   { path: 'managenotification', component:  ManageNotificationComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'CategorySubL1Component',  component: CommonComponent, canActivate:[DashBoardGuardGuard] ,
    children: [
-    {path :'',component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard]},
-    { path: ':id', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
+    {path :'c1/:id',component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard],
+     children:[
+      { path: 'c2/:subId', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
+     ]
+   },
   ]
 },
 

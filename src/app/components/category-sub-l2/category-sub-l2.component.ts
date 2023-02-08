@@ -30,9 +30,9 @@ export class CategorySubL2Component implements OnInit {
     // this.id=this.route.snapshot.paramMap.get("id")
 
     this.route.params.subscribe(params => {
-      console.log("This is params-------->",params)
-      this.L1id= params['L1id']
-      this.id = params['id'];
+      console.log("This is params of subCategoryl2=====-------->",params)
+      this.L1id= params['id']
+      this.id = params['subId'];
       
     });
     console.log("THis is parameter L1id----------->",this.L1id)

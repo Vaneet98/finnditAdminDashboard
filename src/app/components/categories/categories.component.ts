@@ -27,6 +27,14 @@ export class CategoriesComponent implements OnInit {
     this.getData()
   }
 
+//This is for close the popup window
+@ViewChild('closebutton') closebutton: any;
+
+public onSave() {
+  this.closebutton.nativeElement.click();
+}
+
+
 dataMamber:any
   searchText = '';
  
@@ -38,8 +46,8 @@ dataMamber:any
   
   }
   moveTol1(categoryid:any){
-    this.userId=categoryid   //
-    this.router.navigate(['/CategorySubL1Component'], { queryParams: { L1id: this.userId } });
+    this.userId=categoryid   
+    this.router.navigate(['/CategorySubL1Component/c1/',this.userId]);
   }
 
   getData(){

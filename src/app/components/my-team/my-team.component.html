@@ -63,12 +63,12 @@
     </div> 
     </section>
          <!-- Model for Add & Edit Admin tage-->
-  <div class="modal fade" id="exampleModalCenterEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenterEditAdmin" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
      <div class="modal-content">
        <div class="modal-header">
          <h2 class="modal-title" id="exampleModalLabel">{{this.teamId != 2?'Edit':'Add'}}  My team</h2>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true">&times;</span>
          </button>
        </div>
@@ -121,7 +121,7 @@
                                </div>
          <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!teamForm.valid">Save</button>
+          <button type="submit" (click)="onSave()" class="btn btn-primary" [disabled]="!teamForm.valid">Save</button>
         </div>
            </div>
      </form>

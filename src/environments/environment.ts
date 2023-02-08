@@ -27,7 +27,10 @@ export const environment = {
   adminBannerdeleteURL:'http://localhost:3000/admin/v1/adminBanner',
   myTeamURL:'admin/v1/admin?limit=100&skip=0',
   roleAndPermission:'admin/v1/roles?limit=100&skip=0',
-  roleAndPermissionById:'admin/v1/roles/'
+  roleAndPermissionById:'admin/v1/roles/',
+  HorizontalTierGetDetail:'http://localhost:3000/admin/v1/tier',
+  HorizontalTierDeactivate:'http://localhost:3000/admin/v1/tier/deactivited'
+
 };
 // Admin/admin-v1-admin-login-post
 /* https://ncg3n927x2.execute-api.ap-south-1.amazonaws.com/dev/api-docs/?urls.primaryName=API%20-%20Admin#/Admin
