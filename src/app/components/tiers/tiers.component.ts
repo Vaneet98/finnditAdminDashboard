@@ -1,14 +1,13 @@
 import { Component, OnInit,ElementRef ,ViewChild} from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
 import { ToastrService } from 'ngx-toastr';
-import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { HttpParams, HttpClient } from "@angular/common/http"
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from "@angular/router";
 import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { NgxSpinnerService,Spinner } from 'ngx-spinner';
 @Component({
   selector: 'app-tiers',
   templateUrl: './tiers.component.html',
@@ -34,13 +33,16 @@ export class TiersComponent implements OnInit {
   addTag=false
   status:any
   typeOfTier:any=0
+  page: number=1;
+  count: number = 0;
+  tableSize: number = 5;
+  search = '';
+  sortOrder ='DESC'
   constructor(private elementRef: ElementRef,private api: ServiceService,private dialog: MatDialog,
-    private toastr: ToastrService,private fb: FormBuilder,private router: Router) { 
-
+    private toastr: ToastrService,private fb: FormBuilder,
+    private router: Router,private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
   }
-  loadDataPage(event: PageEvent) {
-    this.pagePerItem=event.pageSize
-}
+
 
 //This is for close the popup window
 @ViewChild('closebutton') closebutton: any;
@@ -50,7 +52,14 @@ public onSave() {
 }
 
   ngOnInit(): void {
-   this.pagePerItem=5
+    this.route.queryParams.subscribe(params => {
+      this.page = params['event'];
+    });
+  if(this.page){
+    this.page=this.page
+  }else{
+    this.page=1
+  }
    this.getData()
    if(this.typeOfTier==0){
     this.tierForm = this.fb.group({
@@ -73,17 +82,21 @@ public onSave() {
       additionalRewards: ['', Validators],
     })
    }
- 
-  }
+}
  
 getData(){
+  this.spinner.show()
   let params = new HttpParams();
   params = params.set('limit', 10);
   params = params.set('skip', 0);
   params = params.set('tierType', this.type.toString());
+  params = params.append('orderBy',this.sortOrder)
     this.api.getByParams(this.HorizontalTierGetDetail,params).subscribe(res => {
       console.log("This is tier data------->",res);
       this.dataMamber=res
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
       console.log("this is tier dataMamaber--------->",this.dataMamber.data)  
     })
 }
@@ -92,6 +105,24 @@ getStatus(DataStatus:any){
   this.status=DataStatus
 }
 
+
+  //For searching
+  onTextChange(value: any) {
+    this.search = value;
+    this.getData();
+  }
+  
+  //This is for pagination
+  onTableDataChange(event: any) {
+    this.router.navigate(['tier'], { queryParams: {event: event } });
+    this.page = event;
+    this.getData();
+  }
+  
+  changeSortOrder(value: any): void {
+    this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
+    this.getData();
+  }
 
 ActiveData(){
     if(this.status==1){

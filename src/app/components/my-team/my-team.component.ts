@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router,ActivatedRoute  } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { NgxSpinnerService,Spinner } from 'ngx-spinner';
 @Component({
   selector: 'app-my-team',
   templateUrl: './my-team.component.html',
@@ -13,13 +16,19 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class MyTeamComponent implements OnInit {
 
-  constructor(private elementRef: ElementRef,private toastr: ToastrService,private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog) { }
+  constructor(private elementRef: ElementRef,private toastr: ToastrService,
+    private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog,
+    private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { }
   HostURL=environment.hostULR
   myTeam=environment.myTeamURL
   teamForm: FormGroup | any;
+  page: number=1;
+  count: number = 0;
+  tableSize: number = 5;
+  search = '';
+  sortOrder ='DESC'
   ngOnInit(): void {
-    this.pagePerItem=5
-    this.getData()
+    // this.getData()
     this.teamForm = this.fb.group({
       name: ['', Validators.required],
       email:['', Validators.required],
@@ -27,13 +36,17 @@ export class MyTeamComponent implements OnInit {
       role:['', Validators.required],
       admin_tags:['', Validators.required],
     });
+    this.route.queryParams.subscribe(params => {
+      this.page = params['event'];
+    });
+  if(this.page){
+    this.page=this.page
+  }else{
+    this.page=1
   }
-  p = 1;
-  searchText = '';
-  pagePerItem=0
-  loadDataPage(event: PageEvent) {
-    this.pagePerItem=event.pageSize
-}
+    this.getData()
+  }
+
 //This is for close the popup window
 @ViewChild('closebutton') closebutton: any;
 
@@ -68,11 +81,38 @@ teamId:any
     }
   }
 
+  //For searching
+ onTextChange(value: any) {
+  this.search = value;
+  this.getData();
+}
+
+//This is for pagination
+onTableDataChange(event: any) {
+  this.router.navigate(['myteam'], { queryParams: {event: event } });
+  this.page = event;
+  this.getData();
+}
+
+changeSortOrder(value: any): void {
+  this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
+  this.getData();
+}
+
   dataMamber:any
   getData(){
-    this.api.getAll(this.HostURL+this.myTeam).subscribe(data => {
+    this.spinner.show()
+    let params = new HttpParams();
+    params = params.append('orderBy',this.sortOrder)
+    if(this.search != null && this.search != ''){
+			params =  params.append('search',this.search)
+		}
+    this.api.getByParams(this.HostURL+this.myTeam,params).subscribe(data => {
       console.log("This is my team data------->",data);
       this.dataMamber=data
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
       console.log("this is my team dat dataMamaber--------->",this.dataMamber.data.rows)
     })
   }

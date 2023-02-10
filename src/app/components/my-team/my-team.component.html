@@ -1,4 +1,5 @@
 <main id="main" class="main">
+  <!-- <ngx-spinner type="square-jelly-box"></ngx-spinner> -->
     <div class="pagetitle">
        <h1>My Team</h1>
     </div>
@@ -7,13 +8,18 @@
           <div class="col-lg-12">
              <div class="card">
                 <div class="card-body">
-                   <div style="margin-bottom: 20px;">
-                     <input [(ngModel)]="searchText" placeholder="Search">
-                   </div>
+                  <div style="margin-bottom: 20px;">
+                    <input   
+                    [(ngModel)]="search" 
+                   (input)="getData()" 
+                   (ngModelChange)="onTextChange($event)"
+                    
+                    placeholder="Search">
+                  </div>
                    <table class="table datatable">
                       <thead>
                         <tr>
-                            <th scope="col">Name</th>
+                            <th scope="col" (click)="changeSortOrder($event)">Name<i class="bi bi-arrow-down-up" ></i></th>
                             <th scope="col">Email</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Role Assigned</th>
@@ -22,7 +28,13 @@
                          </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}" >
+                        <tr *ngFor="let data of dataMamber.data.rows | paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                          };
+                    let i = index" [ngStyle]="{'background-color': i % 2 !== 0 ? 'white' : '#f5f5f5'}" >
                            <th scope="row">{{data.firstName}} {{data.lastName}}</th>
                            <td>{{data.email}}</td>
                            <td>{{data.phoneNumber}}</td>
@@ -44,13 +56,14 @@
                           </td>
                       </tbody>
                    </table>
-                   <div class="pagination" >
-                     <mat-paginator [length]="dataMamber.data.rows.length"
-                         [pageSize]="5"
-                         [pageSizeOptions]="[5,10, 25, 100]"
-                         (page)="loadDataPage($event)">
-                     </mat-paginator>
-                    </div>
+                    <div class="d-flex justify-content-center" >
+                      <pagination-controls
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        (pageChange)="onTableDataChange($event)"
+                      >
+                      </pagination-controls>
+                      </div>
                 </div>
              </div>
           </div>

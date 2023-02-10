@@ -6,55 +6,77 @@ import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteDialogComponent } from 'src/app/delete-dialog/delete-dialog.component';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { Router,ActivatedRoute  } from '@angular/router';
+import { NgxSpinnerService,Spinner } from 'ngx-spinner';
 @Component({
   selector: 'app-role-and-permissions',
   templateUrl: './role-and-permissions.component.html',
   styleUrls: ['./role-and-permissions.component.css']
 })
 export class RoleAndPermissionsComponent implements OnInit {
+  search: any;
 
-  constructor(private elementRef: ElementRef,private toastr: ToastrService,private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog) { }
+  constructor(private elementRef: ElementRef,private toastr: ToastrService,
+    private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog,
+    private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { }
   HostURL=environment.hostULR
   roleAndPermission=environment.roleAndPermission
   roleAndPermissionById=environment.roleAndPermissionById
-  // roleAndPermission: FormGroup | any;
+  page: number=1;
+  count: number = 0;
+  tableSize: number = 10;
+  sortOrder ='DESC'
+  teamIds:any
+  teamId:any
+  dataMamber:any
+  datarecord:any
+statusVal:any
+roleAndPermissions:any|undefined
   ngOnInit(): void {
-    this.pagePerItem=5
-    this.getData()
-    // this.roleAndPermission = this.fb.group({
-    //   name: ['', Validators.required],
-    //   email:['', Validators.required],
-    //   phoneNumber:['', Validators.required],
-    //   role:['', Validators.required],
-    //   admin_tags:['', Validators.required],
-    // });
+    this.route.queryParams.subscribe(params => {
+      this.page = params['event'];
+    });
+  if(this.page){
+    this.page=this.page
+  }else{
+    this.page=1
   }
-  p = 1;
-  searchText = '';
-  pagePerItem=0
-  loadDataPage(event: PageEvent) {
-    this.pagePerItem=event.pageSize
-}
+    this.getData()
+  }
+  
 
+//For close the popup after click on save button
 @ViewChild('closebutton') closebutton: any;
 
 public onSave() {
   this.closebutton.nativeElement.click();
 }
 
-teamIds:any
+
   getId(id:any){
-this.teamIds=id
+  this.teamIds=id
   }
-teamId:any
+
   sendValue(num:any){
     this.teamId=num
   }
 
+  //For searching
+  onTextChange(value: any) {
+    this.search = value;
+    this.getData();
+  }
+  
+  //This is for pagination
+  onTableDataChange(event: any) {
+    this.router.navigate(['roleandpermission'], { queryParams: {event: event } });
+    this.page = event;
+    this.getData();
+  }
+
   patchValue(data:any,num:any) {
     if(num==2){
-      // this.roleAndPermission.reset()
+      // this.roleAndPermissions.reset()
     }else{
       // this.roleAndPermission.patchValue({
       //   name: data.firstName,
@@ -65,24 +87,27 @@ teamId:any
       // });
     }
   }
-  dataMamber:any
+  
   getData(){
+    this.spinner.show();
     this.api.getAll(this.HostURL+this.roleAndPermission).subscribe(data => {
       console.log("This is role and permission data------->",data);
       this.dataMamber=data
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
       console.log("this is role and permission dataMamaber--------->",this.dataMamber.data.permissions.name)
     })
   }
-datarecord:any
+
   getRecordSingle(id:any){
   this.api.getById(this.HostURL+this.roleAndPermissionById+id).subscribe(data => {
   console.log("This is role and permission  by id data------->",data);
   this.datarecord=data
   console.log("this is role and permission dataMamaber--------->",this.datarecord.data.role_permissions)
-})
-  }
+   })
+}
 
-statusVal:any
 deleteRole(id: any) {
   const dialogRef = this.dialog.open(DeleteDialogComponent);
   const data = {

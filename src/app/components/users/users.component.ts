@@ -1,38 +1,60 @@
-import { Component, OnInit, ElementRef} from '@angular/core';
+import { Component, OnInit, ElementRef,ViewChild} from '@angular/core';
 import { ServiceService } from '../../service.service'
 import { environment } from 'src/environments/environment';
-import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
+import { Router,ActivatedRoute  } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { NgxSpinnerService,Spinner } from 'ngx-spinner';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  HostURL=environment.hostULR
+  HostURL=environment.hostULR;
   UserULR=environment.UserUrl;
+  userId:any;
+  Blocked:any;
+  activeData:{ id: ""; isBlocked: ""; } | any;
+  dataMamber:any;
   statusVal: any;
   sortBy: string|any;
   sortOrder: string|any;
-  constructor(private elementRef: ElementRef,private api: ServiceService,private toastr: ToastrService ) { }
-  pagePerItem=0
-  searchText = '';
-  p = 1;
- 
-  loadDataPage(event: PageEvent) {
-    this.pagePerItem=event.pageSize
-}
+  page: number=1;
+  count: number = 0;
+  tableSize: number = 5;
+  search = '';
+  constructor(private elementRef: ElementRef,private api: ServiceService,
+    private toastr: ToastrService,private route: ActivatedRoute,
+    private router:Router,private spinner:NgxSpinnerService ) { 
+      this.spinner.show()
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 2000);
+    }
+  
 
+    @ViewChild('closebutton') closebutton: any;
+
+    public onSave() {
+      this.closebutton.nativeElement.click();
+    }
+//This is for sorting
 toggleSortOrder() {
   this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
 }
   ngOnInit(): void {
-    this.pagePerItem=5
-  this.getData()
+    this.route.queryParams.subscribe(params => {
+      this.page = params['event'];
+    });
+  if(this.page){
+    this.page=this.page
+  }else{
+    this.page=1
   }
-  userId:any
-  Blocked:any
-  activeData:{ id: ""; isBlocked: ""; } | any
+    this.getData()
+  }
+ //Get the id
  getId(id:any,isBlocked:any){
    this.activeData={
     id:id,
@@ -40,25 +62,38 @@ toggleSortOrder() {
    }
    this.Blocked=isBlocked
  }
+//For searching
+ onTextChange(value: any) {
+  this.search = value;
+  this.getData();
+}
 
-  dataMamber:any
-  // async getData() {
-  //   try {
-  //     const data = await this.api.getAll(this.HostURL + this.UserULR).toPromise();
-  //     console.log("This is subscription plan data------->", data);
-  //     this.dataMamber = data;
-  //     console.log("this is subscription plan dataMamaber--------->", this.dataMamber.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+//This is for get data form backend
   getData(){
-    this.api.getAll(this.HostURL+this.UserULR).subscribe(data => {
+  
+    console.log("this is page",this.page)
+    let params = new HttpParams();
+    params = params.set('limit', 1000); 
+    params = params.set('skip', 0);
+    if(this.search != null && this.search != ''){
+			params =  params.append('search',this.search)
+		}
+    console.log("This is params=====>",params)
+    this.api.getByParams(this.HostURL+this.UserULR,params).subscribe(data => {
       console.log("This is subscription plan data------->",data);
       this.dataMamber=data
+      
       console.log("this is subscription plan dataMamaber--------->",this.dataMamber.data)
     })
   }
+
+//This is for pagination
+  onTableDataChange(event: any) {
+    this.router.navigate(['user'], { queryParams: {event: event } });
+    this.page = event;
+    this.getData();
+  }
+//Active and Deactive the user
   ActiveData(): void{
     this.api.edit(this.HostURL+this.UserULR,this.activeData).subscribe((val) => {
       console.log("This is respone from server side for edit the subsrcription plan",val)

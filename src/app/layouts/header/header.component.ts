@@ -16,10 +16,12 @@ export class HeaderComponent implements OnInit {
   phoneNumber:any;
   email:any
   profileImage: string|any;
+  type:any
   defaultImage = 'assets/img/vaneet.jpeg';
   constructor(@Inject(DOCUMENT) private document: Document,private toastr: ToastrService,private api: ServiceService) { }
   
   ngOnInit(): void {
+   
     let d:any=localStorage.getItem("jwt")
     const jwt = JSON.parse(d);
     console.log("This is token",jwt)
@@ -46,5 +48,11 @@ export class HeaderComponent implements OnInit {
     }
     this.api.logoutuser(this.HostURL+this.logoutURL)
     this.toastr.success('Logged Out Successfully.');
+  }
+
+  storeType(){
+    // this.type=localStorage.getItem('type')
+    this.type=100
+    localStorage.setItem('type',this.type)
   }
 }
