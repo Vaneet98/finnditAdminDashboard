@@ -21,12 +21,15 @@ export class MyTeamComponent implements OnInit {
     private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { }
   HostURL=environment.hostULR
   myTeam=environment.myTeamURL
+  getAdmin=environment.getAdmin
   teamForm: FormGroup | any;
   page: number=1;
   count: number = 0;
   tableSize: number = 5;
   search = '';
   sortOrder ='DESC'
+  limit=100
+  skip=0
   ngOnInit(): void {
     // this.getData()
     this.teamForm = this.fb.group({
@@ -91,6 +94,7 @@ teamId:any
 onTableDataChange(event: any) {
   this.router.navigate(['myteam'], { queryParams: {event: event } });
   this.page = event;
+  // this.skip=(this.page-1)*this.limit
   this.getData();
 }
 
@@ -103,16 +107,15 @@ changeSortOrder(value: any): void {
   getData(){
     this.spinner.show()
     let params = new HttpParams();
+    params = params.set('limit', this.limit); 
+    params = params.set('skip', this.skip);
     params = params.append('orderBy',this.sortOrder)
     if(this.search != null && this.search != ''){
 			params =  params.append('search',this.search)
 		}
-    this.api.getByParams(this.HostURL+this.myTeam,params).subscribe(data => {
+    this.api.getByParams(this.HostURL+this.getAdmin,params).subscribe(data => {
       console.log("This is my team data------->",data);
       this.dataMamber=data
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000);
       console.log("this is my team dat dataMamaber--------->",this.dataMamber.data.rows)
     })
   }

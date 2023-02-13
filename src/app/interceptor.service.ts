@@ -16,10 +16,10 @@ export class InterceptorService implements HttpInterceptor {
   constructor(private toastr: ToastrService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // console.log('Request URL------------------->:', req.url);
+    console.log('Request URL------------------->:', req.url);
     if (req.url !== this.HostURL+this.LoginURL && req.url!== this.HostURL+this.commanRoleURL 
-      && req.url !== this.HostURL+this.registerURL && req.url !== this.HorizontalTierGetDetail  ) {
-      // console.log("Hellllllllllllllllllllllll")
+      && req.url !== this.HorizontalTierGetDetail  ) {
+      console.log("Hellllllllllllllllllllllll")
       const token: any = localStorage.getItem('jwt');
       const accessToken: any = JSON.parse(token);
       let headers = new HttpHeaders().set('Authorization', 'Bearer ' + accessToken.data.accessToken);

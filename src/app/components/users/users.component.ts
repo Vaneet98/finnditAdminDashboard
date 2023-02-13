@@ -21,9 +21,11 @@ export class UsersComponent implements OnInit {
   sortBy: string|any;
   sortOrder: string|any;
   page: number=1;
-  count: number = 0;
+  count: any;
   tableSize: number = 5;
   search = '';
+  limit=5
+  skip=0
   constructor(private elementRef: ElementRef,private api: ServiceService,
     private toastr: ToastrService,private route: ActivatedRoute,
     private router:Router,private spinner:NgxSpinnerService ) { 
@@ -70,19 +72,16 @@ toggleSortOrder() {
 
 //This is for get data form backend
   getData(){
-  
-    console.log("this is page",this.page)
     let params = new HttpParams();
-    params = params.set('limit', 1000); 
-    params = params.set('skip', 0);
+    params = params.set('limit', this.limit); 
+    params = params.set('skip', this.skip);
     if(this.search != null && this.search != ''){
 			params =  params.append('search',this.search)
 		}
-    console.log("This is params=====>",params)
     this.api.getByParams(this.HostURL+this.UserULR,params).subscribe(data => {
       console.log("This is subscription plan data------->",data);
       this.dataMamber=data
-      
+      this.count=this.dataMamber.data.count
       console.log("this is subscription plan dataMamaber--------->",this.dataMamber.data)
     })
   }
@@ -91,6 +90,7 @@ toggleSortOrder() {
   onTableDataChange(event: any) {
     this.router.navigate(['user'], { queryParams: {event: event } });
     this.page = event;
+    this.skip=(this.page-1)*this.limit
     this.getData();
   }
 //Active and Deactive the user

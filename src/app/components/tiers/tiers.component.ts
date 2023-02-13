@@ -38,6 +38,7 @@ export class TiersComponent implements OnInit {
   tableSize: number = 5;
   search = '';
   sortOrder ='DESC'
+  number:any
   constructor(private elementRef: ElementRef,private api: ServiceService,private dialog: MatDialog,
     private toastr: ToastrService,private fb: FormBuilder,
     private router: Router,private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
@@ -69,6 +70,12 @@ public onSave() {
       pointMultiplier: ['', Validators.required],
       profileCompletion: ['', Validators.required],
       description: ['', Validators.required],
+      pointEarnedValidity: ['', Validators.required],
+      maxPointEarningPerMonth: ['', Validators.required],
+      maxPointRedeemedPerMonth: ['', Validators.required],
+      redeemedPerTransaction: ['', Validators.required],
+      minBlockRedeemedPerTransaction: ['', Validators.required],
+      additionalRewards: ['', Validators.required],
     });
    }
    else if(this.typeOfTier==1){
@@ -85,7 +92,7 @@ public onSave() {
 }
  
 getData(){
-  this.spinner.show()
+
   let params = new HttpParams();
   params = params.set('limit', 10);
   params = params.set('skip', 0);
@@ -94,9 +101,7 @@ getData(){
     this.api.getByParams(this.HorizontalTierGetDetail,params).subscribe(res => {
       console.log("This is tier data------->",res);
       this.dataMamber=res
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000);
+    
       console.log("this is tier dataMamaber--------->",this.dataMamber.data)  
     })
 }
@@ -124,7 +129,7 @@ getStatus(DataStatus:any){
     this.getData();
   }
 
-ActiveData(){
+  ActiveData(){
     if(this.status==1){
       this.status=0
     }
@@ -147,10 +152,11 @@ ActiveData(){
     }
   });
 
-}
+  }
 
-getId(id:any){
+ getId(id:any){
    this.tierId=id
+   console.log("this is tierId--------->",this.tierId)
   }
 
   onRowSelect(event:any) {
@@ -158,69 +164,70 @@ getId(id:any){
 		// this.router.navigate(['/TagAdminDetailComponent/'+this.type+'/'+ event.id])
 	}
 
+  TypePass(n:any){
+    this.typeOfTier=n
+    console.log("this is type of tier",this.typeOfTier)
+    }
+
   patchValue(data:any,num:number) {
+    this.number=num
     if(num===1){
       this.tierForm.reset()
-    }else{
-
-      if(this.typeOfTier==0){
-        this.tierForm.patchValue({
-          tierTitle: data.tierTitle,
-          pointsRewarded: data.pointsRewarded,
-          pointMultiplier: data.pointMultiplier,
-          profileCompletion: data.profileCompletion,
-          description: data.description,
-        });
-      }
-      else if(this.typeOfTier==1){
-        this.tierForm.patchValue({
-          tierTitle: data.tierTitle,
-          pointsRewarded: data.pointsRewarded,
-          pointEarnedValidity: data.pointEarnedValidity,
-          maxPointEarningPerMonth: data.maxPointEarningPerMonth,
-          maxPointRedeemedPerMonth: data.maxPointRedeemedPerMonth,
-          redeemedPerTransaction: data.redeemedPerTransaction,
-          minBlockRedeemedPerTransaction: data.minBlockRedeemedPerTransaction,
-          additionalRewards: data.additionalRewards,
-        });
-      }
-      
-    }
-  }
-
-  TypePass(n:any){
-  this.typeOfTier=n
-  console.log("this is type of tier",this.typeOfTier)
-  }
-
- editTags(data:any){
-    data.id=this.tierId
-    if(data.id!==undefined){
-      this.api.edit(this.HostURL+this.HorizontalTierGetDetail,data).subscribe((val) => {
-        if (val) {
-          this.statusVal=val
-          if(this.statusVal.statusCode===200){
-            this.toastr.success('Edit data Successfully.');
-            this.getData()
-          }
-        }
-      });
     }
     else{
-      delete data.id
-      data.type=this.type
-      console.log("This is data for add in tier-======>>>>",data)
-      // this.api.add(this.HostURL+this.TagaddURL,data).subscribe((val) => {
-      //   if (val) {
-      //     this.statusVal=val
-      //     if(this.statusVal.statusCode===200){
-      //       this.toastr.success('Add data Successfully.');
-      //       this.getData()
-      //     }
-      //   }
-      // });
+      this.tierForm.patchValue({
+        tierTitle: data.tierTitle,
+        pointsRewarded: data.pointsRewarded,
+        pointMultiplier: data.pointMultiplier,
+        profileCompletion: data.profileCompletion,
+        description:data.description,
+        pointEarnedValidity: data.pointEarnedValidity,
+        maxPointEarningPerMonth: data.maxPointEarningPerMonth,
+        maxPointRedeemedPerMonth: data.maxPointRedeemedPerMonth,
+        redeemedPerTransaction: data.redeemedPerTransaction,
+        minBlockRedeemedPerTransaction: data.minBlockRedeemedPerTransaction,
+        additionalRewards: data.additionalRewards
+      });
     }
- 
+  }
+
+  editTags(data:any){
+    if(this.type==0&&this.tierForm.tierTitle&&this.tierForm.pointsRewarded&&this.tierForm.pointMultiplier
+      &&this.tierForm.profileCompletion&&this.tierForm.description){
+        this.toastr.success("data get successfull")
+        
+    }
+    if(this.tierForm.valid){
+      data.id=this.tierId
+      if(data.id!==undefined){
+        this.api.edit(this.HorizontalTierGetDetail,data).subscribe((val) => {
+          if (val) {
+            this.statusVal=val
+            if(this.statusVal.statusCode===200){
+              this.toastr.success('Edit data Successfully.');
+              this.getData()
+            }
+          }
+        });
+      }
+      else{
+        delete data.id
+        data.type=this.type
+        console.log("This is data for add in tier-======>>>>",data)
+        // this.api.add(this.HorizontalTierGetDetail,data).subscribe((val) => {
+        //   if (val) {
+        //     this.statusVal=val
+        //     if(this.statusVal.statusCode===200){
+        //       this.toastr.success('Add data Successfully.');
+        //       this.getData()
+        //     }
+        //   }
+        // });
+      }
+    }
+    else{
+      this.toastr.error('All fields are required.');
+    }
   }
 
   deleteTag(id: any) {

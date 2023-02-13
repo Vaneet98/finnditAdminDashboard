@@ -787,7 +787,7 @@
 	color:black;
 	/* color: white; */
 	transition: 0.3;
-	background: #f6f9ff;
+	/* background: #f6f9ff; */
 	padding: 10px 15px;
 	border-radius: 4px;
   }
@@ -805,7 +805,7 @@
   }
   .sidebar-nav .nav-link:hover {
 	color: #4154f1;
-	background: #f6f9ff;
+	/* background: #f6f9ff; */
   }
   .sidebar-nav .nav-link:hover i {
 	color: #4154f1;

@@ -21,12 +21,15 @@ export class AdminBannersComponent implements OnInit {
   AdminBannerURL=environment.adminBannerURL
   AdminBannerDeleteURL=environment.adminBannerdeleteURL
   page: number=1;
-  count: number = 0;
+  count: any;
   tableSize: number = 5;
   search = '';
   sortOrder ='DESC'
   statusVal:any
   dataMamber:any
+  limit=5
+  skip=0
+  lengths:any
   onRowClick(data:any):void {
     console.log("this is admin banner")
     alert(data);
@@ -52,6 +55,7 @@ export class AdminBannersComponent implements OnInit {
   onTableDataChange(event: any) {
     this.router.navigate(['adminbanner'], { queryParams: {event: event } });
     this.page = event;
+    this.skip=(this.page-1)*this.limit
     this.getData();
   }
   
@@ -68,10 +72,9 @@ public onSave() {
 }
 
   getData(){
-    this.spinner.show()
     let params = new HttpParams();
-    params = params.set('limit', 10);
-    params = params.set('skip', 0);
+    params = params.set('limit', this.limit);
+    params = params.set('skip', this.skip);
     params = params.append('orderBy',this.sortOrder)
     if(this.search != null && this.search != ''){
 			params =  params.append('search',this.search)
@@ -80,9 +83,10 @@ public onSave() {
       console.log("This is admin Banner data------->",data);
       this.dataMamber=data
       this.dataMamber=this.dataMamber.data
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000);
+      //this is for count the total data in the api
+      this.lengths=this.dataMamber.data.length
+      this.count=this.lengths
+  
       console.log("this is dataMamaber--------->",this.dataMamber.data)
     })
   }

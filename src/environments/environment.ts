@@ -23,13 +23,14 @@ export const environment = {
   TagAdminDetailURL:'admin/v1/tags/assignedToListing?limit=1000&skip=0',
   UnassignedURL:'admin/v1/tags/unAssign',
   UserUrl:'admin/v1/customers',
-  adminBannerURL:'http://localhost:3000/admin/v1/adminBanner?limit=100&skip=0',
+  adminBannerURL:'http://localhost:3000/admin/v1/adminBanner',
   adminBannerdeleteURL:'http://localhost:3000/admin/v1/adminBanner',
-  myTeamURL:'admin/v1/admin?limit=100&skip=0',
+  myTeamURL:'admin/v1/admin',
   roleAndPermission:'admin/v1/roles?limit=100&skip=0',
   roleAndPermissionById:'admin/v1/roles/',
   HorizontalTierGetDetail:'http://localhost:3000/admin/v1/tier',
-  HorizontalTierDeactivate:'http://localhost:3000/admin/v1/tier/deactivited'
+  HorizontalTierDeactivate:'http://localhost:3000/admin/v1/tier/deactivited',
+  BusinessURL:'admin/v1/businessListing'
 
 };
 // Admin/admin-v1-admin-login-post
