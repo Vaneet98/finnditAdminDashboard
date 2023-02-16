@@ -1,4 +1,5 @@
 <main id="main" class="main">
+   <ngx-spinner type="ball-beat"></ngx-spinner>
    <div class="pagetitle">
       <h1>Dashboard</h1>
       <nav>
@@ -15,14 +16,13 @@
                <div class="col-xxl-4 col-md-4">
                   <div class="card info-card sales-card">
                      <div class="card-body">
-                        <h5 class="card-title">Sales <span>| Today</span></h5>
+                        <h5 class="card-title">Total <span>| Businesses Register</span></h5>
                         <div class="d-flex align-items-center">
                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
-                                 class="bi bi-cart"></i></div>
+                                 class="bi bi-briefcase-fill"></i></div>
                            <div class="ps-3">
-                              <h6>145</h6>
-                              <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                 class="text-muted small pt-2 ps-1">increase</span>
+                              <h6>{{countBusiness}}</h6>
+                              <span class="text-success small pt-1 fw-bold"></span>
                            </div>
                         </div>
                      </div>
@@ -31,12 +31,12 @@
                <div class="col-xxl-4 col-md-4">
                   <div class="card info-card revenue-card">
                      <div class="card-body">
-                        <h5 class="card-title">Subscription Plan <span></span></h5>
+                        <h5 class="card-title">Total <span>| Subscription Plan</span></h5>
                         <div class="d-flex align-items-center">
                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
                                  class="bi bi-subtract sidebarIcon"></i></div>
                            <div class="ps-3">
-                              <h6>{{this.counts}}</h6>
+                              <h6>{{countSubscriptionPlan}}</h6>
                            </div>
                         </div>
                      </div>
@@ -50,7 +50,7 @@
                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
                                  class="bi bi-people"></i></div>
                            <div class="ps-3">
-                              <h6>{{this.dataMamber.data.count}}</h6>
+                              <h6>{{countUser}}</h6>
                            </div>
                         </div>
                      </div>

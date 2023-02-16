@@ -35,10 +35,21 @@ export class SubscriptionPlansComponent implements OnInit {
   statusVal:any
   data:{id:any,status:any} | any
   publish:any
+  form:FormGroup|any
+  limit=5
+  skip=0
   constructor(private elementRef: ElementRef,private api: ServiceService ,private dialog: MatDialog,
      private router:Router,private fb: FormBuilder,private toastr: ToastrService,
-     private route:ActivatedRoute,private spinner:NgxSpinnerService) { }
-   form:FormGroup|any
+     private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
+      this.spinner.show()
+    }
+  //For Stop uploading when all component render successfully
+    ngAfterViewInit() {
+      setTimeout(() => {
+        this.spinner.hide();
+      });
+     }
+  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -49,6 +60,7 @@ export class SubscriptionPlansComponent implements OnInit {
   }else{
     this.page=1
   }    
+  this.skip=(this.page-1)*this.limit
   this.getData()
     this.subscriptionForm = this.fb.group({
       name: ['', Validators.required],
@@ -71,10 +83,9 @@ export class SubscriptionPlansComponent implements OnInit {
   // Get data from server
 
   getData(){
-    this.spinner.show()
     let params = new HttpParams();
-    params = params.set('limit', 10);
-    params = params.set('skip', 0);
+    params = params.set('limit', this.limit); 
+    params = params.set('skip', this.skip);
     params = params.append('orderBy',this.sortOrder)
     if(this.search != null && this.search != ''){
 			params =  params.append('search',this.search)
@@ -82,9 +93,7 @@ export class SubscriptionPlansComponent implements OnInit {
     this.api.getByParams(this.HostURL+this.SubscriptionPlan,params).subscribe(data => {
       console.log("This is subscription plan data------->",data);
       this.dataMamber=data
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000);
+      this.count=this.dataMamber.data.length+3
       console.log("this is subscription plan dataMamaber--------->",this.dataMamber.data)
     })
   }
@@ -116,13 +125,15 @@ getRecord(data:any){
   
   //This is for pagination
   onTableDataChange(event: any) {
-    this.router.navigate(['tier'], { queryParams: {event: event } });
+    this.router.navigate(['subsription'], { queryParams: {event: event } });
     this.page = event;
+    this.skip=(this.page-1)*this.limit
     this.getData();
   }
   
   changeSortOrder(value: any): void {
     this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
+
     this.getData();
   }
 

@@ -18,7 +18,15 @@ export class MyTeamComponent implements OnInit {
 
   constructor(private elementRef: ElementRef,private toastr: ToastrService,
     private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog,
-    private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { }
+    private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { 
+      this.spinner.show()
+    }
+  //For Stop uploading when all component render successfully
+    ngAfterViewInit() {
+      setTimeout(() => {
+        this.spinner.hide();
+      });
+     }
   HostURL=environment.hostULR
   myTeam=environment.myTeamURL
   getAdmin=environment.getAdmin
@@ -28,7 +36,7 @@ export class MyTeamComponent implements OnInit {
   tableSize: number = 5;
   search = '';
   sortOrder ='DESC'
-  limit=100
+  limit=5
   skip=0
   ngOnInit(): void {
     // this.getData()
@@ -47,6 +55,7 @@ export class MyTeamComponent implements OnInit {
   }else{
     this.page=1
   }
+  this.skip=(this.page-1)
     this.getData()
   }
 
@@ -94,7 +103,7 @@ teamId:any
 onTableDataChange(event: any) {
   this.router.navigate(['myteam'], { queryParams: {event: event } });
   this.page = event;
-  // this.skip=(this.page-1)*this.limit
+  this.skip=(this.page-1)
   this.getData();
 }
 

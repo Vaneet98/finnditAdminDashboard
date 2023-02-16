@@ -30,11 +30,12 @@ export class UsersComponent implements OnInit {
     private toastr: ToastrService,private route: ActivatedRoute,
     private router:Router,private spinner:NgxSpinnerService ) { 
       this.spinner.show()
+    }
+    ngAfterViewInit() {
       setTimeout(() => {
         this.spinner.hide();
-      }, 2000);
-    }
-  
+     });
+     }
 
     @ViewChild('closebutton') closebutton: any;
 
@@ -54,6 +55,7 @@ toggleSortOrder() {
   }else{
     this.page=1
   }
+  this.skip=(this.page-1)
     this.getData()
   }
  //Get the id
@@ -90,7 +92,7 @@ toggleSortOrder() {
   onTableDataChange(event: any) {
     this.router.navigate(['user'], { queryParams: {event: event } });
     this.page = event;
-    this.skip=(this.page-1)*this.limit
+    this.skip=(this.page-1)
     this.getData();
   }
 //Active and Deactive the user

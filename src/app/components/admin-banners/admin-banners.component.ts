@@ -15,7 +15,16 @@ import { NgxSpinnerService,Spinner } from 'ngx-spinner';
 export class AdminBannersComponent implements OnInit {
   constructor(private elementRef: ElementRef,private api: ServiceService,
     private dialog: MatDialog,private toastr: ToastrService,
-    private route:ActivatedRoute,private router:Router,private spinner:NgxSpinnerService ) { }
+    private route:ActivatedRoute,private router:Router,private spinner:NgxSpinnerService ) { 
+      this.spinner.show()
+    }
+
+    ngAfterViewInit() {
+      setTimeout(() => {
+        this.spinner.hide();
+     });
+     }
+
   selectedDataMember: any;
   HostURL=environment.hostULR
   AdminBannerURL=environment.adminBannerURL
@@ -43,6 +52,7 @@ export class AdminBannersComponent implements OnInit {
   }else{
     this.page=1
   } 
+  this.skip=(this.page-1)
   this.getData()
   }
   //For searching
@@ -55,7 +65,7 @@ export class AdminBannersComponent implements OnInit {
   onTableDataChange(event: any) {
     this.router.navigate(['adminbanner'], { queryParams: {event: event } });
     this.page = event;
-    this.skip=(this.page-1)*this.limit
+    this.skip=(this.page-1)
     this.getData();
   }
   

@@ -56,6 +56,7 @@ toggleSortOrder() {
   }else{
     this.page=1
   }
+  this.skip=(this.page-1)
     this.getData()
   }
 
@@ -97,7 +98,7 @@ toggleSortOrder() {
   onTableDataChange(event: any) {
     this.router.navigate(['user'], { queryParams: {event: event } });
     this.page = event;
-    this.skip=(this.page-1)*this.limit
+    this.skip=(this.page-1)
     this.getData();
   }
 //Active and Deactive the user

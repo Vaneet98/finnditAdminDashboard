@@ -104,6 +104,14 @@ export class ServiceService {
   }
 //Edit API
   edit(url:any,data:any){
+    console.log("This is data id",data)
+    return this.http.put(url,data);
+  }
+  edits(url:any,id:any){
+    console.log("This is ------>id",id)
+    const data={
+      id:id
+    }
     return this.http.put(url,data);
   }
 //Get by Params

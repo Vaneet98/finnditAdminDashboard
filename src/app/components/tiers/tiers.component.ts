@@ -20,7 +20,8 @@ export class TiersComponent implements OnInit {
   TagAdminDetailURL=environment.TagAdminDetailURL;
   HorizontalTierDeactivate=environment.HorizontalTierDeactivate
   statusVal: any;
-  tierForm: FormGroup | any;
+  tierFormHorizontal: FormGroup | any;
+  tierFormVertical: FormGroup | any;
   pagePerItem=0
   searchText = '';
   p = 1;
@@ -37,14 +38,19 @@ export class TiersComponent implements OnInit {
   count: number = 0;
   tableSize: number = 5;
   search = '';
-  sortOrder ='DESC'
+  sortOrder ='ASC'
   number:any
   constructor(private elementRef: ElementRef,private api: ServiceService,private dialog: MatDialog,
     private toastr: ToastrService,private fb: FormBuilder,
     private router: Router,private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
+      this.spinner.show()
   }
-
-
+//For Stop uploading when all component render successfully
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.spinner.hide();
+    });
+   }
 //This is for close the popup window
 @ViewChild('closebutton') closebutton: any;
 
@@ -62,33 +68,27 @@ public onSave() {
     this.page=1
   }
    this.getData()
-   if(this.typeOfTier==0){
-    this.tierForm = this.fb.group({
+  //  if(this.typeOfTier==0){
+    this.tierFormHorizontal = this.fb.group({
       // image: ['', Validators.required],
       tierTitle: ['', Validators.required],
       pointsRewarded: ['', Validators.required],
       pointMultiplier: ['', Validators.required],
       profileCompletion: ['', Validators.required],
       description: ['', Validators.required],
+    });
+  //  }
+  //  else if(this.typeOfTier==1){
+    this.tierFormVertical=this.fb.group({
+      tierTitle: ['', Validators.required],
       pointEarnedValidity: ['', Validators.required],
       maxPointEarningPerMonth: ['', Validators.required],
       maxPointRedeemedPerMonth: ['', Validators.required],
       redeemedPerTransaction: ['', Validators.required],
       minBlockRedeemedPerTransaction: ['', Validators.required],
       additionalRewards: ['', Validators.required],
-    });
-   }
-   else if(this.typeOfTier==1){
-    this.tierForm=this.fb.group({
-      tierTitle: ['', Validators.required],
-      pointEarnedValidity: ['', Validators],
-      maxPointEarningPerMonth: ['', Validators],
-      maxPointRedeemedPerMonth: ['', Validators],
-      redeemedPerTransaction: ['', Validators],
-      minBlockRedeemedPerTransaction: ['', Validators],
-      additionalRewards: ['', Validators],
     })
-   }
+  //  }
 }
  
 getData(){
@@ -141,7 +141,7 @@ getStatus(DataStatus:any){
       status:this.status
     }
   this.api.edit(this.HorizontalTierDeactivate,data).subscribe((val) => {
-    console.log("This is respone from server side for edit the subsrcription plan",val)
+    console.log("This is respone from server side for edit the tier plan",val)
     if (val) {
       this.statusVal=val
       if(this.statusVal.statusCode===200){
@@ -172,15 +172,11 @@ getStatus(DataStatus:any){
   patchValue(data:any,num:number) {
     this.number=num
     if(num===1){
-      this.tierForm.reset()
+      this.tierFormHorizontal.reset()
     }
-    else{
-      this.tierForm.patchValue({
+    else if(this.typeOfTier==1&&num!==1){
+      this.tierFormVertical.patchValue({
         tierTitle: data.tierTitle,
-        pointsRewarded: data.pointsRewarded,
-        pointMultiplier: data.pointMultiplier,
-        profileCompletion: data.profileCompletion,
-        description:data.description,
         pointEarnedValidity: data.pointEarnedValidity,
         maxPointEarningPerMonth: data.maxPointEarningPerMonth,
         maxPointRedeemedPerMonth: data.maxPointRedeemedPerMonth,
@@ -189,15 +185,20 @@ getStatus(DataStatus:any){
         additionalRewards: data.additionalRewards
       });
     }
+    else{
+    this.tierFormHorizontal.patchValue({
+        tierTitle: data.tierTitle,
+        pointsRewarded: data.pointsRewarded,
+        pointMultiplier: data.pointMultiplier,
+        profileCompletion: data.profileCompletion,
+        description:data.description,
+      });
+     
+    }
   }
 
   editTags(data:any){
-    if(this.type==0&&this.tierForm.tierTitle&&this.tierForm.pointsRewarded&&this.tierForm.pointMultiplier
-      &&this.tierForm.profileCompletion&&this.tierForm.description){
-        this.toastr.success("data get successfull")
-        
-    }
-    if(this.tierForm.valid){
+    if(this.tierFormHorizontal.valid||this.tierFormVertical.valid){
       data.id=this.tierId
       if(data.id!==undefined){
         this.api.edit(this.HorizontalTierGetDetail,data).subscribe((val) => {
@@ -212,17 +213,17 @@ getStatus(DataStatus:any){
       }
       else{
         delete data.id
-        data.type=this.type
+        data.tierType=this.typeOfTier
         console.log("This is data for add in tier-======>>>>",data)
-        // this.api.add(this.HorizontalTierGetDetail,data).subscribe((val) => {
-        //   if (val) {
-        //     this.statusVal=val
-        //     if(this.statusVal.statusCode===200){
-        //       this.toastr.success('Add data Successfully.');
-        //       this.getData()
-        //     }
-        //   }
-        // });
+        this.api.add(this.HorizontalTierGetDetail,data).subscribe((val) => {
+          if (val) {
+            this.statusVal=val
+            if(this.statusVal.statusCode===200){
+              this.toastr.success('Add data Successfully.');
+              this.getData()
+            }
+          }
+        });
       }
     }
     else{

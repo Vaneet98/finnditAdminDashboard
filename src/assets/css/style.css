@@ -28,6 +28,7 @@
   }
   .tab-section ul li.active a{
 	background-color: #18225a;
+	/* background-color: #aeb2ca; */
     /* color: #b4bcc8; */
 	color: white;
   }
@@ -35,7 +36,8 @@
 	color:black
   }
  .sidebar ul li.active a{
-	background-color: #18225a;
+	/* background-color: #18225a; */
+	background-color: #5867c0;
 	color: white;
   }
   .sidebar ul li.active .sidebarIcon{
@@ -723,7 +725,8 @@
 	scrollbar-width: thin;
 	scrollbar-color: #aab7cf transparent;
 	box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-	background-color: #fff;
+	/* background-color: #fff; */
+	background-color: #F8F9FD;
   }
   @media (max-width: 1199px) {
 	.sidebar {
@@ -804,8 +807,9 @@
 	color: #899bbd;
   }
   .sidebar-nav .nav-link:hover {
-	color: #4154f1;
-	/* background: #f6f9ff; */
+	color: #616ab8;
+	/* color: #182259; */
+	background: #c3d1ed;
   }
   .sidebar-nav .nav-link:hover i {
 	color: #4154f1;

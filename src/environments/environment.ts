@@ -12,7 +12,7 @@ export const environment = {
   getAdmin:'admin/v1/admin',
   changePassword:'admin/v1/admin/profile/change-password',
   logoutURL:'admin/v1/admin/logout',
-  CategoryURL:'admin/v1/categories?limit=1000&skip=0',
+  CategoryURL:'admin/v1/categories',
   SubcategoryL1URL:'admin/v1/subCategories?limit=100&skip=0&categoryId=',
   SubcategoryL2URL:'admin/v1/subCategories/level2?limit=1000&skip=0&subCategoryLevel1Id=',
   SubscriptionPlan:'admin/v1/subscriptionPlan',
@@ -30,7 +30,9 @@ export const environment = {
   roleAndPermissionById:'admin/v1/roles/',
   HorizontalTierGetDetail:'http://localhost:3000/admin/v1/tier',
   HorizontalTierDeactivate:'http://localhost:3000/admin/v1/tier/deactivited',
-  BusinessURL:'admin/v1/businessListing'
+  BusinessURL:'admin/v1/businessListing',
+  listingURL:'/admin/v1/businessListing/listing',
+  listingActiveReject:'admin/v1/businessListing/activeDeactivate?isBlocked='
 
 };
 // Admin/admin-v1-admin-login-post

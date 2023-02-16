@@ -18,7 +18,15 @@ export class RoleAndPermissionsComponent implements OnInit {
 
   constructor(private elementRef: ElementRef,private toastr: ToastrService,
     private api: ServiceService,private fb: FormBuilder,private dialog: MatDialog,
-    private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { }
+    private router:Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { 
+      this.spinner.show()
+    }
+  //For Stop uploading when all component render successfully
+    ngAfterViewInit() {
+      setTimeout(() => {
+        this.spinner.hide();
+      });
+     }
   HostURL=environment.hostULR
   roleAndPermission=environment.roleAndPermission
   roleAndPermissionById=environment.roleAndPermissionById
@@ -89,13 +97,9 @@ public onSave() {
   }
   
   getData(){
-    this.spinner.show();
     this.api.getAll(this.HostURL+this.roleAndPermission).subscribe(data => {
       console.log("This is role and permission data------->",data);
       this.dataMamber=data
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000);
       console.log("this is role and permission dataMamaber--------->",this.dataMamber.data.permissions.name)
     })
   }

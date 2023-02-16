@@ -37,8 +37,14 @@ export class TagsComponent implements OnInit {
   constructor(private elementRef: ElementRef,private api: ServiceService,private dialog: MatDialog,
     private toastr: ToastrService,private fb: FormBuilder,
     private router: Router,private route: ActivatedRoute,private spinner:NgxSpinnerService) { 
-
-  }
+      this.spinner.show()
+    }
+  //For Stop uploading when all component render successfully
+    ngAfterViewInit() {
+      setTimeout(() => {
+        this.spinner.hide();
+      });
+     }
 
   ngOnInit(): void {
   //  this.getData()
@@ -57,13 +63,9 @@ export class TagsComponent implements OnInit {
   }
  
 getData(){
-  this.spinner.show()
   this.api.getById(this.HostURL+this.TageURL+this.type).subscribe(res => {
     console.log("This is tageAdmin data------->",res);
     this.dataMamber=res
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
     console.log("this is tageAdmin dataMamaber--------->",this.dataMamber.data.rows)
     // permission
 				
