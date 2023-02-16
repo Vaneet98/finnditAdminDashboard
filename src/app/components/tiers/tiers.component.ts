@@ -53,11 +53,9 @@ export class TiersComponent implements OnInit {
    }
 //This is for close the popup window
 @ViewChild('closebutton') closebutton: any;
-
 public onSave() {
   this.closebutton.nativeElement.click();
 }
-
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.page = params['event'];
@@ -68,7 +66,6 @@ public onSave() {
     this.page=1
   }
    this.getData()
-  //  if(this.typeOfTier==0){
     this.tierFormHorizontal = this.fb.group({
       // image: ['', Validators.required],
       tierTitle: ['', Validators.required],
@@ -77,8 +74,6 @@ public onSave() {
       profileCompletion: ['', Validators.required],
       description: ['', Validators.required],
     });
-  //  }
-  //  else if(this.typeOfTier==1){
     this.tierFormVertical=this.fb.group({
       tierTitle: ['', Validators.required],
       pointEarnedValidity: ['', Validators.required],
@@ -88,11 +83,8 @@ public onSave() {
       minBlockRedeemedPerTransaction: ['', Validators.required],
       additionalRewards: ['', Validators.required],
     })
-  //  }
 }
- 
 getData(){
-
   let params = new HttpParams();
   params = params.set('limit', 10);
   params = params.set('skip', 0);
@@ -101,34 +93,27 @@ getData(){
     this.api.getByParams(this.HorizontalTierGetDetail,params).subscribe(res => {
       console.log("This is tier data------->",res);
       this.dataMamber=res
-    
       console.log("this is tier dataMamaber--------->",this.dataMamber.data)  
     })
 }
-
 getStatus(DataStatus:any){
   this.status=DataStatus
 }
-
-
   //For searching
   onTextChange(value: any) {
     this.search = value;
     this.getData();
   }
-  
   //This is for pagination
   onTableDataChange(event: any) {
     this.router.navigate(['tier'], { queryParams: {event: event } });
     this.page = event;
     this.getData();
   }
-  
   changeSortOrder(value: any): void {
     this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
     this.getData();
   }
-
   ActiveData(){
     if(this.status==1){
       this.status=0
@@ -153,22 +138,14 @@ getStatus(DataStatus:any){
   });
 
   }
-
  getId(id:any){
    this.tierId=id
    console.log("this is tierId--------->",this.tierId)
   }
-
-  onRowSelect(event:any) {
-    alert(JSON.stringify(event))
-		// this.router.navigate(['/TagAdminDetailComponent/'+this.type+'/'+ event.id])
-	}
-
   TypePass(n:any){
     this.typeOfTier=n
     console.log("this is type of tier",this.typeOfTier)
     }
-
   patchValue(data:any,num:number) {
     this.number=num
     if(num===1){
@@ -196,7 +173,6 @@ getStatus(DataStatus:any){
      
     }
   }
-
   editTags(data:any){
     if(this.tierFormHorizontal.valid||this.tierFormVertical.valid){
       data.id=this.tierId
@@ -230,7 +206,6 @@ getStatus(DataStatus:any){
       this.toastr.error('All fields are required.');
     }
   }
-
   deleteTag(id: any) {
     const dialogRef = this.dialog.open(DeleteDialogComponent);
     const data = {

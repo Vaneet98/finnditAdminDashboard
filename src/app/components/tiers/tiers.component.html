@@ -1,5 +1,5 @@
 <main id="main" class="main">
-  <!-- <ngx-spinner type="square-jelly-box"></ngx-spinner> -->
+  <ngx-spinner type="ball-beat"></ngx-spinner>
    <div class="pagetitle">
       <h1>Tires</h1>
    </div>
@@ -41,7 +41,7 @@
                            totalItems: count
                          };
                    let i = index" [ngStyle]="{'background-color': i % 2 !== 0 ? 'white' : '#f5f5f5'}">
-                         <th scope="row" (click)="onRowSelect(data)" style="cursor: pointer;">{{data.tierTitle}}</th>
+                         <th scope="row"  style="cursor: pointer;">{{data.tierTitle}}</th>
                          <td >{{data.pointsRewarded}} </td>
                          <td *ngIf="type==1">{{data.pointEarnedValidity}} </td>
                          <td *ngIf="type==1">{{data.maxPointEarningPerMonth}} </td>

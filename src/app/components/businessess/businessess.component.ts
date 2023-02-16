@@ -32,10 +32,13 @@ export class BusinessessComponent implements OnInit {
     private toastr: ToastrService,private route: ActivatedRoute,
     private router:Router,private spinner:NgxSpinnerService ) { 
       this.spinner.show()
+    }
+  //For Stop uploading when all component render successfully
+    ngAfterViewInit() {
       setTimeout(() => {
         this.spinner.hide();
-      }, 2000);
-    }
+      });
+     }
   
 
     @ViewChild('closebutton') closebutton: any;
