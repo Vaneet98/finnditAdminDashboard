@@ -17,7 +17,8 @@ export class DashboardComponent implements OnInit {
   countUser:any
   countSubscriptionPlan:any
   countBusiness:any
-  constructor(private elementRef: ElementRef,private api: ServiceService,private spinner:NgxSpinnerService) { 
+  constructor(private elementRef: ElementRef,private api: ServiceService,
+    private spinner:NgxSpinnerService) { 
     this.spinner.show()
   }
 //For Stop uploading when all component render successfully
@@ -52,7 +53,6 @@ export class DashboardComponent implements OnInit {
       console.log("this is subscription plan dataMamaber--------->",this.dataMamber)
     })
   }
-
   getBusiness(){
     let params = new HttpParams();
     params = params.set('limit', 10); 

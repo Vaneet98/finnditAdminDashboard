@@ -21,23 +21,49 @@ export class CategorySubL1Component implements OnInit {
   form: FormGroup | undefined;
   isFormValid:any = false;
   basicForm: any;
+  event:any
+  page: number=1;
+  count: number = 0;
+  tableSize: number = 5;
+  search = '';
+  limit=5
+  skip=0
+  sortOrder ='DESC'
+  dataMamber:any 
+ userId:any
   constructor(private elementRef: ElementRef,private router:Router,
     private toastr: ToastrService,private api: ServiceService,private route: ActivatedRoute) { 
   }
-  pagePerItem=0
+
   ngOnInit(): void {
-    this.pagePerItem=5
-    this.route.params.subscribe(params => {
-      this.L1id = params['id'];
+    this.route.queryParams.subscribe(params => {
+      this.L1id = params['L1id'];
+      this.event=params['event']
     });
     console.log("THis is parameter id",this.L1id)
     this.getDataOfSubCateL1(this.L1id)
   }
 
-dataMamber:any 
-  searchText = '';
-  
- userId:any
+      //For searching
+      onTextChange(value: any) {
+        this.search = value;
+        this.getDataOfSubCateL1(this.L1id);
+      }
+      
+      //This is for pagination
+      onTableDataChange(event: any) {
+        this.router.navigate(['/CategorySubL1Component/'],{ queryParams: {event:this.page,L1id: this.L1id } });
+        this.page = event;
+        this.skip=(this.page-1)
+        this.getDataOfSubCateL1(this.L1id);
+      }
+      
+      changeSortOrder(value: any): void {
+        this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
+        this.getDataOfSubCateL1(this.L1id);
+      }
+
+
   getId(id:any){
      console.log("this is data",JSON.stringify(id))
      alert(JSON.stringify(id))
@@ -45,8 +71,7 @@ dataMamber:any
   }
 
   moveTol2(id:any){
-    // this.router.navigate(['CategorySubL1Component/c1'+'?'+this.L1id+'c2'], { queryParams: {id: id } });
-    this.router.navigate(['CategorySubL1Component/c1/'+this.L1id+'/c2/'+id]);
+     this.router.navigate(['CategorySubL1Component/l2/'], { queryParams: {event:this.event,L1id:this.L1id,id:id } });
   }
 
 
@@ -59,18 +84,12 @@ dataMamber:any
   }
 
   getbacktocategory(){
-    this.router.navigate(['/categories']);
+    this.router.navigate(['/categories'],{queryParams:{event:this.event}});
   }
 
   selectedRowDetail(data:any){
     alert(JSON.stringify(data))
   }
-  p = 1;
- 
-  loadDataPage(event: PageEvent) {
-    this.pagePerItem=event.pageSize
-}
-
   getdataEdit(form:any){
     form.userId=this.userId.id
     console.log("This is  ----------->",form)

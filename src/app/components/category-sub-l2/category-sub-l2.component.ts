@@ -1,9 +1,7 @@
 import { getLocaleDateFormat } from '@angular/common';
 import { Component, OnInit,ElementRef ,ViewChild, Input} from '@angular/core';
 import { Router,ActivatedRoute ,NavigationEnd } from '@angular/router';
-import {NgForm} from "@angular/forms"
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service'
 import { environment } from 'src/environments/environment';
@@ -20,38 +18,63 @@ export class CategorySubL2Component implements OnInit {
   isFormValid:any = false;
   basicForm: any;
   L1id:any
+  event:any
+  page: number=1;
+  count: number = 0;
+  tableSize: number = 5;
+  search = '';
+  limit=5
+  skip=0
+  sortOrder ='DESC'
+  dataMamber:any 
+ userId:any
+ id:any
+ deactivateValue:any={}
+ deleteAt:any={}
   constructor(private elementRef: ElementRef,private router:Router,
     private toastr: ToastrService,private api: ServiceService,private route: ActivatedRoute) { 
   }
-  pagePerItem=0
   ngOnInit(): void {
-    // this.pagePerItem=5
-    // this.L1id= this.route.snapshot.paramMap.get("L1id")
-    // this.id=this.route.snapshot.paramMap.get("id")
-
-    this.route.params.subscribe(params => {
+    this.route.queryParams.subscribe(params => {
       console.log("This is params of subCategoryl2=====-------->",params)
-      this.L1id= params['id']
-      this.id = params['subId'];
-      
+      console.log("This is params========>",params)
+      this.L1id= params['L1id']
+      this.id = params['id'];
+      this.event=params['event']
     });
     console.log("THis is parameter L1id----------->",this.L1id)
     console.log("THis is parameter id----------->",this.id)
-    this.getDataOfSubCateL1(this.id)
+    this.getDataOfSubCateL2(this.id)
   }
 
-dataMamber:any 
-  searchText = '';
-  
- userId:any
+
+      //For searching
+      onTextChange(value: any) {
+        this.search = value;
+        this.getDataOfSubCateL2(this.id);
+      }
+      
+      //This is for pagination
+      onTableDataChange(event: any) {
+        this.router.navigate(['CategorySubL1Component/l2/'], { queryParams: {event:this.event,L1id:this.L1id,id:this.id } });
+        this.page = event;
+        this.skip=(this.page-1)
+        this.getDataOfSubCateL2(this.id);
+      }
+      
+      changeSortOrder(value: any): void {
+        this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
+        this.getDataOfSubCateL2(this.id);
+      }
+
   getId(id:any){
      console.log("this is data",JSON.stringify(id))
      alert(JSON.stringify(id))
      this.userId=id
   }
-  id:any
 
- public getDataOfSubCateL1(id:any){
+
+ public getDataOfSubCateL2(id:any){
     this.api.getById(this.HostURL+this.SubcategoryL2URL+id).subscribe(data => {
       console.log("This is SubcategorireL2 data------->",data);
       this.dataMamber=data
@@ -60,17 +83,13 @@ dataMamber:any
   }
 
   getbacktosubcategoryl1(){
-    this.router.navigate(['/CategorySubL1Component/'+this.L1id]);
+    this.router.navigate(['/CategorySubL1Component/'],{ queryParams: {event:this.event,L1id: this.L1id } });
   }
 
   selectedRowDetail(data:any){
     alert(JSON.stringify(data))
   }
-  p = 1;
- 
-  loadDataPage(event: PageEvent) {
-    this.pagePerItem=event.pageSize
-}
+
 
   getdataEdit(form:any){
     form.userId=this.userId.id
@@ -79,7 +98,7 @@ dataMamber:any
   }
 
 
-  deactivateValue:any={}
+
   deactivate(){
     this.userId
     this.deactivateValue.userId=this.userId
@@ -88,7 +107,7 @@ dataMamber:any
     this.toastr.success('Deactivate data Successfully.');
   }
 
-  deleteAt:any={}
+ 
   deleteData(){
     this.userId
     this.deleteAt.userId=this.userId

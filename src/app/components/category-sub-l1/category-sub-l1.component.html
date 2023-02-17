@@ -10,9 +10,7 @@
                   <div style="display: flex; align-items: center;">
                     <i class="bi bi-chevron-left" (click)="getbacktocategory()" style="cursor: pointer;margin-right: 10px;"></i>
                     <h2 class="card-title">Sub Categories (L1)</h2>
-                  </div>
-                   <div style="margin-bottom: 20px;">
-                    <input [(ngModel)]="searchText" placeholder="Search">
+                 
                   </div>
                    <table class="table datatable">
                       <thead>
@@ -25,8 +23,14 @@
                          </tr>
                       </thead>
                       <tbody  >
-                        <!--  [queryParamsHandling]="'preserve'" -->
-                        <tr *ngFor="let data of dataMamber.data.rows | filter: searchText | paginate: { itemsPerPage: pagePerItem, currentPage: p}">
+                        <tr *ngFor="let data of dataMamber.data.rows 
+                        | paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                          };
+                    let i = index" [ngStyle]="{'background-color': i % 2 !== 0 ? 'white' : '#f5f5f5'}">
                           <th scope="row"><span>{{data?.name}}</span></th>
                           <td><span (click)="moveTol2(data.id)" class="highlight">{{data?.subCategoriesCount}}</span></td>
                           <td><span>{{data?.productAndServicesCount}}</span></td>
@@ -50,13 +54,14 @@
                       </tbody>
                      
                    </table>
-                   <div class="pagination" >
-                    <mat-paginator [length]="dataMamber.data.rows.length"
-                        [pageSize]="5"
-                        [pageSizeOptions]="[5,10, 25, 100]"
-                        (page)="loadDataPage($event)">
-                    </mat-paginator>
-                   </div>
+                   <div class="d-flex justify-content-center" >
+                    <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="onTableDataChange($event)"
+                    >
+                    </pagination-controls>
+                    </div>
                   
                 </div>
              </div>

@@ -64,13 +64,14 @@ const routes: Routes = [
   { path: 'managenotification', component:  ManageNotificationComponent,canActivate:[DashBoardGuardGuard] },
   { path: 'CategorySubL1Component',  component: CommonComponent, canActivate:[DashBoardGuardGuard] ,
    children: [
-    {path :'c1/:id',component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard],
-     children:[
-      { path: 'c2/:subId', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
+    {path :'',component:  CategorySubL1Component,canActivate:[DashBoardGuardGuard],},
+       { path:'l2',component:CommonComponent,canActivate:[DashBoardGuardGuard],
+          children:[
+             { path: '', component:  CategorySubL2Component,canActivate:[DashBoardGuardGuard] },
+           ]
+       },
      ]
-   },
-  ]
-},
+  },
 
   { path: '**', component: PagesError404Component  },
 ];

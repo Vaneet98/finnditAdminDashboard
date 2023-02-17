@@ -92,7 +92,7 @@ public onSave() {
   }
   moveTol1(categoryid:any){
     this.userId=categoryid   
-    this.router.navigate(['/CategorySubL1Component/c1/',this.userId]);
+    this.router.navigate(['/CategorySubL1Component/'],{ queryParams: {event:this.page,L1id: this.userId } });
   }
 
   getData(){
