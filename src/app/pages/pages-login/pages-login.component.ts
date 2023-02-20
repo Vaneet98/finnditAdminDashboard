@@ -26,6 +26,7 @@ export class PagesLoginComponent implements OnInit {
   showError = false;
   secretKey='Vaneet.k@applify.co'
   isLogin = "login";
+  isLoading=false;
   constructor(private api: ServiceService,private toastr: ToastrService,private router: Router,private formBuilder: FormBuilder,) { 
     this.form = this.formBuilder.group({
       email: ["", Validators.compose([Validators.required,Validators.pattern('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')])],
@@ -34,6 +35,15 @@ export class PagesLoginComponent implements OnInit {
     });
   }
 
+  toggleloading(){
+    
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.isLoading=false;
+    });
+   }
   ngOnInit(): void {
     this.api.reloadComponent();
     this.getcommonRoles()
@@ -79,6 +89,7 @@ export class PagesLoginComponent implements OnInit {
   setValue:any
   getdata(){
     if(this.form.valid){
+      this.isLoading=true
       this.api.add(this.HostURL+this.LoginURL,this.form.value)
       .subscribe(async (res) => {
         this.setValue=res
@@ -86,6 +97,7 @@ export class PagesLoginComponent implements OnInit {
         localStorage.setItem("jwt", JSON.stringify(this.setValue))
         localStorage.setItem('userPermissions',JSON.stringify(this.setValue.data.adminDetails?.role.role_permissions)
         );
+
         this.toastr.success("Login successful!");
         // this.form.reset();
         if (this.rememberMe) {
