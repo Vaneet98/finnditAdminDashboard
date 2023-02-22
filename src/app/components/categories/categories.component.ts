@@ -9,6 +9,8 @@ import { ServiceService } from '../../service.service';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AddParentCategoryComponent } from '../add-parent-category/add-parent-category.component';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -32,7 +34,8 @@ export class CategoriesComponent implements OnInit {
   deactivateValue:any={};
   deleteAt:any={};
   constructor(private elementRef: ElementRef,private router:Router,
-    private toastr: ToastrService,private api: ServiceService,private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
+    private toastr: ToastrService,private api: ServiceService,private route:ActivatedRoute
+    ,private dialog: MatDialog,private spinner:NgxSpinnerService) { 
       this.spinner.show()
   }
 //For Stop uploading when all component render successfully
@@ -132,6 +135,26 @@ public onSave() {
     this.deleteAt.value=1
     console.log("This is deleted",this.deleteAt)
     this.toastr.success('Deleted data Successfully.');
+  }
+  addParentCategory(){
+    const dialogRef = this.dialog.open(AddParentCategoryComponent);
+   
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("This is result", result);
+        if (result) {
+          this.api.getAll(this.HostURL+this.categoryURL).subscribe({
+            next: (res) => {
+              console.log("This is result--------->",res)
+              this.getData();
+              this.toastr.success("Delete data Successfull.")
+              console.log(res);
+            },
+            error: () => {
+              this.toastr.error("Something went wrong in deletion")
+            },
+          });
+        }
+    });
   }
   
 }

@@ -106,6 +106,17 @@
 	width: 350px;
 	height: 200px;
   }
+  .addBox{
+	width: 700px;
+	height: 600px;
+  }
+  .addbutton{
+	margin-right: 270px;
+	margin-top: 20px;
+  }
+  .addbtn{
+	border: none;
+  }
   .add-more-container {
 	position: fixed;
 	right: 50px;

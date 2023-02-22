@@ -27,6 +27,7 @@ export class PagesLoginComponent implements OnInit {
   secretKey='Vaneet.k@applify.co'
   isLogin = "login";
   isLoading=false;
+  disabled=""
   constructor(private api: ServiceService,private toastr: ToastrService,private router: Router,private formBuilder: FormBuilder,) { 
     this.form = this.formBuilder.group({
       email: ["", Validators.compose([Validators.required,Validators.pattern('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')])],
@@ -35,9 +36,7 @@ export class PagesLoginComponent implements OnInit {
     });
   }
 
-  toggleloading(){
-    
-  }
+
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -88,8 +87,9 @@ export class PagesLoginComponent implements OnInit {
 
   setValue:any
   getdata(){
+    this.disabled = "btn-loading"
     if(this.form.valid){
-      this.isLoading=true
+      
       this.api.add(this.HostURL+this.LoginURL,this.form.value)
       .subscribe(async (res) => {
         this.setValue=res
@@ -121,6 +121,7 @@ export class PagesLoginComponent implements OnInit {
         )
     }
     else {
+      this.disabled=""
       this.showError = true;
     }
   }

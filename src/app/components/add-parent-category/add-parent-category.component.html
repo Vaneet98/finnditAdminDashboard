@@ -1,0 +1,31 @@
+  <div class="addBox">
+    <label><h1 mat-dialog-title style="margin-left: 220px;">Add Parent Category</h1></label>
+    <div mat-dialog-content style="margin-left: 1px;">
+        <form>
+            <div class="modal-body">
+                <div class="form-element" >
+                    <label><h2>Parent Category Name</h2> </label>
+                    <input class="form-control" type="text">
+                </div>
+                <div class="mb-3" style="margin-top: 30px; ">
+                    <div>
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">
+                        <h2>Parent Category Image</h2>
+                    </label>
+                </div>
+                    <div class="col-md-8 col-lg-9">
+                       <img [src]="profileImage ||defaultImage" style="width: 120px;"  alt="Profile">
+                       <div class="pt-2"> 
+                         <input type="file" (change)="onFileSelected($event)" >
+                        </div>
+                    </div>
+                 </div>
+  
+            </div>
+            <div class="modal-footer addbutton">
+                <button  class="common-btn btn-success" data-dismiss="modal" [mat-dialog-close]="true" cdkFocusInitial>Save </button>
+                <button class="common-btn cancel btn-info" data-dismiss="modal" (click)="onNoClick()">Cancel </button>
+            </div>
+        </form>
+    </div>
+    </div>

@@ -7,6 +7,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from '../../service.service';
 import { environment } from 'src/environments/environment';
+import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-category-sub-l1',
   templateUrl: './category-sub-l1.component.html',
@@ -39,8 +40,16 @@ export class CategorySubL1Component implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.L1id = params['L1id'];
       this.event=params['event']
+      this.page=params['e']
     });
     console.log("THis is parameter id",this.L1id)
+    if(this.page){
+      this.page=this.page
+    }else{
+      this.page=1
+    }    
+    console.log("this is page: " + this.page)
+    this.skip=(this.page-1)
     this.getDataOfSubCateL1(this.L1id)
   }
 
@@ -52,9 +61,12 @@ export class CategorySubL1Component implements OnInit {
       
       //This is for pagination
       onTableDataChange(event: any) {
-        this.router.navigate(['/CategorySubL1Component/'],{ queryParams: {event:this.page,L1id: this.L1id } });
+        console.log("this is evetn=======>",event);
+        this.router.navigate(['/CategorySubL1Component/'],{ queryParams: {event:this.event,L1id: this.L1id,e:event } });
         this.page = event;
         this.skip=(this.page-1)
+        console.log("This is limit",this.limit)
+        console.log("This is skippped",this.skip)
         this.getDataOfSubCateL1(this.L1id);
       }
       
@@ -71,14 +83,22 @@ export class CategorySubL1Component implements OnInit {
   }
 
   moveTol2(id:any){
-     this.router.navigate(['CategorySubL1Component/l2/'], { queryParams: {event:this.event,L1id:this.L1id,id:id } });
+     this.router.navigate(['CategorySubL1Component/l2/'], { queryParams: {event:this.event,L1id:this.L1id,e:this.page,id:id } });
   }
 
 
  public getDataOfSubCateL1(id:any){
-    this.api.getById(this.HostURL+this.SubcategoryL1URL+id).subscribe(data => {
+  let params = new HttpParams();
+  params = params.set('limit', this.limit);
+  params = params.set('skip', this.skip);
+  if(this.search != null && this.search != ''){
+    params =  params.append('search',this.search)
+  }
+  params=params.set("categoryId",id)
+    this.api.getByParams(this.HostURL+this.SubcategoryL1URL,params).subscribe(data => {
       console.log("This is SubcategorireL1 data------->",data);
       this.dataMamber=data
+      this.count=this.dataMamber.data.count
       console.log("this is dataMamaber of subCategoryL1--------->",this.dataMamber.data.rows)
     })
   }

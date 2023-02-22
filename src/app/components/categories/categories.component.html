@@ -81,7 +81,7 @@
           </i>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddParent">
+               <button type="button" class="btn c1" data-toggle="modal" data-target="#exampleModalCenterAddParent" (click)="addParentCategory()">
                   Add Parent Category
                </button>
             </li>
@@ -192,36 +192,7 @@
    </div>
  </div>
 
-       <!-- Model for Add parent -->
-       <div class="modal fade" id="exampleModalCenterAddParent" tabindex="-1" role="dialog"      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalLongTitle" style="display: flex; align-items: center; justify-content: center;">Add Parent</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-               </button>
-             </div>
-             <form>
-               <div class="modal-body">
-                   <div class="form-element" >
-                       <label><h5> Parent Category Name</h5> </label>
-                       <input class="form-control" type="text">
-                   </div>
-                   <div class="form-element">
-                        <span><h5>Parent Category Icon</h5>  </span> 
-                       <input name="pic" type="file" class="upload-lg-icon lg-file" id="lgFile">
-                   </div>
-
-               </div>
-               <div class="modal-footer buttons">
-                   <button  class="common-btn " data-dismiss="modal">Save </button>
-                   <button class="common-btn cancel" data-dismiss="modal">Cancel </button>
-               </div>
-           </form>
-           </div>
-         </div>
-       </div>  
+      
 
           <!-- Model for Add L1 -->
           <div class="modal fade" id="exampleModalCenterAddL1" tabindex="-1" role="dialog"   aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -340,4 +311,3 @@
             </div>
           </div>          
  </main>
- <!-- <app-category-sub-l1 #child></app-category-sub-l1> -->

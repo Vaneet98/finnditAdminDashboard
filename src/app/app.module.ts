@@ -2,6 +2,7 @@ import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -70,6 +71,7 @@ import { SortPipe } from './sort.pipe';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './interceptor.service';
+import { AddParentCategoryComponent } from './components/add-parent-category/add-parent-category.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,8 @@ import { InterceptorService } from './interceptor.service';
     CategorySubL2Component,
     TagAdminDetailComponent,
     CommonComponent,
-    SortPipe
+    SortPipe,
+    AddParentCategoryComponent
 
   ],
   imports: [
@@ -139,6 +142,7 @@ import { InterceptorService } from './interceptor.service';
     Ng2SearchPipeModule,
     NgxPaginationModule,
     NgxSpinnerModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent],
