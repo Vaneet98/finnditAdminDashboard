@@ -1,0 +1,10 @@
+.col-md-4 .test {
+    margin-left: 10px;
+  }
+  
+  /* Styles for col-xxl-4 */
+  @media (min-width: 1400px) {
+    .col-xxl-4 .test {
+      margin-left: 70px;
+    }
+  }

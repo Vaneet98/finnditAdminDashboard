@@ -18,10 +18,70 @@
                      <div class="card-body">
                         <h5 class="card-title">Total <span>| Businesses Register</span></h5>
                         <div class="d-flex align-items-center">
-                           <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
-                                 class="bi bi-briefcase-fill"></i></div>
+                           
                            <div class="ps-3">
-                              <h6>{{countBusiness}}</h6>
+                              <div class="row">
+                                 <div class="col-auto">
+                                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                     <i class="bi bi-briefcase-fill"></i>  
+                                   </div>
+                                 </div>
+                                 <div class="col" style="margin-top:20px ;">
+                                   <h6>{{countBusiness}}\1000</h6>
+                                 </div>
+                               </div>
+                               <div style="margin-left: 20px;">
+                              <circle-progress 
+                              [percent]="percent" 
+                              [radius]="radius" 
+                              title="{{percent}}"
+                              [showTitle]="showTitle"
+                              [showSubtitle]="showSubtitle"
+                              [units]="units"
+                              [showUnits]="showUnits"
+                              [animationDuration]="animationDuration"
+                              [animation]="animation"
+                              [responsive]="responsive"
+                              [backgroundPadding]="7"
+                              [backgroundColor]="'white'"
+                               ></circle-progress>
+                              </div>
+                              <span class="text-success small pt-1 fw-bold"></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xxl-4 col-md-4" >
+                  <div class="card info-card revenue-card">
+                     <div class="card-body" style="height:472px">
+                        <h5 class="card-title">Total <span>| Subscription Plan</span></h5>
+                        <div class="d-flex align-items-center">
+                           
+                           <div class="ps-3">
+                              <div class="row">
+                                 <div class="col-auto">
+                                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="margin-bottom: 30px;">
+                                     <i class="bi bi-briefcase-fill"></i>  
+                                   </div>
+                                 </div>
+                                 <div class="col" style="margin-top:20px ;">
+                                   <h6>{{countSubscriptionPlan}}\100</h6>
+                                 </div>
+                               </div>
+                               <div class="test">
+                              <circle-progress 
+                              [percent]="percentage"  
+                              title="{{countSubscriptionPlan}}"
+                              [backgroundColor]= "'#FDB900'"
+                              [units]="units"
+                              unitsColor="'#483500'"
+                              outerStrokeColor="#FFFFFF"
+                              innerStrokeColor="'#FFFFFF'"
+                              titleColor="'#483500'"
+                              subtitleColor="'#483500'"
+                               ></circle-progress>
+                              </div>
                               <span class="text-success small pt-1 fw-bold"></span>
                            </div>
                         </div>
@@ -29,29 +89,36 @@
                   </div>
                </div>
                <div class="col-xxl-4 col-md-4">
-                  <div class="card info-card revenue-card">
-                     <div class="card-body">
-                        <h5 class="card-title">Total <span>| Subscription Plan</span></h5>
-                        <div class="d-flex align-items-center">
-                           <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
-                                 class="bi bi-subtract sidebarIcon"></i></div>
-                           <div class="ps-3">
-                              <h6>{{countSubscriptionPlan}}</h6>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-xxl-4 col-md-4">
                   <div class="card info-card customers-card">
-                     <div class="card-body">
+                     <div class="card-body"  style="height:472px">
                         <h5 class="card-title">Total <span>| Users</span></h5>
                         <div class="d-flex align-items-center">
-                           <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
-                                 class="bi bi-people"></i></div>
-                           <div class="ps-3">
-                              <h6>{{countUser}}</h6>
-                           </div>
+                           
+                                 <div class="ps-3">
+                                    <div class="row">
+                                       <div class="col-auto">
+                                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i
+                                             class="bi bi-people"></i></div>
+                                       </div>
+                                       <div class="col" style="margin-top:20px ;">
+                                         <h6>{{countUser}}\1000</h6>
+                                       </div>
+                                     </div>
+                                     <div class="test" style="margin-top: 30px;">
+                                    <circle-progress 
+                                    [percent]="percentageUser"
+                                    [maxPercent]="1000" 
+                                    backgroundColor= "#ffffff"
+                                    title="{{percentageUser}}"
+                                    backgroundGradientStopColor="#c0c0c0"
+                                    outerStrokeColor="#61A9DC"
+                                    innerStrokeWidth= 0
+                                    subtitleColor="#444444"
+                                    [backgroundGradient]=true
+                                     ></circle-progress>
+                                    </div>
+                                    <span class="text-success small pt-1 fw-bold"></span>
+                                 </div>
                         </div>
                      </div>
                   </div>

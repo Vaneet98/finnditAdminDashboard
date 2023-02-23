@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -143,6 +144,7 @@ import { AddParentCategoryComponent } from './components/add-parent-category/add
     NgxPaginationModule,
     NgxSpinnerModule,
     NgMultiSelectDropDownModule.forRoot(),
+    NgCircleProgressModule.forRoot()
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent],
