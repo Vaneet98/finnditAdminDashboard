@@ -14,14 +14,31 @@ export class FormsComponent {
   private countdownTime = 60;
   buttonText = 'Click me';
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const storedTime = localStorage.getItem('lastClickTime');
+        const storedDuration = localStorage.getItem('countdownDuration');
+        if (storedTime && storedDuration) {
+          this.lastClickTime = parseInt(storedTime);
+          const remainingSeconds = Math.round(parseInt(storedDuration) - (new Date().getTime() - this.lastClickTime) / 1000);
+          if (remainingSeconds > 0) {
+            this.startCountdownTimer(remainingSeconds);
+          }
+        }
+      }
+    });
   }
 
+  type=0
+  onClicks(n:any){
+    this.type=n
+  }
 
   onClick() {
     const currentTime = new Date().getTime();
     const elapsedSeconds = (currentTime - this.lastClickTime) / 1000;
-    
+    this.type=1;
     if (elapsedSeconds < this.countdownTime) {
       const remainingSeconds = Math.round(this.countdownTime - elapsedSeconds);
       this.startCountdownTimer(remainingSeconds);
@@ -30,6 +47,7 @@ export class FormsComponent {
 
     this.isDisabled = true;
     this.lastClickTime = currentTime;
+    localStorage.setItem('lastClickTime', this.lastClickTime.toString());
     
     // perform button click action here
     console.log('Button clicked');
@@ -42,6 +60,7 @@ export class FormsComponent {
     this.countdownIntervalId = setInterval(() => {
       duration--;
       this.updateButtonText(duration);
+      localStorage.setItem('countdownDuration', (duration + 1).toString());
       
       if (duration <= 0) {
         clearInterval(this.countdownIntervalId!);
@@ -61,6 +80,8 @@ export class FormsComponent {
   }
 
   private resetButton() {
+    localStorage.removeItem('lastClickTime');
+    localStorage.removeItem('countdownDuration');
     this.isDisabled = false;
     this.renderer.setProperty(this.buttonRef.nativeElement, 'innerText', 'Click me');
   }

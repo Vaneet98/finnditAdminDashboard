@@ -50,12 +50,12 @@ toggleSortOrder() {
     this.route.queryParams.subscribe(params => {
       this.page = params['event'];
     });
-  if(this.page){
-    this.page=this.page
-  }else{
-    this.page=1
-  }
-  this.skip=(this.page-1)
+      if(this.page){
+         this.page=this.page
+      }else{
+         this.page=1
+     }
+    this.skip=(this.page-1)
     this.getData()
   }
  //Get the id

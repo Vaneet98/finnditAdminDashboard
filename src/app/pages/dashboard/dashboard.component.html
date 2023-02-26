@@ -1,5 +1,7 @@
-<ngx-spinner type="ball-beat"></ngx-spinner>
+
+
 <main id="main" class="main">
+   <ngx-spinner type="ball-beat"></ngx-spinner>
    <div class="pagetitle">
       <h1>Dashboard</h1>
       <nav>
@@ -9,11 +11,23 @@
          </ol>
       </nav>
    </div>
+
+   <div class="container" *ngIf="!countBusiness && !countSubscriptionPlan && !countUser ">
+      <div class="loader">
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <p class="loader--text"></p>  
+   </div>
+   </div>
    <section class="section dashboard">
       <div class="row">
          <div class="col-lg-12">
-            <div class="row">
-               <div class="col-xxl-4 col-md-4">
+            <div class="row" *ngIf="countBusiness && countSubscriptionPlan &&countUser ">
+               <div class="col-xxl-4 col-md-4" >
                   <div class="card info-card sales-card">
                      <div class="card-body">
                         <h5 class="card-title">Total <span>| Businesses Register</span></h5>
@@ -52,7 +66,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-xxl-4 col-md-4" >
+               <div class="col-xxl-4 col-md-4"  >
                   <div class="card info-card revenue-card">
                      <div class="card-body" style="height:472px">
                         <h5 class="card-title">Total <span>| Subscription Plan</span></h5>

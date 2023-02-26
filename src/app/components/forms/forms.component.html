@@ -1,3 +1,8 @@
 <div id="main" class="main" >
-   <button class="btn btn-success" #buttonRef (click)="onClick()" [disabled]="isDisabled">{{ buttonText }}</button>
+   <button *ngIf="type==0" class="btn btn-success" #buttonRef (click)="onClick()" [disabled]="isDisabled">{{ buttonText }}</button><br><br>
+   <button *ngIf="type==0" class="btn btn-success"  (click)="onClicks(1)">type</button>
    </div>
+
+   <div id="main" class="main" >
+      <button *ngIf="type==1" class="btn btn-success"  (click)="onClicks(0)">This is type</button>
+      </div>

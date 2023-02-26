@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getDataUser(){
+    this.spinner.show()
     let params = new HttpParams();
     params = params.set('limit', 1000); 
     params = params.set('skip', 0);
@@ -44,6 +45,7 @@ export class DashboardComponent implements OnInit {
     })
   }
   getDataSubscriptionPlan(){
+    this.spinner.show()
     let params = new HttpParams();
     params = params.set('limit', 10);
     params = params.set('skip', 0);
@@ -56,6 +58,7 @@ export class DashboardComponent implements OnInit {
     })
   }
   getBusiness(){
+    this.spinner.show()
     let params = new HttpParams();
     params = params.set('limit', 10); 
     params = params.set('skip', 0);
